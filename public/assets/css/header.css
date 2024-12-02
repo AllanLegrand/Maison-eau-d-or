@@ -108,3 +108,9 @@ body{
         font-size: 12px;
     }
 }
+
+.doree{
+    background: linear-gradient(to right, #7A6C29, #C7B254);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
