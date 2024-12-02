@@ -1,0 +1,110 @@
+body{
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.navbar {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+    /*bordure bottom*/
+    border-bottom: 1px solid #000000;
+}
+
+.navbar-nav .nav-link {
+    font-weight: semi-bold;
+    color: #000;
+    margin: 0 15px;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    background: conic-gradient(from 45deg, #7A6C29, #C7B254, #7A6C29);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.navbar-brand img {
+    height: 40px;
+    max-height: 100%;
+    max-width: auto;
+    object-fit: contain;
+}
+
+.d-flex.align-items-center .btn-link img {
+    height: 25px;
+    width: auto;
+    transition: transform 0.3s ease;
+}
+
+.d-flex.align-items-center .btn-link img:hover {
+    transform: scale(1.1);
+    /* effet dorée sur l'image */
+    filter: drop-shadow(0 0 5px #B9A64D);
+}
+
+.search-bar {
+    border: 1px solid #ddd; 
+    transition: border-color 0.3s ease;
+    font-size: 12px;
+}
+
+.search-bar:focus {
+    border-color: #B9A64D;
+    outline: none;
+}
+
+.search-results {
+    position: absolute;
+    top: 100%; 
+    left: 0;
+    width: 100%;
+    max-height: 300px; 
+    overflow-y: auto; 
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000; 
+    display: none;
+}
+
+.search-results .result-item {
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.search-results .result-item:hover {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.search-results .no-results {
+    padding: 10px;
+    color: #888;
+    font-style: italic;
+    text-align: center;
+}
+
+.search-results .selected {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+/* Ajustements pour appareils mobiles */
+@media (max-width: 992px) {
+    .navbar {
+        font-size: 12px;
+    }
+    .navbar-brand img {
+        height: 50px;
+    }
+    .d-flex.align-items-center .btn-link img {
+        height: 25px;
+    }
+    .search-bar {
+        font-size: 12px;
+    }
+}
