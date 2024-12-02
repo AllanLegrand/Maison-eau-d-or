@@ -18,7 +18,7 @@ class SigninController extends BaseController
 	{
 		helper(['form']);
 		$session = session();
-		$UtilisateurModele = new UtilisateurModele();
+		$UtilisateurModele = new UtilisateursModel();
 
 		// Règles de validation pour l'e-mail et le mot de passe
 		$rules = [

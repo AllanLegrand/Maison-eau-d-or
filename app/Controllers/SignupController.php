@@ -26,7 +26,7 @@ class SignupController extends BaseController
 		];
 
 		if ($this->validate($rules)) {
-			$UtilisateurModele = new UtilisateurModele();
+			$UtilisateurModele = new UtilisateursModel();
 
 			$data = [
 				'email' => $this->request->getVar('email'), 
