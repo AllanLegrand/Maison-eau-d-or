@@ -1,0 +1,78 @@
+CRITICAL - 2024-12-02 09:25:58 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "accueil.php"
+[Method: GET, Route: /]
+in SYSTEMPATH/Exceptions/FrameworkException.php on line 41.
+ 1 SYSTEMPATH/View/View.php(222): CodeIgniter\Exceptions\FrameworkException::forInvalidFile()
+ 2 SYSTEMPATH/Common.php(1169): CodeIgniter\View\View->render()
+ 3 APPPATH/Controllers/Accueil.php(10): view()
+ 4 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\Accueil->index()
+ 5 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest()
+ 7 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter()
+ 9 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb()
+10 SYSTEMPATH/rewrite.php(44): require_once('/home/etudiant/dl221361/TP/s5/s5.01_developpement_avance/Maison-eau-d-or/public/index.php')
+CRITICAL - 2024-12-02 09:25:59 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "accueil.php"
+[Method: GET, Route: /]
+in SYSTEMPATH/Exceptions/FrameworkException.php on line 41.
+ 1 SYSTEMPATH/View/View.php(222): CodeIgniter\Exceptions\FrameworkException::forInvalidFile()
+ 2 SYSTEMPATH/Common.php(1169): CodeIgniter\View\View->render()
+ 3 APPPATH/Controllers/Accueil.php(10): view()
+ 4 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\Accueil->index()
+ 5 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest()
+ 7 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter()
+ 9 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb()
+10 SYSTEMPATH/rewrite.php(44): require_once('/home/etudiant/dl221361/TP/s5/s5.01_developpement_avance/Maison-eau-d-or/public/index.php')
+CRITICAL - 2024-12-02 09:25:59 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "accueil.php"
+[Method: GET, Route: /]
+in SYSTEMPATH/Exceptions/FrameworkException.php on line 41.
+ 1 SYSTEMPATH/View/View.php(222): CodeIgniter\Exceptions\FrameworkException::forInvalidFile()
+ 2 SYSTEMPATH/Common.php(1169): CodeIgniter\View\View->render()
+ 3 APPPATH/Controllers/Accueil.php(10): view()
+ 4 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\Accueil->index()
+ 5 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest()
+ 7 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter()
+ 9 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb()
+10 SYSTEMPATH/rewrite.php(44): require_once('/home/etudiant/dl221361/TP/s5/s5.01_developpement_avance/Maison-eau-d-or/public/index.php')
+CRITICAL - 2024-12-02 09:25:59 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "accueil.php"
+[Method: GET, Route: /]
+in SYSTEMPATH/Exceptions/FrameworkException.php on line 41.
+ 1 SYSTEMPATH/View/View.php(222): CodeIgniter\Exceptions\FrameworkException::forInvalidFile()
+ 2 SYSTEMPATH/Common.php(1169): CodeIgniter\View\View->render()
+ 3 APPPATH/Controllers/Accueil.php(10): view()
+ 4 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\Accueil->index()
+ 5 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest()
+ 7 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter()
+ 9 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb()
+10 SYSTEMPATH/rewrite.php(44): require_once('/home/etudiant/dl221361/TP/s5/s5.01_developpement_avance/Maison-eau-d-or/public/index.php')
+CRITICAL - 2024-12-02 09:26:00 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "accueil.php"
+[Method: GET, Route: /]
+in SYSTEMPATH/Exceptions/FrameworkException.php on line 41.
+ 1 SYSTEMPATH/View/View.php(222): CodeIgniter\Exceptions\FrameworkException::forInvalidFile()
+ 2 SYSTEMPATH/Common.php(1169): CodeIgniter\View\View->render()
+ 3 APPPATH/Controllers/Accueil.php(10): view()
+ 4 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\Accueil->index()
+ 5 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest()
+ 7 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter()
+ 9 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb()
+10 SYSTEMPATH/rewrite.php(44): require_once('/home/etudiant/dl221361/TP/s5/s5.01_developpement_avance/Maison-eau-d-or/public/index.php')
+CRITICAL - 2024-12-02 09:26:01 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "accueil.php"
+[Method: GET, Route: /]
+in SYSTEMPATH/Exceptions/FrameworkException.php on line 41.
+ 1 SYSTEMPATH/View/View.php(222): CodeIgniter\Exceptions\FrameworkException::forInvalidFile()
+ 2 SYSTEMPATH/Common.php(1169): CodeIgniter\View\View->render()
+ 3 APPPATH/Controllers/Accueil.php(10): view()
+ 4 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\Accueil->index()
+ 5 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest()
+ 7 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter()
+ 9 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb()
+10 SYSTEMPATH/rewrite.php(44): require_once('/home/etudiant/dl221361/TP/s5/s5.01_developpement_avance/Maison-eau-d-or/public/index.php')
