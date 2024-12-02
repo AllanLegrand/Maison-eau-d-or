@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use CodeIgniter\Controller;
-use App\Models\UtilisateurModele;
+use App\Models\UtilisateursModel;
 
 class SigninController extends BaseController
 {

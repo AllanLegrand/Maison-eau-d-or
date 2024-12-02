@@ -26,7 +26,7 @@ CREATE TABLE Utilisateurs (
 	rst_tkn_exp TIMESTAMP,
 	email VARCHAR(320) UNIQUE,
 	adresse VARCHAR(100),
-	admin BOOLEAN,
+	admin BOOLEAN DEFAULT FALSE,
 	news BOOLEAN,
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

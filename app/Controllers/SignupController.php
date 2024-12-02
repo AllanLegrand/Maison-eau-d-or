@@ -1,6 +1,6 @@
 <?php
 namespace App\Controllers;
-use App\Models\UtilisateurModele;
+use App\Models\UtilisateursModel;
 
 class SignupController extends BaseController
 {
@@ -15,39 +15,34 @@ class SignupController extends BaseController
 	{
 		helper(['form']);
 		
-		// Règles de validation mises à jour avec 'utilisateur.mail'
 		$rules = [
-			'mail' => 'required|min_length[4]|max_length[100]|valid_email|is_unique[utilisateur.mail]',
+			'email' => 'required|min_length[4]|max_length[100]|valid_email|is_unique[utilisateurs.email]',
 			'nom' => 'required|min_length[2]|max_length[50]',
 			'prenom' => 'required|min_length[2]|max_length[50]',
 			'password' => 'required|min_length[4]|max_length[50]',
 			'confirmpassword' => 'matches[password]',
-			'adresse' => 
+			'adresse' => 'min_length[10]|max_length[255]',
+			'news' => 'permit_empty|in_list[0,1]',
 		];
 
-		// Vérification des règles de validation
 		if ($this->validate($rules)) {
 			$UtilisateurModele = new UtilisateurModele();
 
-			// Données à insérer dans la table utilisateur
 			$data = [
-				'email' => $this->request->getVar('mail'), // Utilisation de 'mail'
+				'email' => $this->request->getVar('email'), 
 				'nom' => $this->request->getVar('nom'),
 				'prenom' => $this->request->getVar('prenom'),
 				'mdp' => password_hash($this->request->getVar('password'), PASSWORD_DEFAULT),
-				'adresse' => $this->request->getVar('prenom'),
-				// 'created_at' sera géré automatiquement si $useTimestamps = true
+				'adresse' => $this->request->getVar('adresse'),
+				'news' => $this->request->getVar('news'),
 				'resettoken' => null,
 				'resettokenexpiration' => null
 			];
 
-			// Sauvegarde de l'utilisateur dans la base de données
 			$UtilisateurModele->save($data);
 
-			// Redirection après inscription
 			return redirect()->to('/signin');
 		} else {
-			// Si les règles ne sont pas respectées, renvoi des erreurs de validation
 			$data['validation'] = $this->validator;
 			echo view('signup', $data);
 		}
