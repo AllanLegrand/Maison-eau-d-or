@@ -76,3 +76,10 @@ in SYSTEMPATH/Exceptions/FrameworkException.php on line 41.
  8 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter()
  9 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb()
 10 SYSTEMPATH/rewrite.php(44): require_once('/home/etudiant/dl221361/TP/s5/s5.01_developpement_avance/Maison-eau-d-or/public/index.php')
+CRITICAL - 2024-12-02 12:35:18 --> ParseError: syntax error, unexpected token "<<", expecting end of file
+[Method: CLI, Route: serve]
+in APPPATH/Config/Routes.php on line 8.
+ 1 SYSTEMPATH/CLI/Console.php(41): CodeIgniter\Router\RouteCollection->loadRoutes()
+ 2 SYSTEMPATH/Boot.php(351): CodeIgniter\CLI\Console->run()
+ 3 SYSTEMPATH/Boot.php(104): CodeIgniter\Boot::runCommand()
+ 4 ROOTPATH/spark(84): CodeIgniter\Boot::bootSpark()
