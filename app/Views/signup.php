@@ -14,8 +14,8 @@
 			<form action="/signup/store" method="post">
 				<h3>Inscription</h3>
 
-				<label for="mail">E-mail :</label>
-				<input type="email" name="mail" id="mail" placeholder="Entrez votre adresse e-mail"
+				<label for="email">E-mail :</label>
+				<input type="email" name="email" id="email" placeholder="Entrez votre adresse e-mail"
 					class="<?= isset($validation) && $validation->hasError('mail') ? 'error-input' : '' ?>"
 					data-error="<?= isset($validation) && $validation->hasError('mail') ? $validation->getError('mail') : '' ?>"
 					required>
@@ -53,7 +53,7 @@
 		</div>
 		<div class="right-side">
 			<a href="<?= base_url('Accueil') ?>">
-				<img src="/assets/img/PF-2.png" alt="Logo">
+				<img src="/assets/img/maisoneaudeur.webp" alt="Maison Eau d'Or" height="50">
 			</a>
 		</div>
 	</div>

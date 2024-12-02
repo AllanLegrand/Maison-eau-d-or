@@ -12,7 +12,7 @@
 	<div class="signin-container">
 		<div class="left-side">
 			<a href="<?= base_url('Accueil') ?>">
-				<img src="/assets/img/PF-2.png" alt="Logo">
+				<img src="/assets/img/maisoneaudeur.webp" alt="Maison Eau d'Or" height="50">
 			</a>
 		</div>
 		<div class="right-side">

@@ -1,0 +1,175 @@
+@import url('couleur.css');
+
+/* Global */
+body,
+html {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	display: flex;
+	font-family: 'Poppins', sans-serif;
+}
+
+/* Conteneur principal */
+.signin-container {
+	display: flex;
+	height: 100vh;
+	width: 100vw;
+}
+
+/* Partie gauche : Formulaire */
+.left-side {
+	flex: 1;
+	background-color: var(--blanc);
+	/* Couleur blanche */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 40px;
+}
+
+/* Partie droite : Fond violet avec logo centré */
+.right-side {
+	flex: 1;
+	background-color: var(--violetclair);
+	/* Couleur violette */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.right-side img {
+	max-width: 200px;
+	height: auto;
+}
+
+/* Formulaire */
+form {
+	width: 100%;
+	max-width: 400px;
+	background: #f8f8f8;
+	/* Fond gris clair pour contraste */
+	padding: 40px;
+	border-radius: 15px;
+	border: 1px solid #ddd;
+	/* Bordure légère pour renforcer la distinction */
+	box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+	/* Ombre plus visible */
+}
+
+form h3 {
+	text-align: center;
+	font-size: 28px;
+	font-weight: bold;
+	margin-bottom: 30px;
+	color: var(--violetclair);
+}
+
+form label {
+	font-size: 14px;
+	font-weight: 600;
+	margin-bottom: 8px;
+	color: var(--violetfoncer);
+	display: block;
+}
+
+form input {
+	width: 100%;
+	height: 50px;
+	border: 2px solid var(--violetclair);
+	border-radius: 8px;
+	padding: 0 15px;
+	font-size: 14px;
+	color: black;
+	background-color: #fdfdfd;
+	transition: border-color 0.3s ease, box-shadow 0.3s ease;
+	box-sizing: border-box;
+	margin-bottom: 8px;
+}
+
+/* Style pour les champs en cas d'erreur */
+.error-input {
+	border: 2px solid red;
+	/* Bordure rouge pour signaler une erreur */
+	background-color: #ffe6e6;
+	/* Optionnel : une couleur de fond légèrement rouge */
+
+}
+
+.error-input::placeholder {
+	color: red;
+	/* Placeholder rouge pour mettre en avant l'erreur */
+	font-weight: bold;
+}
+
+form input:focus {
+	border-color: var(--violetfoncer);
+	box-shadow: 0 0 8px rgba(97, 77, 228, 0.5);
+	/* Halo violet au focus */
+	outline: none;
+}
+
+/* Boutons */
+form button {
+	width: 100%;
+	height: 50px;
+	border-radius: 8px;
+	border: none;
+	font-size: 16px;
+	font-weight: bold;
+	cursor: pointer;
+	transition: all 0.3s ease;
+}
+
+form button[type="submit"] {
+	background-color: var(--violetclair);
+	color: var(--blanc);
+	margin-top: 25px;
+}
+
+form button[type="submit"]:hover {
+	background-color: var(--violetfoncer);
+}
+
+form .signin {
+	background-color: var(--blanc);
+	color: var(--violetclair);
+	border: 2px solid var(--violetclair);
+	margin-top: 10px;
+}
+
+form .signin:hover {
+	background-color: var(--violetclair);
+	color: var(--blanc);
+}
+
+/* Lien Mot de passe oublié */
+form a {
+	display: block;
+	margin-top: 0px;
+	text-align: left;
+	font-size: 14px;
+	color: var(--violetclair);
+	text-decoration: none;
+	margin-bottom: 20px;
+}
+
+form a:hover {
+	text-decoration: underline;
+}
+
+/* Media queries pour rendre l'affichage responsive */
+@media (max-width: 768px) {
+	.signin-container {
+		flex-direction: column;
+	}
+
+	.right-side {
+		flex: none;
+		width: 100%;
+	}
+
+	form {
+		max-width: 100%;
+	}
+}
