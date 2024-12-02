@@ -28,4 +28,14 @@ class ProduitsModel extends Model
 	{
 		return $this->delete($id_prod);
 	}
+
+	public function getProduitsActifs(): array
+	{
+		return $this->where(['actif' => true])->select('*')->findAll();
+	}
+
+	public function getProduitById(int $id_prod)
+	{
+		return $this->where(['id_prod' => $id_prod, 'actif' => true])->first();
+	}
 }
