@@ -1,0 +1,63 @@
+writable/*
+
+# Ignore le fichier Routes.php dans /app/Config/
+app/Config/Routes.php
+
+# Fichiers de configuration de l'environnement
+.env
+.env.*
+
+# Dossiers de cache
+application/cache/
+application/logs/
+
+# Dossiers des fichiers temporaires
+system/cache/
+system/logs/
+
+# Fichiers de session
+application/sessions/
+
+# Fichiers de log
+*.log
+
+# Dossier des dépendances (si vous utilisez Composer pour les dépendances PHP)
+vendor/
+
+# Fichiers générés
+*.tar
+*.gz
+*.zip
+*.rar
+
+# Dossiers de sauvegarde
+*.bak
+*.swp
+
+# Fichiers IDE ou éditeurs de texte
+.vscode/
+.idea/
+
+# Fichiers de configuration spécifiques à un éditeur
+*.sublime-project
+*.sublime-workspace
+
+# Fichiers liés à MacOS (ignore les fichiers spécifiques à Mac)
+.DS_Store
+
+# Fichiers liés à Windows
+Thumbs.db
+Desktop.ini
+
+# Dossier de tests (si vous en avez un)
+phpunit.xml
+phpunit.xml.dist
+tests/
+
+# Dossier de production ou déploiement
+build/
+dist/
+
+# Autres fichiers qui pourraient être spécifiques à votre projet
+*.bak
+*.tmp
