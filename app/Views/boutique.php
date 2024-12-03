@@ -10,6 +10,17 @@
 <body>
 	<div class="contenu">
 		<h1>Boutique</h1>
+		<form method="GET" action="<?= base_url('boutique') ?>">
+			<label for="categories">Filtre :</label>
+			<select name="cat" id="categories" onchange="this.form.submit()">
+				<option value="" <?= (is_null($currentCategory) ? 'selected' : '') ?>>Toutes les catégories</option>
+				<?php foreach ($categories as $categorie): ?>
+					<option value="<?= $categorie['id_cat'] ?>" <?= ($currentCategory == $categorie['id_cat']) ? 'selected' : '' ?>>
+						<?= esc($categorie['nom']) ?>
+					</option>
+				<?php endforeach; ?>
+			</select>
+		</form>
 		<div class="row">
 			<?php if (!empty($produits)) : ?>
 				<?php foreach ($produits as $produit) : ?>
