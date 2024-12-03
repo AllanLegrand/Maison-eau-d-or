@@ -2,6 +2,7 @@
 namespace App\Controllers;
 
 use App\Models\ProduitsModel;
+use App\Config\Pager;
 
 class BoutiqueController extends BaseController
 {
@@ -9,7 +10,21 @@ class BoutiqueController extends BaseController
 	{
 		$produitsModel = new ProduitsModel();
 
-		$data['produits'] = $produitsModel->findAll();
+		$configPager = config(Pager::class);
+		$perPage = $configPager->perPage;
+
+		$currentPage = $this->request->getVar('page') ?? 1;
+
+		$offset = ($currentPage - 1) * $perPage;
+
+		$pager = service('pager');
+
+		$produits = $produitsModel->getProduitsPagines($perPage, $offset);
+		$totalProduits = $produitsModel->getTotalProduits();
+		$data = [
+			'produits' => $produits,
+			'pager' => $pager->makeLinks($currentPage, $perPage, $totalProduits, 'default_full')
+		];		
 
 		echo view('header', ['title' => 'Boutique']);
 		echo view('boutique', $data);
