@@ -48,34 +48,22 @@
 
         <!-- Contenu Bestsellers (par défaut affiché) -->
         <div id="bestsellersContent" class="row justify-content-center mt-4">
-            <div class="col-md-3 text-center">
-                <img src="/assets/img/coconut_powder.jpeg" class="img-fluid" alt="Produit 1">
-                <p>California Love<br><strong class="doree">35,00 €</strong></p>
-            </div>
-            <div class="col-md-3 text-center">
-                <img src="/assets/img/coconut_powder.jpeg" class="img-fluid" alt="Produit 2">
-                <p>Exotic Sweet<br><strong class="doree">35,00 €</strong></p>
-            </div>
-            <div class="col-md-3 text-center">
-                <img src="/assets/img/coconut_powder.jpeg" class="img-fluid" alt="Produit 3">
-                <p>Ahlam<br><strong class="doree">35,00 €</strong></p>
-            </div>
+            <?php foreach($produitsBestsellers as $produitBestsellers): ?>
+                <div class="col-md-3 text-center">
+                    <img src="/assets/img/<?= esc($produitBestsellers['img_path'])?>" class="img-fluid" alt="<?=esc($produitBestsellers['nom'])?>">
+                    <p><?=esc($produitBestsellers['nom'])?><br><strong class="doree"><?=esc($produitBestsellers['prix'])?> €</strong></p>
+                </div>
+            <?php endforeach; ?>
         </div>
 
         <!-- Contenu Coffrets (caché par défaut) -->
         <div id="coffretsContent" class="row justify-content-center mt-4 d-none">
-            <div class="col-md-3 text-center">
-                <img src="/assets/img/coconut_powder.jpeg" class="img-fluid" alt="Coffret 1">
-                <p>Coffret Noël<br><strong class="doree">45,00 €</strong></p>
-            </div>
-            <div class="col-md-3 text-center">
-                <img src="/assets/img/coconut_powder.jpeg" class="img-fluid" alt="Coffret 2">
-                <p>Coffret Fête<br><strong class="doree">50,00 €</strong></p>
-            </div>
-            <div class="col-md-3 text-center">
-                <img src="/assets/img/coconut_powder.jpeg" class="img-fluid" alt="Coffret 3">
-                <p>Coffret Luxe<br><strong class="doree">70,00 €</strong></p>
-            </div>
+            <?php foreach($produitsCoffret as $produitCoffret): ?>
+                <div class="col-md-3 text-center">
+                    <img src="/assets/img/<?= esc($produitCoffret['img_path'])?>" class="img-fluid" alt="<?=esc($produitCoffret['nom'])?>">
+                    <p><?=esc($produitCoffret['nom'])?><br><strong class="doree"><?=esc($produitCoffret['prix'])?> €</strong></p>
+                </div>
+            <?php endforeach; ?>
         </div>
 
         <div class="text-center mt-3">
@@ -85,20 +73,23 @@
 
     <!-- Section Produit vedette -->
     <section class="my-5">
-    <h2 class="text-center text-gradient">Notre produit vedette</h2>
-    <div class="d-flex flex-wrap justify-content-center align-items-center mt-4">
-        <img src="/assets/img/coconut_powder.jpeg" class="img-fluid" alt="Produit vedette">
-        <div class="col-md-6">
-            <h3>Exotic Sweet</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse potenti. Cras a augue non ante mattis dictum.</p>
-            <p>Prix : <strong class="doree">35,00€</strong></p>
-            <div class="c-flex">
-                <label for="quantity" class="me-2">Quantité</label>
-                <input type="number" id="quantity" name="quantity" min="1" max="10" value="1" class="form-control w-25 me-3">
-                <button class="btn btn-dark">Ajouter au panier</button>
-            </div>
+        <h2 class="text-center text-gradient">Notre produit vedette</h2>
+        <div class="d-flex flex-wrap justify-content-center align-items-center mt-4">
+            <?php if($produitVedette): ?>
+                <img src="/assets/img/<?=esc($produitVedette['img_path']) ?>" class="img-fluid" alt="<?=esc($produitVedette['nom'])?>">
+                <div class="col-md-6">
+                    <h3><?=esc($produitVedette['nom'])?></h3>
+                    <p><?=esc($produitVedette['description'])?></p>
+                    <p>Prix : <strong class="doree"><?=esc($produitVedette['prix'])?> €</strong></p>
+                    <div class="c-flex">
+                        <label for="quantity" class="me-2">Quantité</label>
+                        <input type="number" id="quantity" name="quantity" min="1" max="10" value="1" class="form-control w-25 me-3">
+                        <button class="btn btn-dark">Ajouter au panier</button>
+                    </div>
+                </div>
+            <?php endif; ?>
         </div>
-    </div>
+    </section>
 </section>
 </main>
 

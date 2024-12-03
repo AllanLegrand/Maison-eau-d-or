@@ -40,9 +40,10 @@ class ProduitsModel extends Model
 	}
 
 	public function getProduitByFilter(string $nom_cat) {
-		return $this->join('prodcat', 'prodcat.id_prod = produits.id_prod')
-					->join('categorie', 'categorie.id_cat = prodcat.id_cat')
-					->where('prodcat.nom', $nom_cat)
+		return $this->db->table('produits')->select('produits.*')
+					->join('prodcat', 'prodcat.id_prod = produits.id_prod')
+					->join('categories', 'categories.id_cat = prodcat.id_cat')
+					->where('categories.nom', $nom_cat)
 					->get()
 					->getResultArray();
 	}

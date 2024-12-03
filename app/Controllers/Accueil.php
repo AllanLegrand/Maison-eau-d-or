@@ -11,7 +11,7 @@ class Accueil extends BaseController
 		$produitsModel = new ProduitsModel();
 
 		$produitsCoffret = $produitsModel->getProduitByFilter('coffrets');
-		$produitsBestsellers = $produitsModel->getProduitByFilter('bestsellers');
+		$produitsBestsellers = $produitsModel->getProduitByFilter('Bestsellers');
 		$produitVedette = $produitsModel->getProduitByFilter('vedette')[0];
 		echo view('header', ['title' => 'Accueil']);
 		echo view('accueil', [
