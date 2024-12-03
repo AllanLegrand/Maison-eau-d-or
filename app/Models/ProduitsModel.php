@@ -29,6 +29,16 @@ class ProduitsModel extends Model
 		return $this->delete($id_prod);
 	}
 
+	public function getProduitsActifs(): array
+	{
+		return $this->where(['actif' => true])->select('*')->findAll();
+	}
+
+	public function getProduitById(int $id_prod)
+	{
+		return $this->where(['id_prod' => $id_prod, 'actif' => true])->first();
+	}
+
 	public function getProduitByFilter(int $id_prod, int $id_cat) {
 		return $this->join('prodcat', 'prodcat.id_prod = produits.id_prod')
 					->where('prodcat.id_cat', $id_cat)

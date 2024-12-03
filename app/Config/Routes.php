@@ -7,6 +7,7 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'Accueil::index');
 $routes->get('/', 'Home::index');
+$routes->get('/Accueil','Accueil::index');
 
 $routes->get('/signup', 'SignupController::index'); 
 $routes->match(['get', 'post'], '/signup/store', 'SignupController::store');
@@ -19,3 +20,5 @@ $routes->post('/forgot-password/sendResetLink', 'ForgotPasswordController::sendR
 
 $routes->get('/reset-password/(:any)', 'ResetPasswordController::index/$1');
 $routes->post('/reset-password/updatePassword', 'ResetPasswordController::updatePassword');
+$routes->get('/boutique', 'BoutiqueController::index');
+$routes->get('boutique/getProduit/(:num)', 'BoutiqueController::getProduit/$1');
