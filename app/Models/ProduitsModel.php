@@ -28,4 +28,11 @@ class ProduitsModel extends Model
 	{
 		return $this->delete($id_prod);
 	}
+
+	public function getProduitByFilter(int $id_prod, int $id_cat) {
+		return $this->join('prodcat', 'prodcat.id_prod = produits.id_prod')
+					->where('prodcat.id_cat', $id_cat)
+					->get()
+					->getResultArray();
+	}
 }

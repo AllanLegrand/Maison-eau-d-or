@@ -1,7 +1,7 @@
 <?php
 namespace App\Controllers;
 use CodeIgniter\Controller;
-use App\Models\UtilisateurModele;
+use App\Models\UtilisateursModel;
 class ForgotPasswordController extends Controller
 {
 	public function index()
@@ -18,9 +18,9 @@ class ForgotPasswordController extends Controller
 
 		if ($user) {
 			$token = bin2hex(random_bytes(16));
-			$expiration = date('Y-m-d H:i:s', strtotime('+1 hour'));
-			$userModel->set('resettoken', $token)
-				->set('resettokenexpiration', $expiration)
+			$expiration = date('Y-m-d H:i:s', strtotime('+2 hour'));
+			$userModel->set('rst_tkn', $token)
+				->set('rst_tkn_exp', $expiration)
 				->update($user['id_util']);
 			
 			$resetLink = site_url("reset-password/$token");

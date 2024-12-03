@@ -63,6 +63,7 @@ CREATE TABLE Categories (
 CREATE TABLE ProdCat (
 	id_prod INTEGER REFERENCES Produits(id_prod),
 	id_cat INTEGER REFERENCES Categories(id_cat),
+	
 	PRIMARY KEY(id_prod, id_cat)
 );
 
