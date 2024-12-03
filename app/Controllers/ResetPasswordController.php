@@ -22,14 +22,13 @@ class ResetPasswordController extends Controller
 		$token = $this->request->getPost('token');
 		$password = $this->request->getPost('password');
 		$confirmPassword = $this->request->getPost('confirm_password');
-		// Valider et traiter les données du formulaire
+
 		$userModel = new UtilisateursModel();
 		$user = $userModel->where('rst_tkn', $token)
 			->where('rst_tkn_exp >', date('Y-m-d H:i:s'))
 			->first();
 
 		if ($user && $password === $confirmPassword) {
-			// Mettre à jour le mot de passe et réinitialiser le jeton
 			$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 			$userModel->set('mdp', $hashedPassword)
 				->set('rst_tkn', null)

@@ -63,14 +63,15 @@ CREATE TABLE Categories (
 CREATE TABLE ProdCat (
 	id_prod INTEGER REFERENCES Produits(id_prod),
 	id_cat INTEGER REFERENCES Categories(id_cat),
-	
+
 	PRIMARY KEY(id_prod, id_cat)
 );
 
 /* Création d'un table article qui servira a servir les articles du blog*/
 CREATE TABLE Article (
 	id_art SERIAL PRIMARY KEY,
-	msg TEXT NOT NULL,
+	titre VARCHAR(255),
+	msg TEXT,
 	img_path TEXT,
 	date DATE
 );

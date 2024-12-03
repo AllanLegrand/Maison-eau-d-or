@@ -27,8 +27,8 @@ class ArticleModel extends Model
 		return $this->delete($id_art);
 	}
 
-	public function getArticle()
+	public function getPaginatedArticles(int $perPage)
 	{
-		return $this->
+		return $this->paginate($perPage);
 	}
 }

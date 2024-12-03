@@ -31,7 +31,7 @@ class ForgotPasswordController extends Controller
 
 			$to = $this->request->getPost('to');
 			$subject = $this->request->getPost('subject');
-			//envoi du mailech
+
 			$emailService->setTo($email);
 			$emailService->setFrom($from);
 			$emailService->setSubject('Réinitialisation de mot de passe');
