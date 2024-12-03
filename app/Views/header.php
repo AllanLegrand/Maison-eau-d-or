@@ -14,7 +14,7 @@
 <body>
     <header>
         <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white">
             <div class="container-fluid">
                 <!-- Logo -->
                 <div>
