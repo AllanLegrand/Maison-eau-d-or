@@ -31,7 +31,7 @@ class ResetPasswordController extends Controller
 		if ($user && $password === $confirmPassword) {
 			// Mettre à jour le mot de passe et réinitialiser le jeton
 			$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-			$userModel->select->set('mdp', $hashedPassword)
+			$userModel->set('mdp', $hashedPassword)
 				->set('rst_tkn', null)
 				->set('rst_tkn_exp', null)
 				->update($user['id_util']);
