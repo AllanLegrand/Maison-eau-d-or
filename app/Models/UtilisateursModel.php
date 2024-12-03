@@ -33,4 +33,10 @@ class UtilisateursModel extends Model
 	{
 		return $this->delete($id_util);
 	}
+
+	public function isSubscribed(int $id_util) : bool
+	{
+		return $this->select('news')
+					->where('id_util', $id_util)->get()->getResultArray()[0]['news'];
+	}
 }

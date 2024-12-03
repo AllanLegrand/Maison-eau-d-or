@@ -1,9 +1,11 @@
+@import url('couleur.css');
+
 .text-gradient {
     font-size: 12px;
     font-weight: bold;
     text-transform: uppercase;
     text-align: center;
-    background: linear-gradient(to right, #7A6C29, #C7B254);
+    background: linear-gradient(to right,  var(--orfoncer), var(--orclaire));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -46,14 +48,14 @@ h2.section-title {
 }
 
 h2.section-title.active {
-    border-bottom: 0px solid #C7B254;
-    background: linear-gradient(to right, #7A6C29, #C7B254);
+    border-bottom: 0px solid var(--orclaire);
+    background: linear-gradient(to right, var(--orfoncer), var(--orclaire));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 h2.text-center {
-    border-bottom: 2px solid #C7B254;
+    border-bottom: 2px solid var(--orclaire);
     padding-bottom: 10px;
 }
 
@@ -70,11 +72,11 @@ section p {
 }
 
 section button:hover {
-    background: #7A6C29;
+    background: var(--orfoncer);
 }
 
 h2.text-center {
-    border-bottom: 2px solid #C7B254;
+    border-bottom: 2px solid var(--orclaire);
     padding-bottom: 10px;
     font-size: 16px;
     font-weight: bold;
@@ -86,7 +88,7 @@ h3.text-center {
 
 .bordergold {
     margin-top: 0px;
-    border-bottom: 2px solid #C7B254;
+    border-bottom: 2px solid var(--orclaire);
 }
 
 .img-fluid{

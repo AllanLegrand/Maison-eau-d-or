@@ -4,25 +4,34 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Boutique</title>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="<?= base_url('assets/css/boutique.css') ?>">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-	<div class="container mt-5">
-		<h1 class="text-center">Boutique</h1>
-		<div class="row mt-4">
+	<div class="contenu">
+		<h1>Boutique</h1>
+		<form method="GET" action="<?= base_url('boutique') ?>">
+			<label for="categories">Filtre :</label>
+			<select name="cat" id="categories" onchange="this.form.submit()">
+				<option value="" <?= (is_null($currentCategory) ? 'selected' : '') ?>>Toutes les catégories</option>
+				<?php foreach ($categories as $categorie): ?>
+					<option value="<?= $categorie['id_cat'] ?>" <?= ($currentCategory == $categorie['id_cat']) ? 'selected' : '' ?>>
+						<?= esc($categorie['nom']) ?>
+					</option>
+				<?php endforeach; ?>
+			</select>
+		</form>
+		<div class="row">
 			<?php if (!empty($produits)) : ?>
 				<?php foreach ($produits as $produit) : ?>
-					<div class="col-md-4 mb-4">
-						<div class="card text-center produit" onclick="openModal(<?= $produit['id_prod'] ?>)">
+					<div class="col-12 col-sm-6 col-md-4 col-lg-3">
+						<div class="produit" onclick="openModal(<?= $produit['id_prod'] ?>)">
 							<img src="<?= base_url('assets/img/default.png') ?>" 
-								class="card-img-top img-fluid mx-auto" 
+								class="produit-img-top" 
 								alt="<?= esc($produit['nom']) ?>" 
 								style="max-height: 420px; object-fit: cover;">
-							<h5 class="card-title mt-3"><?= esc($produit['nom']) ?></h5>
-							<div class="card-body">
-								<p class="card-text doree"><strong><?= esc($produit['prix']) ?> €</strong></p>
-							</div>
+							<h5 class="produit-title"><?= esc($produit['nom']) ?></h5>
+							<p class="produit-prix"><?= esc($produit['prix']) ?> €</p>
 						</div>
 					</div>
 				<?php endforeach; ?>
@@ -35,7 +44,7 @@
 		</div>
 	</div>
 
-	<script src='assets/js/boutique.js'></script>
+	<script src="<?= base_url('assets/js/boutique.js') ?>"></script>
 
 	<!-- Modal Pop-up -->
 	<div id="productModal" class="modal">

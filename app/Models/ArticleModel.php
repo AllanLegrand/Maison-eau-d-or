@@ -26,4 +26,9 @@ class ArticleModel extends Model
 	{
 		return $this->delete($id_art);
 	}
+
+	public function getArticle()
+	{
+		return $this->
+	}
 }

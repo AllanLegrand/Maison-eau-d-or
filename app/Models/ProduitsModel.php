@@ -29,14 +29,31 @@ class ProduitsModel extends Model
 		return $this->delete($id_prod);
 	}
 
-	public function getTotalProduits(): int 
+	public function getTotalProduitsParCategorie(?int $idCat = null): int 
 	{
-		return $this->where(['actif' => true])->select('*')->countAllResults();
+		$query = $this->where(['actif' => true]);
+
+		if ($idCat !== null) {
+			$query->join('prodcat', 'produits.id_prod = prodcat.id_prod')
+				->where('prodcat.id_cat', $idCat);
+		}
+		else {
+			return $this->where(['actif' => true])->select('*')->countAllResults();
+		}
+
+		return $query->countAllResults();
 	}
 
-	public function getProduitsPagines(int $perPage, int $offset = 0): array
+	public function getProduitsParCategorie(?int $idCat = null, int $perPage = 0, int $offset = 0): array
 	{
-		return $this->where(['actif' => true])->select('*')->orderBy('id_prod', 'ASC')->findAll($perPage, $offset);
+		$query = $this->where(['actif' => true])->select('*');
+
+		if ($idCat !== null) {
+			$query->join('prodcat', 'produits.id_prod = prodcat.id_prod')
+				->where('prodcat.id_cat', $idCat);
+		}
+
+		return $query->findAll($perPage ?: null, $offset);
 	}
 
 	public function getProduitById(int $id_prod)
