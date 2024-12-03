@@ -52,10 +52,7 @@ class ProduitsModel extends Model
 			$query->join('prodcat', 'produits.id_prod = prodcat.id_prod')
 				->where('prodcat.id_cat', $idCat);
 		}
-		else {
-			return $this->where(['actif' => true])->select('*')->orderBy('id_prod', 'ASC')->findAll($perPage, $offset);
-		}
-		
+
 		return $query->findAll($perPage ?: null, $offset);
 	}
 

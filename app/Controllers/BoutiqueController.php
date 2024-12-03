@@ -19,7 +19,8 @@ class BoutiqueController extends BaseController
 		$pager = service('pager');
 
 		$categories = $categoriesModel->findAll();
-		$catId = $this->request->getGet('cat') !== '' ? (int)$this->request->getGet('cat') : null;
+		$catId = $this->request->getGet('cat');
+		$catId = ($catId === null || $catId === '') ? null : (int)$catId;
 
 		$produits = $produitsModel->getProduitsParCategorie($catId, $perPage, $offset);
 		$totalProduits = $produitsModel->getTotalProduitsParCategorie($catId);
