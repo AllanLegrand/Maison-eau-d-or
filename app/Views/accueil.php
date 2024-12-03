@@ -66,8 +66,8 @@
             <?php endforeach; ?>
         </div>
 
-        <div class="text-center mt-3">
-            <a href="/boutique" class="btn btn-outline-dark">Voir tous les produits</a>
+        <div class="text-center">
+            <a href="/boutique" class="btn btn-outline-dark"><strong>Voir tous les produits</strong></a>
         </div>
     </section>
 
@@ -84,13 +84,32 @@
                     <div class="c-flex">
                         <label for="quantity" class="me-2">Quantité</label>
                         <input type="number" id="quantity" name="quantity" min="1" max="10" value="1" class="form-control w-25 me-3">
-                        <button class="btn btn-dark">Ajouter au panier</button>
+                        <button class="btn btn-dark btn-img">Ajouter au panier <img src="/assets/img/ajouter-panier.svg" class="img-btn"></button>
                     </div>
                 </div>
+            <?php else: ?>
+                <p>Produit vedette non disponible pour le moment.</p>
             <?php endif; ?>
         </div>
     </section>
-</section>
 </main>
+
+<!-- Section newsletter -->
+<?php /*if($afficheNews):*/ ?>
+    <!-- Bandeau Newsletter -->
+    <section class="newsletter">
+        <div class="container d-flex align-items-center justify-content-between">
+            <div class="newsletter-title">
+                <h4 style="text-align: center;">Newsletter<br>Maison eau d'or</h4>
+            </div>
+            <div class="newsletter-text">
+                <p>Inscrivez-vous à notre newsletter pour recevoir nos dernières actualités</p>
+            </div>
+            <div class="newsletter-btn">
+                <a href="#" class="btn btn-dark">Inscrivez-vous !</a>
+            </div>
+        </div>
+    </section>
+<?php /* endif; */?>
 
 <script src="/assets/js/accueil.js"></script>

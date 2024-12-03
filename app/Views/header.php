@@ -17,9 +17,11 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
             <div class="container-fluid">
                 <!-- Logo -->
-                <a class="navbar-brand" href="<?= base_url('Accueil') ?>">
-                    <img src="/assets/img/maisoneaudor.webp" alt="Maison Eau d'Or" height="50">
-                </a>
+                <div>
+                    <a class="navbar-brand" href="<?= base_url('Accueil') ?>">
+                        <img src="/assets/img/maisoneaudor.webp" alt="Maison Eau d'Or" height="50">
+                    </a>
+                </div>
                 
                 <!-- Toggler for mobile view -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

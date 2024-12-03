@@ -64,6 +64,9 @@ section h3 {
 section p {
     font-size: 12px;
     color: #333;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
 }
 
 section button:hover {
@@ -93,4 +96,96 @@ h3.text-center {
 
 button{
     margin-top: 20px;
+}
+
+/* Style pour le bandeau newsletter */
+.newsletter {
+    background-color: #FAE8D5;
+    padding: 15px 0;
+    border-top: 1px solid #000000;
+}
+
+.newsletter .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.newsletter-title h4 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+    color: #000;
+}
+
+.newsletter-text p {
+    margin: 0;
+    font-size: 14px;
+    color: #333;
+    text-align: center;
+}
+
+.newsletter-btn .btn {
+    padding: 10px 25px;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #000;
+    border-radius: 0px;
+    color: #fff;
+    text-decoration: none;
+}
+
+.newsletter-btn .btn:hover {
+    background-color: #333; 
+}
+
+/* Styles pour les appareils mobiles */
+@media (max-width: 992px) {
+    .newsletter .container {
+        flex-direction: column;
+        text-align: center; 
+    }
+
+    .newsletter-title h4 {
+        font-size: 14px; 
+    }
+
+    .newsletter-text p {
+        font-size: 12px; 
+        margin: 10px 0; 
+    }
+
+    .newsletter-btn .btn {
+        width: 100%; 
+        font-size: 14px; 
+        padding: 10px; 
+        margin-top: 10px; 
+    }
+}
+
+.btn-outline-dark{
+    border-radius: 0px;
+    border: 2px solid #000;
+    color: black
+}
+
+.btn-outline-dark:hover{
+    background-color: #000;
+    color: white;
+}
+
+.btn-dark{
+    border-radius: 0px;
+    background-color: #000;
+    color: white;
+}
+
+.btn-img{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: 10px;
 }
