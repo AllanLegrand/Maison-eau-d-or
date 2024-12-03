@@ -9,17 +9,15 @@ body, html {
 	font-family: 'Poppins', sans-serif;
 }
 
-/* Conteneur principal */
 .signin-container {
 	display: flex;
 	height: 100vh;
 	width: 100vw;
 }
 
-/* Partie gauche : Fond violet avec logo centré */
 .left-side {
 	flex: 1;
-	background-color: var(--violetclair); /* Couleur violette */
+	background-color: var(--noirclaire); 
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -46,7 +44,7 @@ form {
 	background: #f8f8f8; /* Ajout d'un fond gris clair pour contraste */
 	border-radius: 15px;
 	border: 1px solid #ddd; /* Bordure légère pour renforcer la distinction */
-	box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15); /* Ombre plus visible */
+	box-shadow: 0 12px 24px var(--orfoncer); /* Ombre plus visible */
 }
 
 form h3 {
@@ -54,7 +52,7 @@ form h3 {
 	font-size: 28px;
 	font-weight: bold;
 	margin-bottom: 30px;
-	color: var(--violetclair);
+	color: var(--noirclaire);
 }
 
 form label {
@@ -62,14 +60,14 @@ form label {
 	font-weight: 600;
 	margin-bottom: 8px;
 	margin-top: 20px;
-	color: var(--violetfoncer);
+	color: var(--noir);
 	display: block;
 }
 
 form input {
 	width: 100%;
 	height: 50px;
-	border: 2px solid var(--violetclair);
+	border: 2px solid var(--noirclaire);
 	border-radius: 8px;
 	padding: 0 15px;
 	font-size: 14px;
@@ -81,8 +79,8 @@ form input {
 }
 
 form input:focus {
-	border-color: var(--violetfoncer);
-	box-shadow: 0 0 8px rgba(97, 77, 228, 0.5); /* Halo violet au focus */
+	border-color: var(--noir);
+	box-shadow: 0 0 8px var(--orfoncer); /* Halo violet au focus */
 	outline: none;
 }
 
@@ -99,23 +97,23 @@ form button {
 }
 
 form button[type="submit"] {
-	background-color: var(--violetclair);
+	background-color: var(--noirclaire);
 	color: var(--blanc);
 }
 
 form button[type="submit"]:hover {
-	background-color: var(--violetfoncer);
+	background-color: var(--noir);
 }
 
 form .signup {
 	background-color: var(--blanc);
-	color: var(--violetclair);
-	border: 2px solid var(--violetclair);
+	color: var(--noirclaire);
+	border: 2px solid var(--noirclaire);
 	margin-top: 10px;
 }
 
 form .signup:hover {
-	background-color: var(--violetclair);
+	background-color: var(--noirclaire);
 	color: var(--blanc);
 }
 
@@ -125,7 +123,7 @@ form a {
 	margin-top: 0px;
 	text-align: left;
 	font-size: 14px;
-	color: var(--violetclair);
+	color: var(--noirclaire);
 	text-decoration: none;
 	margin-bottom: 20px;
 }

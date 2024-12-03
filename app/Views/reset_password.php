@@ -5,11 +5,12 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Réinitialisation du mot de passe</title>
+	<link rel="stylesheet" href="/assets/css/reset_password.css">
 </head>
 
 <body>
 	<form action="/reset-password/updatePassword" method="post">
-		<label>Réinitialisation du mot de passe</label>
+		<h1>Réinitialisation du mot de passe</h1>
 		<input type="hidden" name="token" value="<?= $token ?>">
 		<label for="password">Nouveau mot de passe :</label>
 		<input type="password" name="password" id="password" required>

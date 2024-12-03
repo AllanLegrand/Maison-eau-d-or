@@ -31,7 +31,7 @@ html {
 /* Partie droite : Fond violet avec logo centré */
 .right-side {
 	flex: 1;
-	background-color: var(--violetclair);
+	background-color: var(--noirclaire);
 	/* Couleur violette */
 	display: flex;
 	justify-content: center;
@@ -62,21 +62,21 @@ form h3 {
 	font-size: 28px;
 	font-weight: bold;
 	margin-bottom: 30px;
-	color: var(--violetclair);
+	color: var(--noirclaire);
 }
 
 form label {
 	font-size: 14px;
 	font-weight: 600;
 	margin-bottom: 8px;
-	color: var(--violetfoncer);
+	color: var(--noir);
 	display: block;
 }
 
 form input {
 	width: 100%;
 	height: 50px;
-	border: 2px solid var(--violetclair);
+	border: 2px solid var(--noirclaire);
 	border-radius: 8px;
 	padding: 0 15px;
 	font-size: 14px;
@@ -103,7 +103,7 @@ form input {
 }
 
 form input:focus {
-	border-color: var(--violetfoncer);
+	border-color: var(--noir);
 	box-shadow: 0 0 8px rgba(97, 77, 228, 0.5);
 	/* Halo violet au focus */
 	outline: none;
@@ -122,24 +122,24 @@ form button {
 }
 
 form button[type="submit"] {
-	background-color: var(--violetclair);
+	background-color: var(--noirclaire);
 	color: var(--blanc);
 	margin-top: 25px;
 }
 
 form button[type="submit"]:hover {
-	background-color: var(--violetfoncer);
+	background-color: var(--noir);
 }
 
 form .signin {
 	background-color: var(--blanc);
-	color: var(--violetclair);
-	border: 2px solid var(--violetclair);
+	color: var(--noirclaire);
+	border: 2px solid var(--noirclaire);
 	margin-top: 10px;
 }
 
 form .signin:hover {
-	background-color: var(--violetclair);
+	background-color: var(--noirclaire);
 	color: var(--blanc);
 }
 
@@ -149,7 +149,7 @@ form a {
 	margin-top: 0px;
 	text-align: left;
 	font-size: 14px;
-	color: var(--violetclair);
+	color: var(--noirclaire);
 	text-decoration: none;
 	margin-bottom: 20px;
 }
