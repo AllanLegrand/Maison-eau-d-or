@@ -32,3 +32,49 @@
     font-size: 30px;
     cursor: pointer;
 }
+
+/*-------------------------------------------*/
+/*         Styles pour la pagination         */
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination a {
+    text-decoration: none;
+    color: black;
+    padding: 10px 15px;
+    margin: 0 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination .active a {
+    color: transparent;
+    background: linear-gradient(to right, #7A6C29, #C7B254);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    border-color: black;
+}
+
+.pagination a:hover {
+    background-color: #f1f1f1;
+    color: black;
+}
+
+.pagination .disabled a {
+    color: #ccc;
+    cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+    .pagination {
+        font-size: 14px;
+    }
+    .pagination a {
+        padding: 8px 12px;
+    }
+}
