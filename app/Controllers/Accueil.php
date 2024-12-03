@@ -2,12 +2,23 @@
 
 namespace App\Controllers;
 
+use App\Models\ProduitsModel;
+
 class Accueil extends BaseController
 {
-    public function index()
-    {
-        echo view('header', ['title' => 'Accueil']);
-        echo view('accueil');
-        echo view('footer');
-    }
+	public function index()
+	{
+		$produitsModel = new ProduitsModel();
+
+		$produitsCoffret = $produitsModel->getProduitByFilter('coffrets');
+		$produitsBestsellers = $produitsModel->getProduitByFilter('bestsellers');
+		$produitVedette = $produitsModel->getProduitByFilter('vedette')[0];
+		echo view('header', ['title' => 'Accueil']);
+		echo view('accueil', [
+			'produitsCoffret' => $produitsCoffret,
+			'produitsBestsellers' => $produitsBestsellers,
+			'produitVedette' => $produitVedette
+		]);
+		echo view('footer');
+	}
 }

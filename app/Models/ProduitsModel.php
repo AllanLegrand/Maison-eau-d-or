@@ -39,9 +39,10 @@ class ProduitsModel extends Model
 		return $this->where(['id_prod' => $id_prod, 'actif' => true])->first();
 	}
 
-	public function getProduitByFilter(int $id_prod, int $id_cat) {
+	public function getProduitByFilter(string $nom_cat) {
 		return $this->join('prodcat', 'prodcat.id_prod = produits.id_prod')
-					->where('prodcat.id_cat', $id_cat)
+					->join('categorie', 'categorie.id_cat = prodcat.id_cat')
+					->where('prodcat.nom', $nom_cat)
 					->get()
 					->getResultArray();
 	}
