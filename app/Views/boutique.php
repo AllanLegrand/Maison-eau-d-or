@@ -30,6 +30,9 @@
 				<p class="text-center">Aucun produit disponible pour le moment.</p>
 			<?php endif; ?>
 		</div>
+		<div class="pagination">
+			<?= $pager ?>
+		</div>
 	</div>
 
 	<script src='assets/js/boutique.js'></script>

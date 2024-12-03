@@ -29,9 +29,14 @@ class ProduitsModel extends Model
 		return $this->delete($id_prod);
 	}
 
-	public function getProduitsActifs(): array
+	public function getTotalProduits(): int 
 	{
-		return $this->where(['actif' => true])->select('*')->findAll();
+		return $this->where(['actif' => true])->select('*')->countAllResults();
+	}
+
+	public function getProduitsPagines(int $perPage, int $offset = 0): array
+	{
+		return $this->where(['actif' => true])->select('*')->orderBy('id_prod', 'ASC')->findAll($perPage, $offset);
 	}
 
 	public function getProduitById(int $id_prod)
