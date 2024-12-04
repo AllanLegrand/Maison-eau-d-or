@@ -49,7 +49,7 @@ CREATE TABLE Historique (
 /*Liste de produit présent dans le panier des utilisateurs*/
 CREATE TABLE Panier (
 	id_prod INTEGER REFERENCES Produits(id_prod),
-	id_sess INTEGER REFERENCES ,
+	id_sess VARCHAR(255),
 	qt INTEGER DEFAULT 0,
 	PRIMARY KEY(id_prod, id_sess)
 );
