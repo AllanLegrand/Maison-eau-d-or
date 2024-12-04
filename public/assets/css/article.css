@@ -1,5 +1,5 @@
 body {
-	font-family: Arial, sans-serif;
+	font-family: 'Merriweather', sans-serif;;
 	margin: 0;
 	padding: 0;
 	background-color: #f9f9f9;
@@ -10,6 +10,7 @@ h1 {
 	text-align: center;
 	margin: 20px 0;
 	color: #444;
+	font-family: 'Montserrat', sans-serif;
 }
 
 .articles-container {
@@ -40,6 +41,7 @@ h1 {
 	font-size: 18px;
 	margin: 10px 0;
 	color: #222;
+	height: 50px;
 }
 
 .article p {
@@ -52,25 +54,50 @@ h1 {
 	max-width: 100%;
 	border-radius: 4px;
 	margin-bottom: 15px;
+	object-fit: cover;
+	height: 200px;
+	width: 100%;
 }
 
 .pagination {
-	text-align: center;
-	margin: 20px 0;
-	
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
 }
 
 .pagination a {
-	margin: 0 5px;
-	padding: 8px 12px;
-	text-decoration: none;
-	color: #007bff;
-	border: 1px solid #ddd;
-	border-radius: 4px;
-	transition: background-color 0.2s, color 0.2s;
+    text-decoration: none;
+    color: black;
+    padding: 10px 15px;
+    margin: 0 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination .active a {
+    color: transparent;
+    background: linear-gradient(to right, #7A6C29, #C7B254);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    border-color: black;
 }
 
 .pagination a:hover {
-	background-color: #007bff;
-	color: #fff;
+    background-color: #f1f1f1;
+    color: black;
+}
+
+.pagination .disabled a {
+    color: #ccc;
+    cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+    .pagination {
+        font-size: 14px;
+    }
+    .pagination a {
+        padding: 8px 12px;
+    }
 }

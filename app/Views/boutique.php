@@ -26,7 +26,12 @@
 				<?php foreach ($produits as $produit) : ?>
 					<div class="col-12 col-sm-6 col-md-4 col-lg-3">
 						<div class="produit" onclick="openModal(<?= $produit['id_prod'] ?>)">
-							<img src="<?= base_url('assets/img/default.png') ?>" 
+							<?php 
+								$imagePath = base_url('assets/img/' . $produit['img_path']);
+								$defaultImage = base_url('assets/img/default.png');
+							?>
+							<img 
+								src="<?= file_exists('./assets/img/' . $produit['img_path']) ? $imagePath : $defaultImage ?>" 
 								class="produit-img-top" 
 								alt="<?= esc($produit['nom']) ?>" 
 								style="max-height: 420px; object-fit: cover;">
@@ -54,6 +59,7 @@
 			<h2 id="modalProductName"></h2>
 			<p id="modalProductDescription"></p>
 			<p id="modalProductPrice"></p>
+			<button id="addToCartButton" class="btn btn-primary" onclick="addToCart()">Ajouter au panier</button>
 			<button onclick="closeModal()" class="btn btn-danger">Fermer</button>
 		</div>
 	</div>

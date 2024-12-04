@@ -14,6 +14,12 @@
 		<?php else: ?>
 			<p>Aucun article disponible pour le moment.</p>
 		<?php endif; ?>
+
+		<?php if($admin): ?>
+			<div class="article">
+				
+			</div>
+		<?php endif; ?>
 	</div>
 
 	<div class="pagination">

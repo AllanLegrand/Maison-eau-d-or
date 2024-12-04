@@ -4,10 +4,10 @@ use CodeIgniter\Model;
 class PanierModel extends Model
 {
 	protected $table = 'panier';
-	protected $primaryKey = ['id_prod', 'id_util'];
+	protected $primaryKey = ['id_prod', 'id_sess'];
 	protected $allowedFields = [
 		'id_prod',
-		'id_util',
+		'id_sess',
 		'qt'
 	];
 
@@ -16,13 +16,13 @@ class PanierModel extends Model
 		return $this->insert($data);
 	}
 
-	public function modifPanier(int $id_prod, int $id_util, array $data): bool
+	public function modifPanier(int $id_prod, string $id_sess, array $data): bool
 	{
-		return $this->update($id_prod, $id_util, $data);
+		return $this->update([$id_prod, $id_sess], $data);
 	}
 
-	public function supprPanier(int $id_prod, int $id_util): bool
+	public function supprPanier(int $id_prod, string $id_sess): bool
 	{
-		return $this->delete($id_prod, $id_util);
+		return $this->delete([$id_prod, $id_sess]);
 	}
 }

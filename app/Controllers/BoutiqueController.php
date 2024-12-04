@@ -3,6 +3,7 @@ namespace App\Controllers;
 
 use App\Models\ProduitsModel;
 use App\Models\CategoriesModel;
+use App\Models\PanierModel;
 use App\Config\Pager;
 
 class BoutiqueController extends BaseController
@@ -25,10 +26,17 @@ class BoutiqueController extends BaseController
 		$produits = $produitsModel->getProduitsParCategorie($catId, $perPage, $offset);
 		$totalProduits = $produitsModel->getTotalProduitsParCategorie($catId);
 
+		foreach ($produits as &$produit) {
+			$imagePath = './assets/img/' . $produit['img_path'];
+			if (!file_exists($imagePath) || empty($produit['img_path'])) {
+				$produit['img_path'] = 'default.png';
+			}
+		}
+
 		$data = [
 			'categories' => $categories,
 			'produits' => $produits,
-			'currentCategory' => $catId, // Ajout de la catégorie actuelle
+			'currentCategory' => $catId,
 			'pager' => $pager->makeLinks($currentPage, $perPage, $totalProduits, 'default_full')
 		];
 
@@ -47,5 +55,34 @@ class BoutiqueController extends BaseController
 		} else {
 			return $this->response->setJSON(['error' => 'Produit non trouvé']);
 		}
+	}
+
+	public function addToCart()
+	{
+		$data = $this->request->getJSON(true);
+		$id_prod = $data['id_prod'] ?? null;
+		$qt = $data['qt'] ?? 1;
+		$id_sess = session_id();
+
+		if (!$id_prod) {
+			return $this->response->setJSON(['error' => 'ID produit manquant']);
+		}
+
+		$panierModel = new PanierModel();
+
+		$existing = $panierModel->where(['id_prod' => $id_prod, 'id_sess' => $id_sess])->first();
+
+		if ($existing) {
+			$newQt = $existing['qt'] + $qt;
+			$panierModel->update(['id_prod' => $id_prod, 'id_sess' => $id_sess], ['qt' => $newQt]);
+		} else {
+			$panierModel->insert([
+				'id_prod' => $id_prod,
+				'id_sess' => $id_sess,
+				'qt' => $qt
+			]);
+		}
+
+		return $this->response->setJSON(['success' => true]);
 	}
 }
