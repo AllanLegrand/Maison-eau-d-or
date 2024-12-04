@@ -16,6 +16,9 @@
 		<?php endif; ?>
 
 		<?php if($admin): ?>
+			<div class="article">
+				
+			</div>
 		<?php endif; ?>
 	</div>
 

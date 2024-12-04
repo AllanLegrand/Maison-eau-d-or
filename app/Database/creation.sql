@@ -51,7 +51,7 @@ CREATE TABLE Panier (
 	id_prod INTEGER REFERENCES Produits(id_prod),
 	id_sess INTEGER REFERENCES ,
 	qt INTEGER DEFAULT 0,
-	PRIMARY KEY(id_prod, id_util)
+	PRIMARY KEY(id_prod, id_sess)
 );
 
 CREATE TABLE Categories (
