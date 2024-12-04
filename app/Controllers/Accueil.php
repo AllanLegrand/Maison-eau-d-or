@@ -10,9 +10,9 @@ class Accueil extends BaseController
 	{
 		$produitsModel = new ProduitsModel();
 
-		$produitsCoffret = $produitsModel->getProduitByFilter('coffrets');
-		$produitsBestsellers = $produitsModel->getProduitByFilter('Bestsellers');
-		$produitVedette = $produitsModel->getProduitByFilter('vedette')[0];
+		$produitsCoffret = $produitsModel->getProduitByFilter('Coffrets');
+		$produitsBestsellers = $produitsModel->getProduitByFilter('Best-sellers');
+		$produitVedette = $produitsModel->getProduitByFilter('Vedette')[0];
 
 		$session = session();
 

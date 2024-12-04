@@ -13,7 +13,7 @@ CREATE TABLE Produits (
 	nom VARCHAR(30) NOT NULL,
 	prix FLOAT,
 	description TEXT,
-	img_path TEXT,
+	img_path VARCHAR(255) DEFAULT 'maisoneaudeur.webp',
 	actif BOOLEAN
 );
 
@@ -49,7 +49,7 @@ CREATE TABLE Historique (
 /*Liste de produit présent dans le panier des utilisateurs*/
 CREATE TABLE Panier (
 	id_prod INTEGER REFERENCES Produits(id_prod),
-	id_util INTEGER REFERENCES Utilisateurs(id_util),
+	id_sess INTEGER REFERENCES ,
 	qt INTEGER DEFAULT 0,
 	PRIMARY KEY(id_prod, id_util)
 );
@@ -73,10 +73,12 @@ CREATE TABLE Article (
 	titre VARCHAR(255),
 	msg TEXT,
 	img_path TEXT,
-	date DATE
+	date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE FAQ (
 	id_faq SERIAL PRIMARY KEY,
 	txt TEXT NOT NULL
 );
+
+

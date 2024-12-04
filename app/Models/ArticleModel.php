@@ -7,6 +7,7 @@ class ArticleModel extends Model
 	protected $primaryKey = 'id_art';
 	protected $allowedFields = [
 		'id_art',
+		'titre',
 		'msg',
 		'img_path',
 		'date'
@@ -29,6 +30,6 @@ class ArticleModel extends Model
 
 	public function getPaginatedArticles(int $perPage)
 	{
-		return $this->paginate($perPage);
+		return $this->select('id_art, msg, titre, img_path, to_char(date, \'DD TMMonth YYYY, HH24:MI\') AS date')->paginate($perPage);
 	}
 }

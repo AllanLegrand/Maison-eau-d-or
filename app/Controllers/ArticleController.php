@@ -6,7 +6,7 @@ use App\Models\ArticleModel;
 
 class ArticleController extends BaseController
 {
-	public function index($perPage = 5)
+	public function index($perPage = 10)
 	{
 		$articleModel = new ArticleModel();
 

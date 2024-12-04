@@ -14,6 +14,9 @@
 		<?php else: ?>
 			<p>Aucun article disponible pour le moment.</p>
 		<?php endif; ?>
+
+		<?php if($admin): ?>
+		<?php endif; ?>
 	</div>
 
 	<div class="pagination">
