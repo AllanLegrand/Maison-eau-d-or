@@ -25,10 +25,17 @@ class BoutiqueController extends BaseController
 		$produits = $produitsModel->getProduitsParCategorie($catId, $perPage, $offset);
 		$totalProduits = $produitsModel->getTotalProduitsParCategorie($catId);
 
+		foreach ($produits as &$produit) {
+			$imagePath = './assets/img/' . $produit['img_path'];
+			if (!file_exists($imagePath) || empty($produit['img_path'])) {
+				$produit['img_path'] = 'default.png';
+			}
+		}
+
 		$data = [
 			'categories' => $categories,
 			'produits' => $produits,
-			'currentCategory' => $catId, // Ajout de la catégorie actuelle
+			'currentCategory' => $catId,
 			'pager' => $pager->makeLinks($currentPage, $perPage, $totalProduits, 'default_full')
 		];
 
