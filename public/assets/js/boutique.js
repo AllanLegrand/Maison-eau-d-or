@@ -1,4 +1,5 @@
 function openModal(productId) {
+	selectedProductId = productId;
 	fetch(`/boutique/getProduit/${productId}`)
 		.then(response => response.json())
 		.then(data => {
@@ -17,7 +18,7 @@ function openModal(productId) {
 				let imageUrl = "/assets/img/default.png";
 				document.getElementById('modalProductImage').src = imageUrl;
 
-				document.getElementById('productModal').style.display = "block";
+				document.getElementById('productModal').style.display = "flex";
 			} else {
 				console.error('Données du produit non valides');
 			}
@@ -35,4 +36,35 @@ window.onclick = function(event) {
 	if (event.target == document.getElementById('productModal')) {
 		closeModal();
 	}
+}
+
+function addToCart() {
+	if (!selectedProductId) {
+		alert("Produit invalide.");
+		return;
+	}
+
+	fetch(`/boutique/addToCart`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			id_prod: selectedProductId,
+			qt: 1 // Toujours ajouter une quantité de 1
+		})
+	})
+	.then(response => response.json())
+	.then(data => {
+		if (data.success) {
+			alert("Produit ajouté au panier !");
+			closeModal();
+		} else {
+			alert("Erreur : " + data.error);
+		}
+	})
+	.catch(error => {
+		console.error('Erreur:', error);
+		alert("Une erreur est survenue.");
+	});
 }

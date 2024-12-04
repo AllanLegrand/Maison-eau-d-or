@@ -59,6 +59,7 @@
 			<h2 id="modalProductName"></h2>
 			<p id="modalProductDescription"></p>
 			<p id="modalProductPrice"></p>
+			<button id="addToCartButton" class="btn btn-primary" onclick="addToCart()">Ajouter au panier</button>
 			<button onclick="closeModal()" class="btn btn-danger">Fermer</button>
 		</div>
 	</div>

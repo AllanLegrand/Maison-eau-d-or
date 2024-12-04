@@ -22,5 +22,6 @@ $routes->get('/reset-password/(:any)', 'ResetPasswordController::index/$1');
 $routes->post('/reset-password/updatePassword', 'ResetPasswordController::updatePassword');
 $routes->get('/boutique', 'BoutiqueController::index');
 $routes->get('boutique/getProduit/(:num)', 'BoutiqueController::getProduit/$1');
+$routes->post('boutique/addToCart', 'BoutiqueController::addToCart');
 
 $routes->get('blog', 'ArticleController::index');
