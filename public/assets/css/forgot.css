@@ -63,7 +63,7 @@ input {
 	height: 50px;
 	width: 100%;
 	background-color: var(--blanc);
-	border: 2px solid var(--violetclair);
+	border: 2px solid var(--noirclaire);
 	border-radius: 6px;
 	margin-top: 8px;
 	font-size: 14px;

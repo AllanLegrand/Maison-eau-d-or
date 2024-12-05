@@ -24,3 +24,4 @@ $routes->get('/boutique', 'BoutiqueController::index');
 $routes->get('boutique/getProduit/(:num)', 'BoutiqueController::getProduit/$1');
 
 $routes->get('blog', 'ArticleController::index');
+$routes->post('addArticle', 'ArticleController::addArticle');

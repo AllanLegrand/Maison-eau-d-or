@@ -39,4 +39,10 @@ class UtilisateursModel extends Model
 		return $this->select('news')
 					->where('id_util', $id_util)->get()->getResultArray()[0]['news'];
 	}
+
+	public function isAdmin(int $id_util) : bool
+	{
+		return $this->select('admin')
+					->where('id_util', $id_util)->get()->getResultArray()[0]['admin'];
+	}
 }
