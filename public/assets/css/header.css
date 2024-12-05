@@ -119,14 +119,16 @@ body{
 .cart-sidebar {
     position: fixed;
     top: 0;
-    right: -400px;
-    width: 400px;
+    right: -500px;
+    width: 500px;
     height: 100%;
     background-color: #f8f9fa;
     box-shadow: -4px 0 10px rgba(0, 0, 0, 0.1);
     transition: right 0.3s ease;
     padding: 20px;
     z-index: 1050;
+    display: flex;
+    flex-direction: column;
 }
 
 .cart-header {
@@ -146,9 +148,63 @@ body{
     margin-top: 20px;
     max-height: 60vh;
     overflow-y: auto;
+    flex-grow: 1;
 }
 
 #cartTotal {
-    margin-top: 20px;
     font-weight: bold;
+    margin-top: 20px;
+    position: sticky;
+    bottom: 0;
+    background-color: #f8f9fa;
+    padding: 10px 0;
+    border-top: 1px solid #ccc;
+}
+
+.cart-item {
+    padding: 10px 0;
+}
+
+.cart-item .btn {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.cart-item .btn:hover {
+    background-color: #f1f1f1;
+}
+
+.cart-item input[type="number"] {
+    width: 60px;
+    text-align: center;
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+.cart-item input[type="number"]::-webkit-outer-spin-button,
+.cart-item input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.finalize-button {
+    width: 100%;
+    padding: 15px;
+    color: #000;
+    background-color: #f8f9fa;
+    border: 1px solid #000;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+}
+
+.finalize-button:hover {
+    background: linear-gradient(to right, #7A6C29, #C7B254);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }

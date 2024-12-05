@@ -97,7 +97,9 @@ class BoutiqueController extends BaseController
 		$id_sess = $session->session_id;
 
 		$panierModel = new PanierModel();
-		$panierItems = $panierModel->where('id_sess', $id_sess)->findAll();
+		$panierItems = $panierModel->where('id_sess', $id_sess)
+							       ->orderBy('id_prod', 'ASC')
+							       ->findAll();
 
 		$produitsModel = new ProduitsModel();
 		$cartProducts = [];
@@ -116,5 +118,38 @@ class BoutiqueController extends BaseController
 		}
 
 		return $this->response->setJSON($cartProducts);
+	}
+
+	public function updateQuantity()
+	{
+		$input = $this->request->getJSON();
+		$session = session();
+		$id_sess = $session->session_id;
+		$id_prod = $input->id_prod;
+		$quantite = $input->quantite;
+
+		$panierModel = new PanierModel();
+		$result = $panierModel->where('id_prod', $id_prod)
+							  ->where('id_sess', $id_sess)
+							  ->set(['qt' => $quantite])
+							  ->update();
+
+		return $this->response->setJSON(['success' => $result]);
+	}
+
+
+	public function removeItem()
+	{
+		$input = $this->request->getJSON();
+		$session = session();
+		$id_sess = $session->session_id;
+		$id_prod = $input->id_prod;
+
+		$panierModel = new PanierModel();
+		$result = $panierModel->where('id_prod', $id_prod)
+                              ->where('id_sess', $id_sess)
+                              ->delete();
+
+		return $this->response->setJSON(['success' => $result]);
 	}
 }

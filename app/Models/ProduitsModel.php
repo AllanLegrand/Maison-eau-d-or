@@ -76,5 +76,4 @@ class ProduitsModel extends Model
 					->get()
 					->getResultArray();
 	}
-
 }

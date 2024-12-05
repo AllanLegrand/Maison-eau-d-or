@@ -29,5 +29,8 @@ $routes->post('addArticle', 'ArticleController::addArticle');
 $routes->get('/blog', 'ArticleController::index');
 
 $routes->get('/panier/getCartItems', 'BoutiqueController::getCartItems');
+$routes->post('panier/updateQuantity', 'BoutiqueController::updateQuantity');
+$routes->post('panier/removeItem', 'BoutiqueController::removeItem');
+
 $routes->get('/rechercheProduit', 'BoutiqueController::rechercherProduitByNom');
 $routes->get('/rechercheProduit', 'BoutiqueController::rechercherProduitByNom');
