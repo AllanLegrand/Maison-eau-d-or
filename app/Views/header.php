@@ -58,7 +58,7 @@
                         <img src="/assets/img/user.png" alt="Compte" height="30">
                     </a>
                     <!-- Cart Icon -->
-                    <a href="/panier" class="btn btn-link">
+                    <a href="javascript:void(0)" class="btn btn-link" onclick="openCart()">
                         <img src="/assets/img/panier.png" alt="Panier" height="30">
                     </a>
                 </div>
@@ -69,3 +69,11 @@
     <!-- Custom JavaScript -->
     <script src="/assets/js/header.js"></script>
     </header>
+    <div id="cartSidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h5>Votre Panier</h5>
+            <button class="close-btn" onclick="closeCart()">×</button>
+        </div>
+        <div id="cartItems"></div>
+        <div id="cartTotal"></div>
+    </div>

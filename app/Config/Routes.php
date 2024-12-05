@@ -27,4 +27,5 @@ $routes->post('boutique/addToCart', 'BoutiqueController::addToCart');
 
 $routes->get('/blog', 'ArticleController::index');
 
+$routes->get('/panier/getCartItems', 'BoutiqueController::getCartItems');
 $routes->get('/rechercheProduit', 'BoutiqueController::rechercherProduitByNom');
