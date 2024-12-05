@@ -16,7 +16,7 @@ form {
 }
 
 form * {
-	color: var(--violetclair);
+	color: var(--noirclaire);
 	letter-spacing: 0.5px;
 	outline: none;
 	border: none;
@@ -74,13 +74,13 @@ input {
 }
 
 ::placeholder {
-	color: var(--violetfoncer);
+	color: var(--noir);
 }
 
 button {
 	margin-top: 50px;
 	width: 100%;
-	background-color: var(--violetclair);
+	background-color: var(--noirclaire);
 	color: var(--blanc);
 	;
 	padding: 15px 0;
@@ -92,13 +92,13 @@ button {
 
 .signup {
 	background-color: var(--blanc);
-	color: var(--violetclair);
-	border: 2px solid var(--violetclair);
+	color: var(--noirclaire);
+	border: 2px solid var(--noirclaire);
 	margin-top: 10px;
 }
 
 button:hover {
-	background-color: var(--violetfoncer);
+	background-color: var(--noir);
 }
 
 .signup:hover {
