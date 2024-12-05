@@ -146,7 +146,7 @@ body{
 
 #cartItems {
     margin-top: 20px;
-    max-height: 60vh;
+    max-height: 73vh;
     overflow-y: auto;
     flex-grow: 1;
 }
@@ -207,4 +207,19 @@ body{
     background: linear-gradient(to right, #7A6C29, #C7B254);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+}
+
+.close-cross {
+    position: absolute;
+    top: 14px;
+    right: 22px;
+    font-size: 24px;
+    color: #333;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-cross:hover {
+    color: #c89f65;
 }

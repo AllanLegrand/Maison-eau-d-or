@@ -72,7 +72,7 @@
     <div id="cartSidebar" class="cart-sidebar">
         <div class="cart-header">
             <h5>Votre Panier</h5>
-            <button class="close-btn" onclick="closeCart()">×</button>
+            <span class="close-cross" onclick="closeCart()">×</span>
         </div>
         <div id="cartItems"></div>
         <div id="cartTotal"></div>
