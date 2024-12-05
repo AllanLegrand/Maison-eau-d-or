@@ -50,7 +50,7 @@
                 <div class="d-flex align-items-center">
                     <!-- Search Icon -->
                     <div class="ms-auto d-flex align-items-center position-relative">
-                        <input type="text" class="form-control search-bar me-2" placeholder="Rechercher un produit ..." oninput="searchProjects(this.value)">
+                        <input type="text" class="form-control search-bar me-2" placeholder="Rechercher un produit ..." oninput="searchProduits(this.value)">
                         <div id="searchResults" class="search-results"></div>
                     </div>
                     <!-- User Account Icon -->
@@ -66,4 +66,6 @@
         </nav>
     <!-- Bootstrap JavaScript (optional for interactive elements) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script src="/assets/js/header.js"></script>
     </header>

@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use App\Models\ArticleModel;
+use App\Models\ProduitsModel;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -54,5 +56,22 @@ abstract class BaseController extends Controller
         // Preload any models, libraries, etc, here.
 
         // E.g.: $this->session = \Config\Services::session();
+    }
+
+    public function rechercherProduitByNom()
+    {
+        // Récupération de la recherche
+        $query = $this->request->getGet('query');
+        
+        if (empty($query)) {
+            return $this->response->setJSON(['message' => 'Aucune recherche spécifiée'])->setStatusCode(400);
+        }
+    
+        $idUtil = session('idutil');
+    
+        $projetModel = new ProduitsModel();
+        $projets = $projetModel->getProduitByNom($query);
+    
+        return $this->response->setJSON($projets);
     }
 }
