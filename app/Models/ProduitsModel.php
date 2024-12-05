@@ -69,4 +69,12 @@ class ProduitsModel extends Model
 					->get()
 					->getResultArray();
 	}
+
+	public function getProduitByNom(string $nomProd) {
+		return $this->db->table('produits')->select('produits.*')
+					->like('LOWER(produits.nom)', strtolower($nomProd), 'after')
+					->get()
+					->getResultArray();
+	}
+
 }

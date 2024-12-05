@@ -59,6 +59,8 @@
 			<h2 id="modalProductName"></h2>
 			<p id="modalProductDescription"></p>
 			<p id="modalProductPrice"></p>
+			<input type="number" id="quantity" name="quantity" min="1" max="10" value="1" class="form-control w-25 me-3">
+			<button id="addToCartButton" class="btn btn-primary" onclick="addToCart()">Ajouter au panier</button>
 			<button onclick="closeModal()" class="btn btn-danger">Fermer</button>
 		</div>
 	</div>

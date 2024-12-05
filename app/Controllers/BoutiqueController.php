@@ -3,6 +3,7 @@ namespace App\Controllers;
 
 use App\Models\ProduitsModel;
 use App\Models\CategoriesModel;
+use App\Models\PanierModel;
 use App\Config\Pager;
 
 class BoutiqueController extends BaseController
@@ -54,5 +55,40 @@ class BoutiqueController extends BaseController
 		} else {
 			return $this->response->setJSON(['error' => 'Produit non trouvé']);
 		}
+	}
+
+	public function addToCart()
+	{
+		$session = session();
+		$id_sess = $session->session_id;
+		$data = $this->request->getJSON(true);
+		$id_prod = $data['id_prod'] ?? null;
+		$qt = $data['qt'] ?? 1;
+
+		if (!$id_prod) {
+			return $this->response->setJSON(['success' => false, 'error' => 'ID produit manquant.'], 400);
+		}
+
+		$panierModel = new PanierModel();
+
+		$existing = $panierModel->where(['id_prod' => $id_prod, 'id_sess' => $id_sess])->first();
+
+		if ($existing) {
+			$newQt = $existing['qt'] + $qt;
+			$panierModel->where(['id_prod' => $id_prod, 'id_sess' => $id_sess])
+						->set(['qt' => $newQt])
+						->update();
+			$message = 'Quantité mise à jour dans le panier.';
+		} else {
+			$panierModel->ajouterPanier([
+				'id_prod' => $id_prod,
+				'id_sess' => $id_sess,
+				'qt' => $qt
+			]);
+			$message = 'Produit ajouté au panier.';
+		}
+
+		return $this->response->setJSON(['success' => true, 'message' => $message]);
+		
 	}
 }
