@@ -51,20 +51,24 @@ function addToCart() {
 		},
 		body: JSON.stringify({
 			id_prod: selectedProductId,
-			qt: 1 // Toujours ajouter une quantité de 1
+			qt: 1
 		})
 	})
-	.then(response => response.json())
+	.then(response => {
+		if (!response.ok) {
+			throw new Error('Erreur réseau.');
+		}
+		return response.json();
+	})
 	.then(data => {
 		if (data.success) {
-			alert("Produit ajouté au panier !");
+			alert(data.message || "Produit ajouté au panier !");
 			closeModal();
 		} else {
-			alert("Erreur : " + data.error);
+			alert(data.error || "Une erreur s'est produite.");
 		}
 	})
 	.catch(error => {
-		console.error('Erreur:', error);
-		alert("Une erreur est survenue.");
+		alert("Une erreur s'est produite : " + error.message);
 	});
 }

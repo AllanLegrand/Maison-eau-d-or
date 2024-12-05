@@ -13,7 +13,10 @@ class PanierModel extends Model
 
 	public function ajouterPanier(array $data)
 	{
-		return $this->insert($data);
+		$this->db->query("
+		INSERT INTO panier (id_prod, id_sess, qt) 
+		VALUES (:id_prod:, :id_sess:, :qt:) 
+		", $data);
 	}
 
 	public function modifPanier(int $id_prod, string $id_sess, array $data): bool

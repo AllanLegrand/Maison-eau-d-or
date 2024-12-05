@@ -59,13 +59,14 @@ class BoutiqueController extends BaseController
 
 	public function addToCart()
 	{
+		$session = session();
+		$id_sess = $session->session_id;
 		$data = $this->request->getJSON(true);
 		$id_prod = $data['id_prod'] ?? null;
 		$qt = $data['qt'] ?? 1;
-		$id_sess = session_id();
 
 		if (!$id_prod) {
-			return $this->response->setJSON(['error' => 'ID produit manquant']);
+			return $this->response->setJSON(['success' => false, 'error' => 'ID produit manquant.'], 400);
 		}
 
 		$panierModel = new PanierModel();
@@ -74,15 +75,20 @@ class BoutiqueController extends BaseController
 
 		if ($existing) {
 			$newQt = $existing['qt'] + $qt;
-			$panierModel->update(['id_prod' => $id_prod, 'id_sess' => $id_sess], ['qt' => $newQt]);
+			$panierModel->where(['id_prod' => $id_prod, 'id_sess' => $id_sess])
+						->set(['qt' => $newQt])
+						->update();
+			$message = 'Quantité mise à jour dans le panier.';
 		} else {
-			$panierModel->insert([
+			$panierModel->ajouterPanier([
 				'id_prod' => $id_prod,
 				'id_sess' => $id_sess,
 				'qt' => $qt
 			]);
+			$message = 'Produit ajouté au panier.';
 		}
 
-		return $this->response->setJSON(['success' => true]);
+		return $this->response->setJSON(['success' => true, 'message' => $message]);
+		
 	}
 }
