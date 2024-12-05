@@ -4,12 +4,19 @@ namespace App\Controllers;
 use App\Models\ProduitsModel;
 use App\Models\CategoriesModel;
 use App\Models\PanierModel;
+use App\Models\UtilisateursModel;
 use App\Config\Pager;
 
 class BoutiqueController extends BaseController
 {
 	public function index()
 	{
+		$session = session();
+
+		$utilisateurModel = new UtilisateursModel();
+
+		$admin = $session->get('isLoggedIn') && $utilisateurModel->isAdmin($session->get('id_util'));
+
 		$produitsModel = new ProduitsModel();
 		$categoriesModel = new CategoriesModel();
 		$configPager = config(Pager::class);
@@ -37,7 +44,8 @@ class BoutiqueController extends BaseController
 			'categories' => $categories,
 			'produits' => $produits,
 			'currentCategory' => $catId,
-			'pager' => $pager->makeLinks($currentPage, $perPage, $totalProduits, 'default_full')
+			'pager' => $pager->makeLinks($currentPage, $perPage, $totalProduits, 'default_full'),
+			'admin' => $admin
 		];
 
 		echo view('header', ['title' => 'Boutique']);
@@ -90,5 +98,46 @@ class BoutiqueController extends BaseController
 
 		return $this->response->setJSON(['success' => true, 'message' => $message]);
 		
+	}
+
+	public function addProduit() {
+		$session = session();
+
+		$utilisateurModel = new UtilisateursModel();
+
+		if(!$session->get('isLoggedIn') || !$utilisateurModel->isAdmin($session->get('id_util'))) {
+			return redirect()->to('/Accueil');
+		}
+
+		$image = $this->request->getFile('image');
+
+		$data = [
+			'nom' => $this->request->getPost('nom'),
+			'prix' => $this->request->getPost('prix'),
+			'description' => $this->request->getPost('description'),
+			'actif' => $this->request->getPost('actif')
+		];
+
+		if ($image && $image->isValid() && !$image->hasMoved()) {
+			$targetPath = 'assets/img';
+		
+			// Vérifier si le dossier existe, sinon le créer
+			if (!is_dir($targetPath)) {
+				mkdir($targetPath, 0755, true);
+			}
+		
+			// Renommer l'image pour éviter les conflits
+			$newName = $image->getRandomName();
+		
+			// Déplacer l'image vers le dossier uploads
+			$image->move($targetPath, $newName);
+		
+			$data['img_path'] = $newName;
+		}
+		
+		$model = new ProduitsModel();
+		$model->insert($data);
+
+		return redirect()->to('/boutique')->with('message', 'Produit ajouté avec succès !');
 	}
 }

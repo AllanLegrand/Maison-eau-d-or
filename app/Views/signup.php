@@ -6,6 +6,16 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Inscription</title>
 	<link href="/assets/css/inscription.css" rel="stylesheet" type="text/css">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+	<style>
+		/* Correction de l'alignement entre la case à cocher et le texte */
+		.newsletter-container {
+			display: flex;
+			align-items: center;
+			gap: 0.5em;
+			margin: 1em 0;
+		}
+	</style>
 </head>
 
 <body>
@@ -32,6 +42,12 @@
 					data-error="<?= isset($validation) && $validation->hasError('prenom') ? $validation->getError('prenom') : '' ?>"
 					required>
 
+				<label for="adresse">Adresse :</label>
+				<input type="text" name="adresse" id="adresse" placeholder="Entrez votre adresse physique"
+					class="<?= isset($validation) && $validation->hasError('adresse') ? 'error-input' : '' ?>"
+					data-error="<?= isset($validation) && $validation->hasError('adresse') ? $validation->getError('adresse') : '' ?>"
+					required>
+
 				<label for="password">Mot de passe :</label>
 				<input type="password" name="password" id="password" placeholder="Entrez votre mot de passe"
 					class="<?= isset($validation) && $validation->hasError('password') ? 'error-input' : '' ?>"
@@ -44,6 +60,13 @@
 					class="<?= isset($validation) && $validation->hasError('confirmpassword') ? 'error-input' : '' ?>"
 					data-error="<?= isset($validation) && $validation->hasError('confirmpassword') ? $validation->getError('confirmpassword') : '' ?>"
 					required>
+
+				<div class="newsletter-container">
+					<div class="form-check form-switch">
+						<input class="form-check-input" type="checkbox" role="switch" name="news" id="flexSwitchCheckDefault">
+						<label class="newsletter" for="flexSwitchCheckDefault"> S'inscrire à la newsletter</label>
+					</div>
+				</div>
 
 				<button type="submit">S'inscrire</button>
 				<a href="/signin">
