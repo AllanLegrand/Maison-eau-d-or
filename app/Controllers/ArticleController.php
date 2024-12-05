@@ -29,6 +29,14 @@ class ArticleController extends BaseController
 
 	public function addArticle() 
 	{
+		$session = session();
+
+		$utilisateurModel = new UtilisateursModel();
+
+		if(!$session->get('isLoggedIn') || !$utilisateurModel->isAdmin($session->get('id_util'))) {
+			return redirect()->to('/Accueil');
+		}
+
 		$titre = $this->request->getPost('titre');
 		$msg = $this->request->getPost('description');
 
@@ -38,8 +46,6 @@ class ArticleController extends BaseController
 			'titre' => $titre,
 			'msg' => $msg,
 		];
-
-		echo $image;
 
 		if ($image && $image->isValid() && !$image->hasMoved()) {
 			$targetPath = 'assets/img';
@@ -56,7 +62,7 @@ class ArticleController extends BaseController
 			$image->move($targetPath, $newName);
 		
 			$data['img_path'] = $newName;
-		} 
+		}
 		
 		$model = new ArticleModel();
 		$model->insert($data);
