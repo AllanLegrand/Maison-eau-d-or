@@ -39,6 +39,7 @@ window.onclick = function(event) {
 }
 
 function addToCart() {
+	const quantity = document.getElementById('quantity').value;
 	if (!selectedProductId) {
 		alert("Produit invalide.");
 		return;
@@ -51,7 +52,7 @@ function addToCart() {
 		},
 		body: JSON.stringify({
 			id_prod: selectedProductId,
-			qt: 1
+			qt: parseInt(quantity)
 		})
 	})
 	.then(response => {
