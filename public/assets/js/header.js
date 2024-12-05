@@ -38,3 +38,42 @@ function searchProduits(query) {
 function selectProduit(id_prod) {
     
 }
+
+
+function openCart() {
+    document.getElementById("cartSidebar").style.right = "0";
+    loadCartItems();
+}
+
+function closeCart() {
+    document.getElementById("cartSidebar").style.right = "-400px";
+}
+
+function loadCartItems() {
+    fetch('/panier/getCartItems')
+        .then(response => response.json())
+        .then(data => {
+            const cartItemsContainer = document.getElementById("cartItems");
+            cartItemsContainer.innerHTML = '';  // Clear previous items
+            let total = 0;
+            data.forEach(item => {
+                total += item.prix * item.quantite;
+                const itemElement = document.createElement("div");
+                itemElement.classList.add("cart-item");
+                itemElement.innerHTML = `
+                    <div class="d-flex justify-content-between">
+                        <img src="${item.image}" alt="${item.nom}" style="width: 50px;">
+                        <div>
+                            <div>${item.nom}</div>
+                            <div>${item.quantite} x ${item.prix} €</div>
+                        </div>
+                    </div>
+                    <hr>
+                `;
+                cartItemsContainer.appendChild(itemElement);
+            });
+            const totalElement = document.getElementById("cartTotal");
+            totalElement.innerHTML = `Total: ${total} €`;
+        })
+        .catch(error => console.error("Error loading cart items:", error));
+}

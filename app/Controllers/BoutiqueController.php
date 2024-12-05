@@ -89,6 +89,32 @@ class BoutiqueController extends BaseController
 		}
 
 		return $this->response->setJSON(['success' => true, 'message' => $message]);
-		
+	}
+
+	public function getCartItems()
+	{
+		$session = session();
+		$id_sess = $session->session_id;
+
+		$panierModel = new PanierModel();
+		$panierItems = $panierModel->where('id_sess', $id_sess)->findAll();
+
+		$produitsModel = new ProduitsModel();
+		$cartProducts = [];
+
+		foreach ($panierItems as $item) {
+			$produit = $produitsModel->find($item['id_prod']);
+			if ($produit) {
+				$cartProducts[] = [
+					'id_prod' => $produit['id_prod'],
+					'nom' => $produit['nom'],
+					'prix' => $produit['prix'],
+					'quantite' => $item['qt'],
+					'image' => base_url('assets/img/' . ($produit['img_path'] ?: 'default.png'))
+				];
+			}
+		}
+
+		return $this->response->setJSON($cartProducts);
 	}
 }

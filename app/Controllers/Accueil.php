@@ -16,8 +16,9 @@ class Accueil extends BaseController
 
 		$session = session();
 
-		$userId = $session->get('idutil');
+		$userId = $session->get('id_util');
 		$utilisateurModel = new UtilisateursModel();
+
 		$afficheNews = !$session->get('isLoggedIn') || !$utilisateurModel->isSubscribed($userId);
 
 		echo view('header', ['title' => 'Accueil']);
