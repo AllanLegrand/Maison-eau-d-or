@@ -96,7 +96,7 @@ class BoutiqueController extends BaseController
 	public function addToCart()
 	{
 		$session = session();
-		$id_sess = $session->session_id;
+		$id_sess = $session->get('id_util') ?: session_id();
 		$data = $this->request->getJSON(true);
 		$id_prod = $data['id_prod'] ?? null;
 		$qt = $data['qt'] ?? 1;
@@ -130,7 +130,7 @@ class BoutiqueController extends BaseController
 	public function getCartItems()
 	{
 		$session = session();
-		$id_sess = $session->session_id;
+		$id_sess = $session->get('id_util') ?: session_id();
 
 		$panierModel = new PanierModel();
 		$panierItems = $panierModel->where('id_sess', $id_sess)
@@ -160,7 +160,7 @@ class BoutiqueController extends BaseController
 	{
 		$input = $this->request->getJSON();
 		$session = session();
-		$id_sess = $session->session_id;
+		$id_sess = $session->get('id_util') ?: session_id();
 		$id_prod = $input->id_prod;
 		$quantite = $input->quantite;
 
@@ -178,7 +178,7 @@ class BoutiqueController extends BaseController
 	{
 		$input = $this->request->getJSON();
 		$session = session();
-		$id_sess = $session->session_id;
+		$id_sess = $session->get('id_util') ?: session_id();
 		$id_prod = $input->id_prod;
 
 		$panierModel = new PanierModel();

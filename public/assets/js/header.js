@@ -133,7 +133,7 @@ function removeFromCart(productId) {
 
 function openUserSidebar() {
     document.getElementById("userSidebar").style.right = "0";
-    loadUserDetails(); // Charge les informations utilisateur
+    loadUserDetails();
 }
 
 function closeUserSidebar() {
@@ -141,7 +141,7 @@ function closeUserSidebar() {
 }
 
 function loadUserDetails() {
-    fetch('/utilisateur/getUserDetails') // Endpoint à créer côté serveur
+    fetch('/utilisateur/getUserDetails')
         .then(response => response.json())
         .then(data => {
             const userDetailsContainer = document.getElementById("userDetails");
@@ -158,14 +158,30 @@ function loadUserDetails() {
 }
 
 function handleUserIconClick() {
-    fetch('/utilisateur/checkAuth') // Endpoint pour vérifier la connexion
+    fetch('/utilisateur/checkAuth')
         .then(response => response.json())
         .then(data => {
             if (data.isLoggedIn) {
-                openUserSidebar(); // Ouvre le bandeau profil
+                openUserSidebar();
             } else {
-                window.location.href = '/signin'; // Redirige vers la page de connexion
+                window.location.href = '/signin';
             }
         })
         .catch(error => console.error("Erreur lors de la vérification de l'authentification :", error));
+}
+
+function disconnect() {
+    fetch('/utilisateur/deconnexion')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                window.location.href = '/';
+            } else {
+                alert("Erreur lors de la déconnexion");
+            }
+        })
+        .catch(error => {
+            console.error("Erreur lors de la déconnexion :", error);
+            alert("Erreur de connexion au serveur");
+        });
 }
