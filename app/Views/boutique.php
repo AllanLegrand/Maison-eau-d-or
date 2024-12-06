@@ -33,7 +33,7 @@
         <?php endif; ?>
 
         <!-- Tri -->
-        <div class="d-flex justify-content-end align-items-center mt-3">
+        <div class="d-flex align-items-center mt-3 tri-align">
             <label for="sort" class="me-2 lbltri">Trier par :</label>
             <select name="sort" id="sort" class="form-select w-auto selecttri">
                 <option value="" <?= (empty($currentSort)) ? 'selected' : '' ?>>Par défaut</option>
