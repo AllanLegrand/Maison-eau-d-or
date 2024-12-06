@@ -54,7 +54,7 @@
                         <div id="searchResults" class="search-results"></div>
                     </div>
                     <!-- User Account Icon -->
-                    <a href="/signin" class="btn btn-link">
+                    <a href="javascript:void(0)" class="btn btn-link" onclick="handleUserIconClick()">
                         <img src="/assets/img/user.png" alt="Compte" height="30">
                     </a>
                     <!-- Cart Icon -->
@@ -76,4 +76,14 @@
         </div>
         <div id="cartItems"></div>
         <div id="cartTotal"></div>
+        <button class="finalize-button">Modifier mes informations</button>
+    </div>
+
+    <div id="userSidebar" class="user-sidebar">
+        <div class="user-header">
+            <h5>Vos Informations</h5>
+            <span class="close-cross" onclick="closeUserSidebar()">×</span>
+        </div>
+        <div id="userDetails"></div>
+        <button class="editProfil">Modifier mes informations</button>
     </div>

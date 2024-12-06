@@ -15,6 +15,9 @@ $routes->match(['get', 'post'], '/signup/store', 'SignupController::store');
 $routes->get('/signin', 'SigninController::index');
 $routes->match(['get', 'post'], '/SigninController/loginAuth', 'SigninController::loginAuth');
 
+$routes->get('/utilisateur/checkAuth', 'UtilisateurController::checkAuth');
+$routes->get('/utilisateur/getUserDetails', 'UtilisateurController::getUserDetails');
+
 $routes->get('/forgot-password', 'ForgotPasswordController::index'); 
 $routes->post('/forgot-password/sendResetLink', 'ForgotPasswordController::sendResetLink');
 

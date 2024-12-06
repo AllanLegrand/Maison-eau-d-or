@@ -83,14 +83,6 @@ function loadCartItems() {
             });
             const totalElement = document.getElementById("cartTotal");
             totalElement.innerHTML = `Total: ${total} €`;
-            let finalizeButton = document.querySelector(".finalize-button");
-            if (!finalizeButton) {
-                finalizeButton = document.createElement("button");
-                finalizeButton.classList.add("finalize-button");
-                finalizeButton.textContent = "Finaliser la commande";
-                finalizeButton.addEventListener('click', () => {});
-                totalElement.parentElement.appendChild(finalizeButton);
-            }
         })
         .catch(error => console.error("Error loading cart items:", error));
 }
@@ -137,4 +129,43 @@ function removeFromCart(productId) {
             }
         })
         .catch(error => console.error("Error removing item:", error));
+}
+
+function openUserSidebar() {
+    document.getElementById("userSidebar").style.right = "0";
+    loadUserDetails(); // Charge les informations utilisateur
+}
+
+function closeUserSidebar() {
+    document.getElementById("userSidebar").style.right = "-500px";
+}
+
+function loadUserDetails() {
+    fetch('/utilisateur/getUserDetails') // Endpoint à créer côté serveur
+        .then(response => response.json())
+        .then(data => {
+            const userDetailsContainer = document.getElementById("userDetails");
+            userDetailsContainer.innerHTML = `
+                <div class="user-details">
+                    <p><strong>Nom :</strong> ${data.nom}</p>
+                    <p><strong>Prénom :</strong> ${data.prenom}</p>
+                    <p><strong>Email :</strong> ${data.email}</p>
+                    <p><strong>Adresse :</strong> ${data.adresse}</p>
+                </div>
+            `;
+        })
+        .catch(error => console.error("Erreur lors du chargement des informations utilisateur :", error));
+}
+
+function handleUserIconClick() {
+    fetch('/utilisateur/checkAuth') // Endpoint pour vérifier la connexion
+        .then(response => response.json())
+        .then(data => {
+            if (data.isLoggedIn) {
+                openUserSidebar(); // Ouvre le bandeau profil
+            } else {
+                window.location.href = '/signin'; // Redirige vers la page de connexion
+            }
+        })
+        .catch(error => console.error("Erreur lors de la vérification de l'authentification :", error));
 }
