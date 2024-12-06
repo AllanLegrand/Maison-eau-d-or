@@ -70,3 +70,7 @@ window.onclick = function(event) {
         closeModal();
     }
 }
+
+document.getElementById('sort').addEventListener('change', function () {
+    this.form.submit();
+});

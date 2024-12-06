@@ -12,7 +12,6 @@ class BoutiqueController extends BaseController
 	public function index()
 	{
 		$session = session();
-
 		$utilisateurModel = new UtilisateursModel();
 
 		$admin = $session->get('isLoggedIn') && $utilisateurModel->isAdmin($session->get('id_util'));
@@ -30,7 +29,34 @@ class BoutiqueController extends BaseController
 		$catId = $this->request->getGet('cat');
 		$catId = ($catId === null || $catId === '') ? null : (int)$catId;
 
-		$produits = $produitsModel->getProduitsParCategorie($catId, $perPage, $offset);
+		// Gérer le tri
+		$currentSort = $this->request->getGet('sort');
+		$sortField = null;
+		$sortDirection = null;
+
+		if ($currentSort) {
+			switch ($currentSort) {
+				case 'price_asc':
+					$sortField = 'prix';
+					$sortDirection = 'ASC';
+					break;
+				case 'price_desc':
+					$sortField = 'prix';
+					$sortDirection = 'DESC';
+					break;
+				case 'name_asc':
+					$sortField = 'nom';
+					$sortDirection = 'ASC';
+					break;
+				case 'name_desc':
+					$sortField = 'nom';
+					$sortDirection = 'DESC';
+					break;
+			}
+		}
+
+		// Charger les produits selon catégorie et tri
+		$produits = $produitsModel->getProduitsParCategorie($catId, $perPage, $offset, $sortField, $sortDirection);
 		$totalProduits = $produitsModel->getTotalProduitsParCategorie($catId);
 
 		foreach ($produits as &$produit) {
@@ -44,6 +70,7 @@ class BoutiqueController extends BaseController
 			'categories' => $categories,
 			'produits' => $produits,
 			'currentCategory' => $catId,
+			'currentSort' => $currentSort,
 			'pager' => $pager->makeLinks($currentPage, $perPage, $totalProduits, 'default_full'),
 			'admin' => $admin
 		];
@@ -52,6 +79,7 @@ class BoutiqueController extends BaseController
 		echo view('boutique', $data);
 		echo view('footer');
 	}
+
 
 	public function getProduit($id_prod)
 	{

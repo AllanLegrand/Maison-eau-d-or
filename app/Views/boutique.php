@@ -1,26 +1,39 @@
 <div class="container my-5">
 	<h1 class="text-center bordergold">Boutique</h1>
 
-	<!-- Filtre des catégories -->
-	<form method="GET" action="<?= base_url('boutique') ?>" class="mb-4">
-		<div class="d-flex justify-content-center gap-3 flex-wrap">
-		<button type="submit" name="cat" value="" class="category-btn <?= (is_null($currentCategory)) ? 'active' : '' ?>">
-            Tous
-        </button>
-		<?php foreach ($categories as $categorie): ?>
-			<button type="submit" name="cat" value="<?= $categorie['id_cat'] ?>" class="category-btn <?= ($currentCategory == $categorie['id_cat']) ? 'active' : '' ?>">
-				<?= esc($categorie['nom']) ?>
-			</button>
-		<?php endforeach; ?>
-		</div>
-	</form>
+	<!-- Filtre et tri des catégories -->
+    <form method="GET" action="<?= base_url('boutique') ?>" class="mb-4">
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+            <button type="submit" name="cat" value="" class="category-btn <?= (is_null($currentCategory)) ? 'active' : '' ?>">
+                Tous
+            </button>
+            <?php foreach ($categories as $categorie): ?>
+                <button type="submit" name="cat" value="<?= $categorie['id_cat'] ?>" class="category-btn <?= ($currentCategory == $categorie['id_cat']) ? 'active' : '' ?>">
+                    <?= esc($categorie['nom']) ?>
+                </button>
+            <?php endforeach; ?>
+        </div>
+
+        <!-- Tri -->
+        <div class="d-flex mt-3">
+            <label for="sort" class="me-2">Trier par :</label>
+            <select name="sort" id="sort" class="form-select w-auto">
+                <option value="" <?= (empty($currentSort)) ? 'selected' : '' ?>>Par défaut</option>
+                <option value="price_asc" <?= ($currentSort == 'price_asc') ? 'selected' : '' ?>>Prix : croissant</option>
+                <option value="price_desc" <?= ($currentSort == 'price_desc') ? 'selected' : '' ?>>Prix : décroissant</option>
+                <option value="name_asc" <?= ($currentSort == 'name_asc') ? 'selected' : '' ?>>Nom : A-Z</option>
+                <option value="name_desc" <?= ($currentSort == 'name_desc') ? 'selected' : '' ?>>Nom : Z-A</option>
+            </select>
+        </div>
+    </form>
+
 
 
     <!-- Produits -->
     <div class="row gx-4 gy-5">
         <?php if (!empty($produits)) : ?>
             <?php foreach ($produits as $produit) : ?>
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 flex-center">
                     <div class="product-item" onclick="openModal(<?= $produit['id_prod'] ?>)">
                         <?php 
                             $imagePath = base_url('assets/img/' . $produit['img_path']);
