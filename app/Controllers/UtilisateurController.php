@@ -38,4 +38,12 @@ class UtilisateurController extends Controller
 
 		return $this->response->setJSON(['error' => 'Utilisateur non trouvé'], 404);
 	}
+
+	public function deconnexion()
+    {
+        $session = session();
+        $session->destroy();
+
+        return $this->response->setJSON(['success' => true]);
+    }
 }

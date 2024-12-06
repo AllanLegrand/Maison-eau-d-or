@@ -17,6 +17,7 @@ $routes->match(['get', 'post'], '/SigninController/loginAuth', 'SigninController
 
 $routes->get('/utilisateur/checkAuth', 'UtilisateurController::checkAuth');
 $routes->get('/utilisateur/getUserDetails', 'UtilisateurController::getUserDetails');
+$routes->get('/utilisateur/deconnexion', 'UtilisateurController::deconnexion');
 
 $routes->get('/forgot-password', 'ForgotPasswordController::index'); 
 $routes->post('/forgot-password/sendResetLink', 'ForgotPasswordController::sendResetLink');

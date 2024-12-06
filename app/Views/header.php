@@ -86,4 +86,5 @@
         </div>
         <div id="userDetails"></div>
         <button class="editProfil">Modifier mes informations</button>
+        <button class="deconnexion" onClick="disconnect()">Se déconnecter</button>
     </div>
