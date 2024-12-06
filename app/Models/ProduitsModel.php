@@ -47,18 +47,20 @@ class ProduitsModel extends Model
 	public function getProduitsParCategorie(?int $idCat = null, int $perPage = 0, int $offset = 0, ?string $sortField = null, ?string $sortDirection = null): array
 	{
 		$query = $this->where(['actif' => true])->select('*');
-	
+
 		if ($idCat !== null) {
 			$query->join('prodcat', 'produits.id_prod = prodcat.id_prod')
-				  ->where('prodcat.id_cat', $idCat);
+				->where('prodcat.id_cat', $idCat);
 		}
-	
+
+		// Appliquer le tri si spécifié
 		if ($sortField && $sortDirection) {
 			$query->orderBy($sortField, $sortDirection);
 		}
-	
+
 		return $query->findAll($perPage ?: null, $offset);
 	}
+
 	
 
 

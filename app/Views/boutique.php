@@ -3,6 +3,7 @@
 
 	<!-- Filtre et tri des catégories -->
     <form method="GET" action="<?= base_url('boutique') ?>" class="mb-4">
+        <!-- Boutons de catégories -->
         <div class="d-flex justify-content-center gap-3 flex-wrap">
             <button type="submit" name="cat" value="" class="category-btn <?= (is_null($currentCategory)) ? 'active' : '' ?>">
                 Tous
@@ -15,7 +16,7 @@
         </div>
 
         <!-- Tri -->
-        <div class="d-flex mt-3">
+        <div class="d-flex justify-content-end align-items-center mt-3">
             <label for="sort" class="me-2">Trier par :</label>
             <select name="sort" id="sort" class="form-select w-auto">
                 <option value="" <?= (empty($currentSort)) ? 'selected' : '' ?>>Par défaut</option>
@@ -26,8 +27,6 @@
             </select>
         </div>
     </form>
-
-
 
     <!-- Produits -->
     <div class="row gx-4 gy-5">
@@ -68,7 +67,7 @@
         <!-- Croix pour fermer -->
         <span class="close-cross" onclick="closeModal()">&times;</span>
 
-        <div class="d-flex flex-wrap justify-content-center align-items-center modal-border">
+        <div class="d-flex flex-wrap justify-content-center align-items-center modal-border modal-row">
             <img id="modalProductImage" src="/assets/img/default.png" class="img-fluid" alt="Image produit">
             <div class="col-md-6">
                 <h3 id="modalProductName"></h3>
