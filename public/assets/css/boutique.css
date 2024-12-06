@@ -1,5 +1,6 @@
+@import url('couleur.css');
+
 .row.gx-4.gy-5 {
-    margin-top: 20px;
     min-height: 508px;
 }
 
@@ -218,6 +219,9 @@
     h1.text-center.bordergold {
         font-size: 18px;
         margin-bottom: 15px;
+        font-weight: bold;
+        padding-bottom: 10px;
+        border-bottom: 2px solid var(--orclaire);
     }
 
     .modal-content {
@@ -300,3 +304,16 @@
     }
 }
 
+h2{
+    margin-top: 30px;
+}
+
+.lbltri{
+    font-size: 12px;
+}
+
+.selecttri{
+    font-size: 12px;
+    padding: 5px 10px;
+    border-radius: 0px;
+}
