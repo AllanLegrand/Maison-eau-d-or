@@ -85,7 +85,7 @@ class BoutiqueController extends BaseController
 
 		echo view('header', ['title' => 'Boutique']);
 		echo view('boutique', $data);
-		echo view('footer');
+		echo view('footer'); 
 	}
 
 
