@@ -28,4 +28,33 @@ class PanierModel extends Model
 	{
 		return $this->delete([$id_prod, $id_sess]);
 	}
+
+	public function migrerPanierVersUtilisateur(string $idSess, int $idUtil)
+	{
+		$idUtil = (string)$idUtil;
+		$panier = $this->where('id_sess', $idSess)->findAll();
+
+		if (!empty($panier)) {
+			foreach ($panier as $item) {
+				$existing = $this->where('id_prod', $item['id_prod'])
+								->where('id_sess', $idUtil)
+								->first();
+
+				if ($existing) {
+					$newQt = $existing['qt'] + $item['qt'];
+					$this->where(['id_prod' => $item['id_prod'], 'id_sess' => $idUtil])
+						->set(['qt' => $newQt])
+						->update();
+				} else {
+					$this->db->table($this->table)->insert([
+						'id_prod' => $item['id_prod'],
+						'id_sess' => $idUtil,
+						'qt' => $item['qt']
+					]);
+				}
+			}
+
+			$this->where('id_sess', $idSess)->delete();
+		}
+	}
 }

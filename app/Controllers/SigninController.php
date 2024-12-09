@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use CodeIgniter\Controller;
 use App\Models\UtilisateursModel;
+use App\Models\PanierModel;
 
 class SigninController extends BaseController
 {
@@ -42,8 +43,13 @@ class SigninController extends BaseController
 			$authenticatePassword = password_verify($password, $pass);
 
 			if ($authenticatePassword) {
+				$currentSessionId = $session->session_id;
+            	$userId = $data['id_util'];
+				$PanierModel = new PanierModel();
+            	$PanierModel->migrerPanierVersUtilisateur($currentSessionId, $userId);
+
 				$ses_data = [
-					'id_util' => $data['id_util'],
+					'id_util' => $userId,
 					'nom' => $data['nom'],
 					'prenom' => $data['prenom'],
 					'email' => $data['email'],

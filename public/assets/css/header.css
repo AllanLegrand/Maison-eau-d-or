@@ -223,3 +223,75 @@ body{
 .close-cross:hover {
     color: #c89f65;
 }
+
+/*--------------------------------*/
+/*      Style pour le profil      */
+
+.user-sidebar {
+    position: fixed;
+    top: 0;
+    right: -500px;
+    width: 500px;
+    height: 100%;
+    background-color: #ffffff;
+    box-shadow: -4px 0 10px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease;
+    padding: 20px;
+    z-index: 1050;
+}
+
+.user-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-header h5 {
+    margin: 0;
+}
+
+.user-details {
+    margin-top: 20px;
+}
+
+.editProfil {
+    width: 100%;
+    padding: 15px;
+    color: #000;
+    background-color: #f8f9fa;
+    border: 1px solid #000;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+}
+
+.editProfil:hover {
+    background: linear-gradient(to right, #7A6C29, #C7B254);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.deconnexion {
+    width: 100%;
+    padding: 15px;
+    color: #333;
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    margin-top: 20px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    display: inline-block;
+    border-radius: 5px;
+}
+
+.deconnexion:hover {
+    background: #e2e2e2;
+    color: #7A6C29;
+    border-color: #7A6C29;
+}

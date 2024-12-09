@@ -14,7 +14,7 @@ function openModal(productId) {
                 document.getElementById('modalProductName').innerText = data.nom;
                 document.getElementById('modalProductDescription').innerText = data.description || "Aucune description disponible.";
                 document.getElementById('modalProductPrice').innerText = data.prix + " €";
-                document.getElementById('modalProductImage').src = data.image_url || "/assets/img/default.png";
+                document.getElementById('modalProductImage').src = "/assets/img/" + data.img_path || "/assets/img/default.png";
                 document.getElementById('productModal').style.display = "flex";
             } else {
                 console.error('Données du produit non valides');
@@ -102,3 +102,18 @@ function openEditArticleModal(event, prod, dicProdCat) {
 function closeEditProductModal() {
     document.getElementById('editProductModal').style.display = 'none';
 }
+document.getElementById('sort').addEventListener('change', function () {
+    const form = this.form;
+
+    // Ajoute un champ caché pour inclure la catégorie active
+    const activeCategory = document.querySelector('.category-btn.active');
+    if (activeCategory) {
+        const hiddenCatInput = document.createElement('input');
+        hiddenCatInput.type = 'hidden';
+        hiddenCatInput.name = 'cat';
+        hiddenCatInput.value = activeCategory.getAttribute('value');
+        form.appendChild(hiddenCatInput);
+    }
+
+    form.submit();
+});

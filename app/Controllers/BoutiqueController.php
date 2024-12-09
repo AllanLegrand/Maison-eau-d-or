@@ -5,6 +5,8 @@ use App\Models\ProdCatModel;
 use App\Models\ProduitsModel;
 use App\Models\CategoriesModel;
 use App\Models\PanierModel;
+use App\Models\CommandesModel;
+use App\Models\HistoriqueModel;
 use App\Models\UtilisateursModel;
 use App\Config\Pager;
 
@@ -13,7 +15,6 @@ class BoutiqueController extends BaseController
 	public function index()
 	{
 		$session = session();
-
 		$utilisateurModel = new UtilisateursModel();
 
 		$admin = $session->get('isLoggedIn') && $utilisateurModel->isAdmin($session->get('id_util'));
@@ -31,7 +32,34 @@ class BoutiqueController extends BaseController
 		$catId = $this->request->getGet('cat');
 		$catId = ($catId === null || $catId === '') ? null : (int)$catId;
 
-		$produits = $produitsModel->getProduitsParCategorie($catId, $perPage, $offset, $admin);
+		// Gérer le tri
+		$currentSort = $this->request->getGet('sort');
+		$sortField = null;
+		$sortDirection = null;
+
+		if ($currentSort) {
+			switch ($currentSort) {
+				case 'price_asc':
+					$sortField = 'prix';
+					$sortDirection = 'ASC';
+					break;
+				case 'price_desc':
+					$sortField = 'prix';
+					$sortDirection = 'DESC';
+					break;
+				case 'name_asc':
+					$sortField = 'nom';
+					$sortDirection = 'ASC';
+					break;
+				case 'name_desc':
+					$sortField = 'nom';
+					$sortDirection = 'DESC';
+					break;
+			}
+		}
+
+		// Charger les produits selon catégorie et tri
+		$produits = $produitsModel->getProduitsParCategorie($catId, $perPage, $offset, $sortField, $sortDirection, $admin);
 		
 		$totalProduits = $produitsModel->getTotalProduitsParCategorie($catId, $admin);
 
@@ -49,6 +77,7 @@ class BoutiqueController extends BaseController
 			'categories' => $categories,
 			'produits' => $produits,
 			'currentCategory' => $catId,
+			'currentSort' => $currentSort,
 			'pager' => $pager->makeLinks($currentPage, $perPage, $totalProduits, 'default_full'),
 			'admin' => $admin,
 			'dicProdCat' => $dictionnaire,
@@ -58,6 +87,7 @@ class BoutiqueController extends BaseController
 		echo view('boutique', $data);
 		echo view('footer');
 	}
+
 
 	public function getProduit($id_prod)
 	{
@@ -74,7 +104,7 @@ class BoutiqueController extends BaseController
 	public function addToCart()
 	{
 		$session = session();
-		$id_sess = $session->session_id;
+		$id_sess = $session->get('id_util') ?: session_id();
 		$data = $this->request->getJSON(true);
 		$id_prod = $data['id_prod'] ?? null;
 		$qt = $data['qt'] ?? 1;
@@ -108,7 +138,7 @@ class BoutiqueController extends BaseController
 	public function getCartItems()
 	{
 		$session = session();
-		$id_sess = $session->session_id;
+		$id_sess = $session->get('id_util') ?: session_id();
 
 		$panierModel = new PanierModel();
 		$panierItems = $panierModel->where('id_sess', $id_sess)
@@ -138,7 +168,7 @@ class BoutiqueController extends BaseController
 	{
 		$input = $this->request->getJSON();
 		$session = session();
-		$id_sess = $session->session_id;
+		$id_sess = $session->get('id_util') ?: session_id();
 		$id_prod = $input->id_prod;
 		$quantite = $input->quantite;
 
@@ -156,7 +186,7 @@ class BoutiqueController extends BaseController
 	{
 		$input = $this->request->getJSON();
 		$session = session();
-		$id_sess = $session->session_id;
+		$id_sess = $session->get('id_util') ?: session_id();
 		$id_prod = $input->id_prod;
 
 		$panierModel = new PanierModel();
@@ -299,5 +329,98 @@ class BoutiqueController extends BaseController
 		else {
 			return redirect()->back()->with('error', 'Erreur lors de la suppression du produit.');
 		}
+	}
+
+	public function commande()
+	{
+		$session = session();
+
+		if (!$session->has('id_util')) {
+			return redirect()->to('/signin');
+		}
+
+		$id_sess = $session->get('id_util');
+
+		$panierModel = new PanierModel();
+		$panierItems = $panierModel->where('id_sess', $id_sess)
+								->orderBy('id_prod', 'ASC')
+								->findAll();
+
+		if (empty($panierItems)) {
+			return redirect()->to('/boutique');
+		}
+		$produitsModel = new ProduitsModel();
+		$orderDetails = [];
+		$total = 0;
+
+		foreach ($panierItems as $item) {
+			$produit = $produitsModel->find($item['id_prod']);
+			if ($produit) {
+				$orderDetails[] = [
+					'nom' => $produit['nom'],
+					'prix' => $produit['prix'],
+					'quantite' => $item['qt'],
+					'total' => $produit['prix'] * $item['qt']
+				];
+				$total += $produit['prix'] * $item['qt'];
+			}
+		}
+
+		$data = [
+			'orderDetails' => $orderDetails,
+			'total' => $total
+		];
+
+		echo view('header', ['title' => 'Commande']);
+		echo view('commande', $data);
+		echo view('footer');
+	}
+
+	public function finalizeOrder()
+	{
+		$session = session();
+
+		if (!$session->has('id_util')) {
+			alert("Une erreur est survenue, reconnectez-vous pour finaliser votre commande");
+			return redirect()->to('/accueil');
+		}
+
+		$id_sess = $session->get('id_util');
+
+		$panierModel = new PanierModel();
+		$produitsModel = new ProduitsModel();
+		$commandesModel = new CommandesModel();
+		$historiqueModel = new HistoriqueModel();
+
+		$panierItems = $panierModel->where('id_sess', $id_sess)->findAll();
+		
+		if (empty($panierItems)) {
+			return $this->response->setJSON(['success' => false, 'message' => 'Le panier est vide.']);
+		}
+
+		$commandeData = [
+			'id_util' => $session->get('id_util'),
+			'date' => date('Y-m-d H:i:s')
+		];
+		$commandesModel->ajouterCommandes($commandeData);
+
+		$id_com = $commandesModel->getInsertID();
+
+		foreach ($panierItems as $item) {
+			$produit = $produitsModel->find($item['id_prod']);
+			
+			if ($produit) {
+				$historiqueData = [
+					'id_com' => $id_com,
+					'id_prod' => $item['id_prod'],
+					'qt' => $item['qt']
+				];
+				$historiqueModel->ajouterHistorique($historiqueData);
+			}
+		}
+
+		$panierModel->where('id_sess', $id_sess)->delete();
+
+		return $this->response->setJSON(['success' => true, 'message' => 'Commande finalisée avec succès !']);
 	}
 }

@@ -83,14 +83,9 @@ function loadCartItems() {
             });
             const totalElement = document.getElementById("cartTotal");
             totalElement.innerHTML = `Total: ${total} €`;
-            let finalizeButton = document.querySelector(".finalize-button");
-            if (!finalizeButton) {
-                finalizeButton = document.createElement("button");
-                finalizeButton.classList.add("finalize-button");
-                finalizeButton.textContent = "Finaliser la commande";
-                finalizeButton.addEventListener('click', () => {});
-                totalElement.parentElement.appendChild(finalizeButton);
-            }
+
+            const finalizeButton = document.querySelector(".finalize-button");
+            finalizeButton.onclick = () => window.location.href = '/commande';
         })
         .catch(error => console.error("Error loading cart items:", error));
 }
@@ -111,7 +106,7 @@ function updateQuantity(productId, newQuantity) {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                loadCartItems(); // Recharge les éléments du panier après mise à jour
+                loadCartItems();
             } else {
                 alert("Erreur lors de la mise à jour de la quantité.");
             }
@@ -137,4 +132,63 @@ function removeFromCart(productId) {
             }
         })
         .catch(error => console.error("Error removing item:", error));
+}
+
+function openUserSidebar() {
+    document.getElementById("userSidebar").style.right = "0";
+    loadUserDetails();
+}
+
+function closeUserSidebar() {
+    document.getElementById("userSidebar").style.right = "-500px";
+}
+
+function loadUserDetails() {
+    fetch('/utilisateur/getUserDetails')
+        .then(response => response.json())
+        .then(data => {
+            const userDetailsContainer = document.getElementById("userDetails");
+            userDetailsContainer.innerHTML = `
+                <div class="user-details">
+                    <p><strong>Nom :</strong> ${data.nom}</p>
+                    <p><strong>Prénom :</strong> ${data.prenom}</p>
+                    <p><strong>Email :</strong> ${data.email}</p>
+                    <p><strong>Adresse :</strong> ${data.adresse}</p>
+                </div>
+            `;
+        })
+        .catch(error => console.error("Erreur lors du chargement des informations utilisateur :", error));
+}
+
+function handleUserIconClick() {
+    fetch('/utilisateur/checkAuth')
+        .then(response => response.json())
+        .then(data => {
+            if (data.isLoggedIn) {
+                openUserSidebar();
+            } else {
+                window.location.href = '/signin';
+            }
+        })
+        .catch(error => console.error("Erreur lors de la vérification de l'authentification :", error));
+}
+
+function disconnect() {
+    fetch('/utilisateur/deconnexion')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                window.location.href = '/';
+            } else {
+                alert("Erreur lors de la déconnexion");
+            }
+        })
+        .catch(error => {
+            console.error("Erreur lors de la déconnexion :", error);
+            alert("Erreur de connexion au serveur");
+        });
+}
+
+function test() {
+    window.location.href = "/profil";
 }

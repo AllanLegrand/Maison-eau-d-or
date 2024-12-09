@@ -49,7 +49,7 @@ class ProduitsModel extends Model
 		return $query->countAllResults();
 	}
 
-	public function getProduitsParCategorie(?int $idCat = null, int $perPage = 0, int $offset = 0, bool $admin = false): array
+	public function getProduitsParCategorie(?int $idCat = null, int $perPage = 0, int $offset = 0, bool $admin = false, ?string $sortField = null, ?string $sortDirection = null): array
 	{
 		if(!$admin)
 			$query = $this->where(['actif' => true])->select('*');
@@ -61,8 +61,16 @@ class ProduitsModel extends Model
 				->where('prodcat.id_cat', $idCat);
 		}
 
+		// Appliquer le tri si spécifié
+		if ($sortField && $sortDirection) {
+			$query->orderBy($sortField, $sortDirection);
+		}
+
 		return $query->findAll($perPage ?: null, $offset);
 	}
+
+	
+
 
 	public function getProduitById(int $id_prod)
 	{
