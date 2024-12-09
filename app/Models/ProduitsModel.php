@@ -61,8 +61,6 @@ class ProduitsModel extends Model
 		return $query->findAll($perPage ?: null, $offset);
 	}
 
-	
-
 
 	public function getProduitById(int $id_prod)
 	{

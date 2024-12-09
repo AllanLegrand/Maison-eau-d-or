@@ -64,11 +64,12 @@
                 </div>
             </div>
         </nav>
-    <!-- Bootstrap JavaScript (optional for interactive elements) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Custom JavaScript -->
-    <script src="/assets/js/header.js"></script>
+        <!-- Bootstrap JavaScript (optional for interactive elements) -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Custom JavaScript -->
+        <script src="/assets/js/header.js"></script>
     </header>
+
     <div id="cartSidebar" class="cart-sidebar">
         <div class="cart-header">
             <h5>Votre Panier</h5>

@@ -26,10 +26,10 @@
                 }
             ?>
             <?php if ($categorieActive): ?>
-                <h2 class="text-center bordergold">Découvrez nos produits <?= esc($categorieActive['nom']) ?></h2>
+                <h1 class="text-center bordergold mrg-top">Découvrez nos produits <?= esc($categorieActive['nom']) ?></h1>
             <?php endif; ?>
         <?php else: ?>
-            <h2 class="text-center bordergold">Découvrez tout nos produits</h2>
+            <h1 class="text-center bordergold mrg-top">Découvrez tout nos produits</h1>
         <?php endif; ?>
 
         <!-- Tri -->
@@ -101,8 +101,6 @@
         </div>
     </div>
 </div>
-
-
 
 <script src="/assets/js/boutique.js"></script>
 
