@@ -4,6 +4,8 @@ namespace App\Controllers;
 use App\Models\ProduitsModel;
 use App\Models\CategoriesModel;
 use App\Models\PanierModel;
+use App\Models\CommandesModel;
+use App\Models\HistoriqueModel;
 use App\Models\UtilisateursModel;
 use App\Config\Pager;
 
@@ -228,5 +230,98 @@ class BoutiqueController extends BaseController
 		$model->insert($data);
 
 		return redirect()->to('/boutique')->with('message', 'Produit ajouté avec succès !');
+	}
+
+	public function commande()
+	{
+		$session = session();
+
+		if (!$session->has('id_util')) {
+			return redirect()->to('/signin');
+		}
+
+		$id_sess = $session->get('id_util');
+
+		$panierModel = new PanierModel();
+		$panierItems = $panierModel->where('id_sess', $id_sess)
+								->orderBy('id_prod', 'ASC')
+								->findAll();
+
+		if (empty($panierItems)) {
+			return redirect()->to('/boutique');
+		}
+		$produitsModel = new ProduitsModel();
+		$orderDetails = [];
+		$total = 0;
+
+		foreach ($panierItems as $item) {
+			$produit = $produitsModel->find($item['id_prod']);
+			if ($produit) {
+				$orderDetails[] = [
+					'nom' => $produit['nom'],
+					'prix' => $produit['prix'],
+					'quantite' => $item['qt'],
+					'total' => $produit['prix'] * $item['qt']
+				];
+				$total += $produit['prix'] * $item['qt'];
+			}
+		}
+
+		$data = [
+			'orderDetails' => $orderDetails,
+			'total' => $total
+		];
+
+		echo view('header', ['title' => 'Commande']);
+		echo view('commande', $data);
+		echo view('footer');
+	}
+
+	public function finalizeOrder()
+	{
+		$session = session();
+
+		if (!$session->has('id_util')) {
+			alert("Une erreur est survenue, reconnectez-vous pour finaliser votre commande");
+			return redirect()->to('/accueil');
+		}
+
+		$id_sess = $session->get('id_util');
+
+		$panierModel = new PanierModel();
+		$produitsModel = new ProduitsModel();
+		$commandesModel = new CommandesModel();
+		$historiqueModel = new HistoriqueModel();
+
+		$panierItems = $panierModel->where('id_sess', $id_sess)->findAll();
+		
+		if (empty($panierItems)) {
+			return $this->response->setJSON(['success' => false, 'message' => 'Le panier est vide.']);
+		}
+
+		$commandeData = [
+			'id_util' => $session->get('id_util'),
+			'date' => date('Y-m-d H:i:s')
+		];
+		$commandesModel->ajouterCommandes($commandeData);
+
+		$id_com = $commandesModel->getInsertID();
+
+		foreach ($panierItems as $item) {
+			$produit = $produitsModel->find($item['id_prod']);
+			
+			if ($produit) {
+				$historiqueData = [
+					'id_com' => $id_com,
+					'id_prod' => $item['id_prod'],
+					'qt' => $item['qt']
+				];
+				$historiqueModel->ajouterHistorique($historiqueData);
+			}
+		}
+
+		$panierModel->where('id_sess', $id_sess)->delete();
+
+		return $this->response->setJSON(['success' => true, 'message' => 'Commande finalisée avec succès !']);
 	}
 }

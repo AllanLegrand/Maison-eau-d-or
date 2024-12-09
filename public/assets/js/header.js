@@ -83,6 +83,9 @@ function loadCartItems() {
             });
             const totalElement = document.getElementById("cartTotal");
             totalElement.innerHTML = `Total: ${total} €`;
+
+            const finalizeButton = document.querySelector(".finalize-button");
+            finalizeButton.onclick = () => window.location.href = '/commande';
         })
         .catch(error => console.error("Error loading cart items:", error));
 }
