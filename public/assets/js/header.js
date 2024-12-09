@@ -103,7 +103,7 @@ function updateQuantity(productId, newQuantity) {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                loadCartItems(); // Recharge les éléments du panier après mise à jour
+                loadCartItems();
             } else {
                 alert("Erreur lors de la mise à jour de la quantité.");
             }
@@ -184,4 +184,8 @@ function disconnect() {
             console.error("Erreur lors de la déconnexion :", error);
             alert("Erreur de connexion au serveur");
         });
+}
+
+function test() {
+    window.location.href = "/profil";
 }

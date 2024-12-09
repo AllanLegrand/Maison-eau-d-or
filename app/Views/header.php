@@ -76,7 +76,7 @@
         </div>
         <div id="cartItems"></div>
         <div id="cartTotal"></div>
-        <button class="finalize-button">Modifier mes informations</button>
+        <button class="finalize-button">Finaliser la commande</button>
     </div>
 
     <div id="userSidebar" class="user-sidebar">
@@ -85,6 +85,6 @@
             <span class="close-cross" onclick="closeUserSidebar()">×</span>
         </div>
         <div id="userDetails"></div>
-        <button class="editProfil">Modifier mes informations</button>
+        <button class="editProfil" onClick="test()">Modifier mes informations</button>
         <button class="deconnexion" onClick="disconnect()">Se déconnecter</button>
     </div>
