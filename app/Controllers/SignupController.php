@@ -32,7 +32,6 @@ class SignupController extends BaseController
 				'rules' => 'required|alpha|min_length[2]|max_length[50]',
 				'errors' => [
 					'required' => 'Le nom est obligatoire.',
-					'alpha' => 'Le nom ne peut contenir que des lettres.',
 					'min_length' => 'Le nom doit contenir au moins 2 caractères.',
 					'max_length' => 'Le nom ne peut pas dépasser 50 caractères.'
 				],
@@ -41,7 +40,6 @@ class SignupController extends BaseController
 				'rules' => 'required|alpha|min_length[2]|max_length[50]',
 				'errors' => [
 					'required' => 'Le prénom est obligatoire.',
-					'alpha' => 'Le prénom ne peut contenir que des lettres.',
 					'min_length' => 'Le prénom doit contenir au moins 2 caractères.',
 					'max_length' => 'Le prénom ne peut pas dépasser 50 caractères.'
 				],

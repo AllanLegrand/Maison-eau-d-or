@@ -1,6 +1,7 @@
 <?php
 namespace App\Controllers;
 
+use App\Models\ProdCatModel;
 use App\Models\ProduitsModel;
 use App\Models\CategoriesModel;
 use App\Models\PanierModel;
@@ -30,8 +31,9 @@ class BoutiqueController extends BaseController
 		$catId = $this->request->getGet('cat');
 		$catId = ($catId === null || $catId === '') ? null : (int)$catId;
 
-		$produits = $produitsModel->getProduitsParCategorie($catId, $perPage, $offset);
-		$totalProduits = $produitsModel->getTotalProduitsParCategorie($catId);
+		$produits = $produitsModel->getProduitsParCategorie($catId, $perPage, $offset, $admin);
+		
+		$totalProduits = $produitsModel->getTotalProduitsParCategorie($catId, $admin);
 
 		foreach ($produits as &$produit) {
 			$imagePath = './assets/img/' . $produit['img_path'];
@@ -40,12 +42,16 @@ class BoutiqueController extends BaseController
 			}
 		}
 
+		$modelProdCat = new ProdCatModel();
+		$dictionnaire = $modelProdCat->getProdCatDictionary();
+
 		$data = [
 			'categories' => $categories,
 			'produits' => $produits,
 			'currentCategory' => $catId,
 			'pager' => $pager->makeLinks($currentPage, $perPage, $totalProduits, 'default_full'),
-			'admin' => $admin
+			'admin' => $admin,
+			'dicProdCat' => $dictionnaire,
 		];
 
 		echo view('header', ['title' => 'Boutique']);
@@ -199,6 +205,99 @@ class BoutiqueController extends BaseController
 		$model = new ProduitsModel();
 		$model->insert($data);
 
+		$categories = $this->request->getPost('categories');
+
+		$modelCat = new ProdCatModel();
+		$data = [
+			'id_prod' => $model->getInsertID(),
+		];
+
+		foreach($categories as $categorie) {
+			$data['id_cat'] = $categorie;
+
+			$modelCat->insert($data);
+		}
+
 		return redirect()->to('/boutique')->with('message', 'Produit ajouté avec succès !');
+	}
+
+	public function editProduit() {
+		$session = session();
+
+		$utilisateurModel = new UtilisateursModel();
+
+		if(!$session->get('isLoggedIn') || !$utilisateurModel->isAdmin($session->get('id_util'))) {
+			return redirect()->to('/Accueil');
+		}
+
+		$image = $this->request->getFile('image');
+
+		$id_prod = $this->request->getPost('id_prod');
+
+		$data = [
+			'nom' => $this->request->getPost('nom'),
+			'prix' => $this->request->getPost('prix'),
+			'description' => $this->request->getPost('description'),
+			'actif' => $this->request->getPost('actif')
+		];
+
+		if ($image && $image->isValid() && !$image->hasMoved()) {
+			$targetPath = 'assets/img';
+		
+			// Vérifier si le dossier existe, sinon le créer
+			if (!is_dir($targetPath)) {
+				mkdir($targetPath, 0755, true);
+			}
+		
+			// Renommer l'image pour éviter les conflits
+			$newName = $image->getRandomName();
+		
+			// Déplacer l'image vers le dossier uploads
+			$image->move($targetPath, $newName);
+		
+			$data['img_path'] = $newName;
+		}
+		
+		$model = new ProduitsModel();
+		if (!$model->find($id_prod)) {
+			return redirect()->back()->with('error', 'Produit introuvable.');
+		}
+		$model->update($id_prod, $data);
+
+		$categories = $this->request->getPost('categories');
+
+		$modelCat = new ProdCatModel();
+
+		$modelCat->reintialiseProdCat($id_prod);
+
+		foreach($categories as $categorie) {
+			$data = [
+				'id_prod' => $id_prod,
+				'id_cat' => $categorie
+			];
+
+			$modelCat->insertComposite($data);
+		}
+
+		return redirect()->to('/boutique')->with('message', 'Produit ajouté avec succès !');
+	}
+
+	public function suppProduit(int $id_prod) {
+		$session = session();
+
+		$utilisateurModel = new UtilisateursModel();
+
+		if(!$session->get('isLoggedIn') || !$utilisateurModel->isAdmin($session->get('id_util'))) {
+			return redirect()->to('/Accueil');
+		}
+
+		$model = new ProduitsModel();
+
+		if($model->delete($id_prod)) {
+			return redirect()->back()->with('message', 'Produit supprimé avec succès.');
+		}
+		else {
+			return redirect()->back()->with('error', 'Erreur lors de la suppression du produit.');
+		}
 	}
 }

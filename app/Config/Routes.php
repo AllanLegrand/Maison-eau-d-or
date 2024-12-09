@@ -34,3 +34,8 @@ $routes->post('panier/removeItem', 'BoutiqueController::removeItem');
 
 $routes->get('/rechercheProduit', 'BoutiqueController::rechercherProduitByNom');
 $routes->get('/rechercheProduit', 'BoutiqueController::rechercherProduitByNom');
+
+$routes->post('/addProduit', 'BoutiqueController::addProduit');
+$routes->get('/suppProduit/(:num)', 'BoutiqueController::suppProduit/$1');
+
+$routes->post('/editProduit', 'BoutiqueController::editProduit');
