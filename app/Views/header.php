@@ -85,6 +85,6 @@
             <span class="close-cross" onclick="closeUserSidebar()">×</span>
         </div>
         <div id="userDetails"></div>
-        <button class="editProfil" onClick="test()">Modifier mes informations</button>
+        <button class="editProfil" onClick="test()">Plus d'informations</button>
         <button class="deconnexion" onClick="disconnect()">Se déconnecter</button>
     </div>
