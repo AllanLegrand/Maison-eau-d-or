@@ -1,9 +1,12 @@
 <?php
 namespace App\Controllers;
 
+use App\Models\ProdCatModel;
 use App\Models\ProduitsModel;
 use App\Models\CategoriesModel;
 use App\Models\PanierModel;
+use App\Models\CommandesModel;
+use App\Models\HistoriqueModel;
 use App\Models\UtilisateursModel;
 use App\Config\Pager;
 
@@ -56,8 +59,9 @@ class BoutiqueController extends BaseController
 		}
 
 		// Charger les produits selon catégorie et tri
-		$produits = $produitsModel->getProduitsParCategorie($catId, $perPage, $offset, $sortField, $sortDirection);
-		$totalProduits = $produitsModel->getTotalProduitsParCategorie($catId);
+		$produits = $produitsModel->getProduitsParCategorie($catId, $perPage, $offset, $admin, $sortField, $sortDirection);
+		
+		$totalProduits = $produitsModel->getTotalProduitsParCategorie($catId, $admin);
 
 		foreach ($produits as &$produit) {
 			$imagePath = './assets/img/' . $produit['img_path'];
@@ -66,18 +70,22 @@ class BoutiqueController extends BaseController
 			}
 		}
 
+		$modelProdCat = new ProdCatModel();
+		$dictionnaire = $modelProdCat->getProdCatDictionary();
+
 		$data = [
 			'categories' => $categories,
 			'produits' => $produits,
 			'currentCategory' => $catId,
 			'currentSort' => $currentSort,
 			'pager' => $pager->makeLinks($currentPage, $perPage, $totalProduits, 'default_full'),
-			'admin' => $admin
+			'admin' => $admin,
+			'dicProdCat' => $dictionnaire,
 		];
 
 		echo view('header', ['title' => 'Boutique']);
 		echo view('boutique', $data);
-		echo view('footer');
+		echo view('footer'); 
 	}
 
 
@@ -227,6 +235,211 @@ class BoutiqueController extends BaseController
 		$model = new ProduitsModel();
 		$model->insert($data);
 
+		$categories = $this->request->getPost('categories');
+
+		$modelCat = new ProdCatModel();
+		$data = [
+			'id_prod' => $model->getInsertID(),
+		];
+
+		foreach($categories as $categorie) {
+			$data['id_cat'] = $categorie;
+
+			$modelCat->insertComposite($data);
+		}
+
 		return redirect()->to('/boutique')->with('message', 'Produit ajouté avec succès !');
+	}
+
+	public function editProduit() {
+		$session = session();
+
+		$utilisateurModel = new UtilisateursModel();
+
+		if(!$session->get('isLoggedIn') || !$utilisateurModel->isAdmin($session->get('id_util'))) {
+			return redirect()->to('/Accueil');
+		}
+
+		$image = $this->request->getFile('image');
+
+		$id_prod = $this->request->getPost('id_prod');
+
+		$data = [
+			'nom' => $this->request->getPost('nom'),
+			'prix' => $this->request->getPost('prix'),
+			'description' => $this->request->getPost('description'),
+			'actif' => $this->request->getPost('actif')
+		];
+
+		if ($image && $image->isValid() && !$image->hasMoved()) {
+			$targetPath = 'assets/img';
+		
+			// Vérifier si le dossier existe, sinon le créer
+			if (!is_dir($targetPath)) {
+				mkdir($targetPath, 0755, true);
+			}
+		
+			// Renommer l'image pour éviter les conflits
+			$newName = $image->getRandomName();
+		
+			// Déplacer l'image vers le dossier uploads
+			$image->move($targetPath, $newName);
+		
+			$data['img_path'] = $newName;
+		}
+		
+		$model = new ProduitsModel();
+		if (!$model->find($id_prod)) {
+			return redirect()->back()->with('error', 'Produit introuvable.');
+		}
+		$model->update($id_prod, $data);
+
+		$categories = $this->request->getPost('categories');
+
+		$modelCat = new ProdCatModel();
+
+		$modelCat->reintialiseProdCat($id_prod);
+
+		foreach($categories as $categorie) {
+			$data = [
+				'id_prod' => $id_prod,
+				'id_cat' => $categorie
+			];
+
+			$modelCat->insertComposite($data);
+		}
+
+		return redirect()->to('/boutique')->with('message', 'Produit ajouté avec succès !');
+	}
+
+	public function suppProduit(int $id_prod) {
+		$session = session();
+
+		$utilisateurModel = new UtilisateursModel();
+
+		if(!$session->get('isLoggedIn') || !$utilisateurModel->isAdmin($session->get('id_util'))) {
+			return redirect()->to('/Accueil');
+		}
+
+		$model = new ProduitsModel();
+
+		if($model->delete($id_prod)) {
+			return redirect()->back()->with('message', 'Produit supprimé avec succès.');
+		}
+		else {
+			return redirect()->back()->with('error', 'Erreur lors de la suppression du produit.');
+		}
+	}
+
+	public function commande()
+	{
+		$session = session();
+
+		if (!$session->has('id_util')) {
+			return redirect()->to('/signin');
+		}
+
+		$id_sess = $session->get('id_util');
+
+		$panierModel = new PanierModel();
+		$panierItems = $panierModel->where('id_sess', $id_sess)
+								->orderBy('id_prod', 'ASC')
+								->findAll();
+
+		if (empty($panierItems)) {
+			return redirect()->to('/boutique');
+		}
+		$produitsModel = new ProduitsModel();
+		$orderDetails = [];
+		$total = 0;
+
+		foreach ($panierItems as $item) {
+			$produit = $produitsModel->find($item['id_prod']);
+			if ($produit) {
+				$orderDetails[] = [
+					'nom' => $produit['nom'],
+					'prix' => $produit['prix'],
+					'quantite' => $item['qt'],
+					'total' => $produit['prix'] * $item['qt']
+				];
+				$total += $produit['prix'] * $item['qt'];
+			}
+		}
+
+		$data = [
+			'orderDetails' => $orderDetails,
+			'total' => $total
+		];
+
+		echo view('header', ['title' => 'Commande']);
+		echo view('commande', $data);
+		echo view('footer');
+	}
+
+	public function finalizeOrder()
+	{
+		$session = session();
+
+		if (!$session->has('id_util')) {
+			alert("Une erreur est survenue, reconnectez-vous pour finaliser votre commande");
+			return redirect()->to('/accueil');
+		}
+
+		$id_sess = $session->get('id_util');
+
+		$panierModel = new PanierModel();
+		$produitsModel = new ProduitsModel();
+		$commandesModel = new CommandesModel();
+		$historiqueModel = new HistoriqueModel();
+
+		$panierItems = $panierModel->where('id_sess', $id_sess)->findAll();
+		
+		if (empty($panierItems)) {
+			return $this->response->setJSON(['success' => false, 'message' => 'Le panier est vide.']);
+		}
+
+		$commandeData = [
+			'id_util' => $session->get('id_util'),
+			'date' => date('Y-m-d H:i:s')
+		];
+		$commandesModel->ajouterCommandes($commandeData);
+
+		$id_com = $commandesModel->getInsertID();
+
+		foreach ($panierItems as $item) {
+			$produit = $produitsModel->find($item['id_prod']);
+			
+			if ($produit) {
+				$historiqueData = [
+					'id_com' => $id_com,
+					'id_prod' => $item['id_prod'],
+					'qt' => $item['qt']
+				];
+				$historiqueModel->ajouterHistorique($historiqueData);
+			}
+		}
+
+		$panierModel->where('id_sess', $id_sess)->delete();
+
+		return $this->response->setJSON(['success' => true, 'message' => 'Commande finalisée avec succès !']);
+	}
+
+	public function addCategorie() {
+		$session = session();
+
+		$utilisateurModel = new UtilisateursModel();
+
+		if(!$session->get('isLoggedIn') || !$utilisateurModel->isAdmin($session->get('id_util'))) {
+			return redirect()->to('/Accueil');
+		}
+
+		$data = [
+			'nom' => $this->request->getPost('nom')
+		];
+		
+		$model = new CategoriesModel();
+		$model->insert($data);
+
+		return redirect()->to('/boutique')->with('message', 'Categorie ajouté avec succès !');
 	}
 }

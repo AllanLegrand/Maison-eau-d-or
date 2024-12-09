@@ -29,24 +29,32 @@ class ProduitsModel extends Model
 		return $this->delete($id_prod);
 	}
 
-	public function getTotalProduitsParCategorie(?int $idCat = null): int 
+	public function getTotalProduitsParCategorie(?int $idCat = null, bool $admin = false): int 
 	{
-		$query = $this->where(['actif' => true]);
+		if(!$admin)
+			$query = $this->where(['actif' => true]);
+		else
+			$query = $this;
 
 		if ($idCat !== null) {
 			$query->join('prodcat', 'produits.id_prod = prodcat.id_prod')
 				->where('prodcat.id_cat', $idCat);
 		}
 		else {
-			return $this->where(['actif' => true])->select('*')->countAllResults();
+			if($admin)
+				return $this->select('*')->countAllResults();
+			return $this->where(['actif' => !$admin])->select('*')->countAllResults();
 		}
 
 		return $query->countAllResults();
 	}
 
-	public function getProduitsParCategorie(?int $idCat = null, int $perPage = 0, int $offset = 0, ?string $sortField = null, ?string $sortDirection = null): array
+	public function getProduitsParCategorie(?int $idCat = null, int $perPage = 0, int $offset = 0, bool $admin = false, ?string $sortField = null, ?string $sortDirection = null): array
 	{
-		$query = $this->where(['actif' => true])->select('*');
+		if(!$admin)
+			$query = $this->where(['actif' => true])->select('*');
+		else
+			$query = $this->select('*');
 
 		if ($idCat !== null) {
 			$query->join('prodcat', 'produits.id_prod = prodcat.id_prod')

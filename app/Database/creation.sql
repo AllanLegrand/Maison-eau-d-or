@@ -42,13 +42,13 @@ CREATE TABLE Commandes (
 CREATE TABLE Historique (
 	id_com INTEGER REFERENCES Commandes(id_com),
 	id_prod INTEGER REFERENCES Produits(id_prod),
-	qt INTEGER,
+	qt INTEGER CHECK (qt > 0),
 	PRIMARY KEY(id_com, id_prod)
 );
 
 /*Liste de produit présent dans le panier des utilisateurs*/
 CREATE TABLE Panier (
-	id_prod INTEGER REFERENCES Produits(id_prod),
+	id_prod INTEGER REFERENCES Produits(id_prod) ON DELETE CASCADE,
 	id_sess VARCHAR(255),
 	qt INTEGER DEFAULT 0,
 	PRIMARY KEY(id_prod, id_sess)
@@ -61,9 +61,8 @@ CREATE TABLE Categories (
 
 /*Table liant les produits a leurs catégories*/
 CREATE TABLE ProdCat (
-	id_prod INTEGER REFERENCES Produits(id_prod),
-	id_cat INTEGER REFERENCES Categories(id_cat),
-
+	id_prod INTEGER REFERENCES Produits(id_prod) ON DELETE CASCADE,
+	id_cat INTEGER REFERENCES Categories(id_cat) ON DELETE CASCADE,
 	PRIMARY KEY(id_prod, id_cat)
 );
 

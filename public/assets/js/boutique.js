@@ -71,6 +71,37 @@ window.onclick = function(event) {
     }
 }
 
+function openAddArticleModal() {
+    document.getElementById('addProductModal').style.display = 'flex';
+}
+
+function closeAddProductModal() {
+    document.getElementById('addProductModal').style.display = 'none';
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function openEditArticleModal(event, prod, dicProdCat) {
+    event.stopPropagation();
+    document.getElementById('editProductModal').style.display = 'flex';
+    document.getElementById('productId').value = prod.id_prod;
+    document.getElementById('productName').value = prod.nom;
+    document.getElementById('productPrice').value = prod.prix;
+    document.getElementById('productDescription').value = prod.description;
+    document.getElementById('productStatus').value = prod.actif === "t" ? 1 : 0;
+
+    dicProdCat.forEach(cat => {
+        document.getElementById("categoryCheckbox" +cat).checked = true;
+    })
+}
+
+
+
+function closeEditProductModal() {
+    document.getElementById('editProductModal').style.display = 'none';
+}
 document.getElementById('sort').addEventListener('change', function () {
     const form = this.form;
 
@@ -86,3 +117,11 @@ document.getElementById('sort').addEventListener('change', function () {
 
     form.submit();
 });
+
+function openModalAddCategorie() {
+    document.getElementById('addCategorieModal').style.display = 'flex';
+}
+
+function closeAddCategorieModal() {
+    document.getElementById('addCategorieModal').style.display = 'none';
+}
