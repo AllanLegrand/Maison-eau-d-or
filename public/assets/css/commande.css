@@ -1,6 +1,9 @@
 .commande {
-	padding-top: 20px;
-	min-height: 700px;
+	width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+	min-height: 780px;
 }
 
 .table {
