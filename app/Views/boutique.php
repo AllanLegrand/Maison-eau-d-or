@@ -15,10 +15,27 @@
             <?php endforeach; ?>
         </div>
 
+        <?php if(!is_null($currentCategory)): ?>
+            <?php 
+                $categorieActive = null;
+                foreach ($categories as $categorie) {
+                    if ($categorie['id_cat'] == $currentCategory) {
+                        $categorieActive = $categorie;
+                        break;
+                    }
+                }
+            ?>
+            <?php if ($categorieActive): ?>
+                <h2 class="text-center bordergold">Découvrez nos produits <?= esc($categorieActive['nom']) ?></h2>
+            <?php endif; ?>
+        <?php else: ?>
+            <h2 class="text-center bordergold">Découvrez tout nos produits</h2>
+        <?php endif; ?>
+
         <!-- Tri -->
-        <div class="d-flex justify-content-end align-items-center mt-3">
-            <label for="sort" class="me-2">Trier par :</label>
-            <select name="sort" id="sort" class="form-select w-auto">
+        <div class="d-flex align-items-center mt-3 tri-align">
+            <label for="sort" class="me-2 lbltri">Trier par :</label>
+            <select name="sort" id="sort" class="form-select w-auto selecttri">
                 <option value="" <?= (empty($currentSort)) ? 'selected' : '' ?>>Par défaut</option>
                 <option value="price_asc" <?= ($currentSort == 'price_asc') ? 'selected' : '' ?>>Prix : croissant</option>
                 <option value="price_desc" <?= ($currentSort == 'price_desc') ? 'selected' : '' ?>>Prix : décroissant</option>
