@@ -13,8 +13,6 @@ document.getElementById('coffretsTitle').addEventListener('click', function () {
     document.getElementById('bestsellersTitle').classList.remove('active');
 });
 
-
-
 document.querySelectorAll('.carousel-container').forEach(carousel => {
     const wrapper = carousel.querySelector('.carousel-wrapper');
     const items = wrapper.querySelectorAll('.carousel-item');
@@ -49,3 +47,38 @@ document.querySelectorAll('.carousel-container').forEach(carousel => {
 
     window.addEventListener('resize', updateCarousel);
 });
+
+function addToCart(selectedProductId) {
+    const quantity = document.getElementById('quantity').value;
+    if (!selectedProductId) {
+        alert("Produit invalide.");
+        return;
+    }
+
+    fetch(`/Accueil/addToCart`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            id_prod: selectedProductId,
+            qt: parseInt(quantity)
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Erreur réseau.');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            alert(data.message || "Produit ajouté au panier !");
+        } else {
+            alert(data.error || "Une erreur s'est produite.");
+        }
+    })
+    .catch(error => {
+        alert("Une erreur s'est produite : " + error.message);
+    });
+}

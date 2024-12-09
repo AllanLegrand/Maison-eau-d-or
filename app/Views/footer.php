@@ -3,8 +3,8 @@
         <div class="container">
             <div class="footer-top d-flex justify-content-between align-items-center">
                 <div class="footer-links d-flex">
-                    <a href="#" class="footer-link">Condition générales</a>
-                    <a href="#" class="footer-link">Politique de confidentialité</a>
+                    <a href="<?= base_url('conditions_generales') ?>" class="footer-link">Condition générales</a>
+                    <a href="<?= base_url('politique_confidentialite') ?>" class="footer-link">Politique de confidentialité</a>
                     <a href="#" class="footer-link">FAQ</a>
                 </div>
                 <div class="footer-social d-flex align-items-center">

@@ -116,8 +116,6 @@
         </div>
     </section>
 
-
-
     <!-- Section Produit vedette -->
     <section class="my-5">
         <h2 class="text-center text-gradient">Notre produit vedette</h2>
@@ -131,7 +129,7 @@
                     <div class="c-flex">
                         <label for="quantity" class="me-2">Quantité</label>
                         <input type="number" id="quantity" name="quantity" min="1" max="10" value="1" class="form-control w-25 me-3">
-                        <button class="btn btn-dark btn-img">Ajouter au panier <img src="/assets/img/ajouter-panier.svg" class="img-btn"></button>
+                        <button class="btn btn-dark btn-img button-margin" onclick="addToCart(<?= $produitVedette['id_prod'] ?>)">Ajouter au panier <img src="/assets/img/ajouter-panier.svg" class="img-btn"></button>
                     </div>
                 </div>
             <?php else: ?>
@@ -150,7 +148,7 @@
 </main>
 
 <!-- Section newsletter -->
-<?php /*if($afficheNews):*/ ?>
+<?php if($afficheNews): ?>
     <!-- Bandeau Newsletter -->
     <section class="newsletter">
         <div class="container d-flex align-items-center justify-content-between">
@@ -165,6 +163,6 @@
             </div>
         </div>
     </section>
-<?php /* endif; */?>
+<?php endif; ?>
 
 <script src="/assets/js/accueil.js"></script>

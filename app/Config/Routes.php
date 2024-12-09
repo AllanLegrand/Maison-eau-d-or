@@ -8,6 +8,7 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/', 'Accueil::index');
 $routes->get('/', 'Home::index');
 $routes->get('/Accueil','Accueil::index');
+$routes->post('Accueil/addToCart', 'BoutiqueController::addToCart');
 
 $routes->get('/signup', 'SignupController::index'); 
 $routes->match(['get', 'post'], '/signup/store', 'SignupController::store');
@@ -38,3 +39,6 @@ $routes->post('panier/removeItem', 'BoutiqueController::removeItem');
 
 $routes->get('/rechercheProduit', 'BoutiqueController::rechercherProduitByNom');
 $routes->get('/rechercheProduit', 'BoutiqueController::rechercherProduitByNom');
+
+$routes->get('/conditions_generales', 'ConditionController::index');
+$routes->get('/politique_confidentialite', 'PolitiqueController::index');

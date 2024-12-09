@@ -31,3 +31,5 @@ class Accueil extends BaseController
 		echo view('footer');
 	}
 }
+
+?>
