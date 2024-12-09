@@ -176,10 +176,6 @@
     cursor: not-allowed;
 }
 
-h2{
-    margin-top: 30px;
-}
-
 .lbltri{
     font-size: 12px;
 }
@@ -324,6 +320,10 @@ h2{
         font-size: 12px;
         padding: 6px 15px;
     }
+}
+
+.mrg-top {
+    margin-top: 30px;
 }
 
 .admin-add {
