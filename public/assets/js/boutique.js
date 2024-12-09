@@ -117,3 +117,11 @@ document.getElementById('sort').addEventListener('change', function () {
 
     form.submit();
 });
+
+function openModalAddCategorie() {
+    document.getElementById('addCategorieModal').style.display = 'flex';
+}
+
+function closeAddCategorieModal() {
+    document.getElementById('addCategorieModal').style.display = 'none';
+}

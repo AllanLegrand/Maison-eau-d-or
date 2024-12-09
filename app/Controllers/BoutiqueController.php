@@ -59,7 +59,7 @@ class BoutiqueController extends BaseController
 		}
 
 		// Charger les produits selon catégorie et tri
-		$produits = $produitsModel->getProduitsParCategorie($catId, $perPage, $offset, $sortField, $sortDirection, $admin);
+		$produits = $produitsModel->getProduitsParCategorie($catId, $perPage, $offset, $admin, $sortField, $sortDirection);
 		
 		$totalProduits = $produitsModel->getTotalProduitsParCategorie($catId, $admin);
 
@@ -245,7 +245,7 @@ class BoutiqueController extends BaseController
 		foreach($categories as $categorie) {
 			$data['id_cat'] = $categorie;
 
-			$modelCat->insert($data);
+			$modelCat->insertComposite($data);
 		}
 
 		return redirect()->to('/boutique')->with('message', 'Produit ajouté avec succès !');
@@ -422,5 +422,24 @@ class BoutiqueController extends BaseController
 		$panierModel->where('id_sess', $id_sess)->delete();
 
 		return $this->response->setJSON(['success' => true, 'message' => 'Commande finalisée avec succès !']);
+	}
+
+	public function addCategorie() {
+		$session = session();
+
+		$utilisateurModel = new UtilisateursModel();
+
+		if(!$session->get('isLoggedIn') || !$utilisateurModel->isAdmin($session->get('id_util'))) {
+			return redirect()->to('/Accueil');
+		}
+
+		$data = [
+			'nom' => $this->request->getPost('nom')
+		];
+		
+		$model = new CategoriesModel();
+		$model->insert($data);
+
+		return redirect()->to('/boutique')->with('message', 'Categorie ajouté avec succès !');
 	}
 }

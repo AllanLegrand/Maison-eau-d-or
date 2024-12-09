@@ -46,7 +46,9 @@ $routes->get('/rechercheProduit', 'BoutiqueController::rechercherProduitByNom');
 
 $routes->post('/addProduit', 'BoutiqueController::addProduit');
 $routes->get('/suppProduit/(:num)', 'BoutiqueController::suppProduit/$1');
-
 $routes->post('/editProduit', 'BoutiqueController::editProduit');
+
 $routes->get('/conditions_generales', 'ConditionController::index');
 $routes->get('/politique_confidentialite', 'PolitiqueController::index');
+
+$routes->post('/addCategorie', 'BoutiqueController::addCategorie');
