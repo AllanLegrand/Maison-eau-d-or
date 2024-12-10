@@ -67,6 +67,34 @@ class ArticleController extends BaseController
 		$model = new ArticleModel();
 		$model->insert($data);
 
+		$this->sendNewsletterEmails($titre, $msg);
+
 		return redirect()->to('/blog')->with('message', 'Article ajouté avec succès !');
+	}
+
+	private function sendNewsletterEmails(string $titre, string $msg)
+	{
+		$utilisateurModel = new UtilisateursModel();
+
+		$subscribers = $utilisateurModel->getNewsletterSubscribers();
+
+		if (!empty($subscribers)) {
+			$email = \Config\Services::email();
+
+			foreach ($subscribers as $subscriber) {
+				$email->setTo($subscriber['email']);
+				$email->setFrom('no-reply@yourdomain.com', 'Votre Blog');
+				$email->setSubject('Maison Eau D\'Or | Nouvel article publié : ' . $titre);
+				$email->setMessage(
+					'<h1>' . $titre . '</h1>' .
+					'<p>' . nl2br($msg) . '</p>' .
+					'<p><a href="' . base_url('/blog') . '">Voir l\'article</a></p>'
+				);
+
+				if (!$email->send()) {
+					log_message('error', 'Échec de l\'envoi de l\'e-mail à ' . $subscriber['email']);
+				}
+			}
+		}
 	}
 }

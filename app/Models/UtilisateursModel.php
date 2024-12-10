@@ -45,4 +45,11 @@ class UtilisateursModel extends Model
 		return $this->select('admin')
 					->where('id_util', $id_util)->get()->getResultArray()[0]['admin'] === 't';
 	}
+
+	public function getNewsletterSubscribers(): array
+	{
+		return $this->select('email')
+					->where('news', true)
+					->findAll();
+	}
 }
