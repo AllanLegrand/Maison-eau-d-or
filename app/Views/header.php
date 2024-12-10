@@ -89,3 +89,27 @@
         <button class="editProfil" onClick="test()">Plus d'informations</button>
         <button class="deconnexion" onClick="disconnect()">Se déconnecter</button>
     </div>
+
+    <!-- Modal -->
+    <div id="productModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <!-- Croix pour fermer -->
+            <span class="close-cross" onclick="closeModal()">&times;</span>
+
+            <div class="d-flex flex-wrap justify-content-center align-items-center modal-border modal-row">
+                <img id="modalProductImage" src="/assets/img/default.png" class="img-fluid" alt="Image produit">
+                <div class="col-md-6">
+                    <h3 id="modalProductName"></h3>
+                    <p id="modalProductDescription"></p>
+                    <p>Prix : <strong class="doree" id="modalProductPrice"></strong></p>
+                    <div class="c-flex">
+                        <label for="quantity" class="me-2">Quantité</label>
+                        <input type="number" id="quantity" name="quantity" min="1" max="10" value="1" class="form-control w-25 me-3">
+                        <button onclick="addToCart()" class="btn btn-dark btn-img">Ajouter au panier 
+                            <img src="/assets/img/ajouter-panier.svg" class="img-btn">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
