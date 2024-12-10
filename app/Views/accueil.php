@@ -1,3 +1,6 @@
+
+
+<main class="container my-5">
 <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
     <!-- Indicateurs du carrousel -->
     <div class="carousel-indicators">
@@ -46,8 +49,6 @@
         <span class="visually-hidden">Suivant</span>
     </button>
 </div>
-
-<main class="container my-5">
     <!-- Section choix Bestsellers ou Coffrets -->
     <section class="my-5">
         <div class="text-center bordergold">
@@ -59,13 +60,28 @@
         <!-- Contenu Bestsellers -->
         <div id="bestsellersContent" class="carousel slide mt-4" data-bs-ride="carousel">
             <div class="carousel-inner">
-                <?php foreach(array_chunk($produitsBestsellers, 3) as $index => $row): ?>
+                <?php
+                // Divisez les produits en groupes de 3 pour afficher sur plusieurs lignes
+                $chunks = array_chunk($produitsBestsellers, 3);
+                foreach ($chunks as $index => $row):
+                ?>
                     <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
                         <div class="carousel-container d-flex justify-content-center">
-                            <?php foreach($row as $produitBestseller): ?>
-                                <div class="product-item mx-3">
-                                    <img src="/assets/img/<?= esc($produitBestseller['img_path']) ?>" alt="<?= esc($produitBestseller['nom']) ?>">
-                                    <p><?= esc($produitBestseller['nom']) ?><br><strong class="doree"><?= esc($produitBestseller['prix']) ?> €</strong></p>
+                            <?php foreach ($row as $produitBestseller): ?>
+                                <div class="product-item col-12 col-sm-6 col-md-4 col-xl-3 mx-3" onclick="openModal(<?= $produitBestseller['id_prod'] ?>)">
+                                    <?php 
+                                        $imagePath = base_url('assets/img/' . $produitBestseller['img_path']);
+                                        $defaultImage = base_url('assets/img/default.png');
+                                    ?>
+                                    <img 
+                                        src="<?= file_exists('./assets/img/' . $produitBestseller['img_path']) ? $imagePath : $defaultImage ?>" 
+                                        alt="<?= esc($produitBestseller['nom']) ?>" 
+                                        class="product-img">
+                                    
+                                    <div class="product-info text-center">
+                                        <h5 class="product-title"><?= esc($produitBestseller['nom']) ?></h5>
+                                        <p class="product-prix doree"><?= esc($produitBestseller['prix']) ?> €</p>
+                                    </div>
                                 </div>
                             <?php endforeach; ?>
                         </div>
@@ -86,28 +102,43 @@
         <!-- Contenu Coffrets -->
         <div id="coffretsContent" class="carousel slide mt-4 d-none" data-bs-ride="carousel">
             <div class="carousel-inner">
-                <?php foreach(array_chunk($produitsCoffret, 3) as $index => $row): ?>
+                <?php
+                // Divisez les produits en groupes de 3 pour afficher sur plusieurs lignes
+                $chunks = array_chunk($produitsCoffret, 3);
+                foreach ($chunks as $index => $row):
+                ?>
                     <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
                         <div class="carousel-container d-flex justify-content-center">
-                            <?php foreach($row as $produitCoffret): ?>
-                                <div class="product-item mx-3">
-                                    <img src="/assets/img/<?= esc($produitCoffret['img_path']) ?>" alt="<?= esc($produitCoffret['nom']) ?>">
-                                    <p><?= esc($produitCoffret['nom']) ?><br><strong class="doree"><?= esc($produitCoffret['prix']) ?> €</strong></p>
+                            <?php foreach ($row as $produitCoffret): ?>
+                                <div class="product-item col-12 col-sm-6 col-md-4 col-xl-3 mx-3" onclick="openModal(<?= $produitCoffret['id_prod'] ?>)">
+                                    <?php 
+                                        $imagePath = base_url('assets/img/' . $produitCoffret['img_path']);
+                                        $defaultImage = base_url('assets/img/default.png');
+                                    ?>
+                                    <img 
+                                        src="<?= file_exists('./assets/img/' . $produitCoffret['img_path']) ? $imagePath : $defaultImage ?>" 
+                                        alt="<?= esc($produitCoffret['nom']) ?>" 
+                                        class="product-img">
+                                    
+                                    <div class="product-info text-center">
+                                        <h5 class="product-title"><?= esc($produitCoffret['nom']) ?></h5>
+                                        <p class="product-prix doree"><?= esc($produitCoffret['prix']) ?> €</p>
+                                    </div>
                                 </div>
                             <?php endforeach; ?>
                         </div>
                     </div>
                 <?php endforeach; ?>
-                <!-- Contrôles pour le carrousel avec flèches -->
-                <button class="carousel-control-prev custom-prev" type="button" data-bs-target="#coffretsContent" data-bs-slide="prev">
-                    <img src="/assets/icons/arrow-left.svg" alt="Previous" class="custom-arrow">
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next custom-next" type="button" data-bs-target="#coffretsContent" data-bs-slide="next">
-                    <img src="/assets/icons/arrow-right.svg" alt="Next" class="custom-arrow">
-                    <span class="visually-hidden">Next</span>
-                </button>
             </div>
+            <!-- Contrôles pour le carrousel avec flèches -->
+            <button class="carousel-control-prev custom-prev" type="button" data-bs-target="#coffretsContent" data-bs-slide="prev">
+                <img src="/assets/img/back.png" alt="Previous" class="custom-arrow">
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next custom-next" type="button" data-bs-target="#coffretsContent" data-bs-slide="next">
+                <img src="/assets/img/next.png" alt="Next" class="custom-arrow">
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
 
         <!-- Voir tous les produits -->
@@ -116,12 +147,20 @@
         </div>
     </section>
 
+
     <!-- Section Produit vedette -->
     <section class="my-5">
         <h2 class="text-center text-gradient">Notre produit vedette</h2>
         <div class="d-flex flex-wrap justify-content-center align-items-center mt-4">
             <?php if($produitVedette): ?>
-                <img src="/assets/img/<?=esc($produitVedette['img_path']) ?>" class="img-fluid" alt="<?=esc($produitVedette['nom'])?>">
+                <?php 
+                    $imagePath = base_url('assets/img/' . $produitVedette['img_path']);
+                    $defaultImage = base_url('assets/img/default.png');
+                ?>
+                <img 
+                    src="<?= file_exists('./assets/img/' . $produitVedette['img_path']) ? $imagePath : $defaultImage ?>" 
+                    alt="<?= esc($produitVedette['nom']) ?>" 
+                    class="img-fluid">
                 <div class="col-md-6">
                     <h3><?=esc($produitVedette['nom'])?></h3>
                     <p><?=esc($produitVedette['description'])?></p>
@@ -129,7 +168,7 @@
                     <div class="c-flex">
                         <label for="quantity" class="me-2">Quantité</label>
                         <input type="number" id="quantity" name="quantity" min="1" max="10" value="1" class="form-control w-25 me-3">
-                        <button class="btn btn-dark btn-img button-margin" onclick="addToCart(<?= $produitVedette['id_prod'] ?>)">Ajouter au panier <img src="/assets/img/ajouter-panier.svg" class="img-btn"></button>
+                        <button class="btn btn-dark btn-img button-margin" onclick="addToCart2(<?= $produitVedette['id_prod'] ?>)">Ajouter au panier <img src="/assets/img/ajouter-panier.svg" class="img-btn"></button>
                     </div>
                 </div>
             <?php else: ?>
@@ -164,5 +203,29 @@
         </div>
     </section>
 <?php endif; ?>
+
+<!-- Modal -->
+<div id="productModal" class="modal-overlay" style="display: none;">
+    <div class="modal-content">
+        <!-- Croix pour fermer -->
+        <span class="close-cross" onclick="closeModal()">&times;</span>
+
+        <div class="d-flex flex-wrap justify-content-center align-items-center modal-border modal-row">
+            <img id="modalProductImage" src="/assets/img/default.png" class="img-fluid" alt="Image produit">
+            <div class="col-md-6">
+                <h3 id="modalProductName"></h3>
+                <p id="modalProductDescription"></p>
+                <p>Prix : <strong class="doree" id="modalProductPrice"></strong></p>
+                <div class="c-flex">
+                    <label for="quantity" class="me-2">Quantité</label>
+                    <input type="number" id="quantity" name="quantity" min="1" max="10" value="1" class="form-control w-25 me-3">
+                    <button onclick="addToCart()" class="btn btn-dark btn-img">Ajouter au panier 
+                        <img src="/assets/img/ajouter-panier.svg" class="img-btn">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="/assets/js/accueil.js"></script>

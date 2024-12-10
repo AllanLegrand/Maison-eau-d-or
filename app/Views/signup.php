@@ -24,7 +24,7 @@
 			<form action="/signup/store" method="post">
 				<h3>Inscription</h3>
 
-				<label for="email">E-mail :</label>
+				<label for="email">E-mail <span class="required">*</span> :</label>
 				<input type="email" name="email" id="email" placeholder="Entrez votre adresse e-mail"
 					class="<?= isset($validation) && $validation->hasError('email') ? 'error-input' : '' ?>"
 					value="<?= old('email') ?>"
@@ -33,7 +33,7 @@
 					<span class="error-message"><?= $validation->getError('email') ?></span>
 				<?php endif; ?>
 
-				<label for="nom">Nom :</label>
+				<label for="nom">Nom <span class="required">*</span> :</label>
 				<input type="text" name="nom" id="nom" placeholder="Entrez votre nom"
 					class="<?= isset($validation) && $validation->hasError('nom') ? 'error-input' : '' ?>"
 					value="<?= old('nom') ?>"
@@ -42,7 +42,7 @@
 					<span class="error-message"><?= $validation->getError('nom') ?></span>
 				<?php endif; ?>
 
-				<label for="prenom">Prénom :</label>
+				<label for="prenom">Prénom <span class="required">*</span> :</label>
 				<input type="text" name="prenom" id="prenom" placeholder="Entrez votre prénom"
 					class="<?= isset($validation) && $validation->hasError('prenom') ? 'error-input' : '' ?>"
 					value="<?= old('prenom') ?>"
@@ -51,7 +51,7 @@
 					<span class="error-message"><?= $validation->getError('prenom') ?></span>
 				<?php endif; ?>
 
-				<label for="adresse">Adresse :</label>
+				<label for="adresse">Adresse <span class="required">*</span> :</label>
 				<input type="text" name="adresse" id="adresse" placeholder="Entrez votre adresse physique"
 					class="<?= isset($validation) && $validation->hasError('adresse') ? 'error-input' : '' ?>"
 					value="<?= old('adresse') ?>"
@@ -60,7 +60,7 @@
 					<span class="error-message"><?= $validation->getError('adresse') ?></span>
 				<?php endif; ?>
 
-				<label for="password">Mot de passe :</label>
+				<label for="password">Mot de passe <span class="required">*</span> :</label>
 				<input type="password" name="password" id="password" placeholder="Entrez votre mot de passe"
 					class="<?= isset($validation) && $validation->hasError('password') ? 'error-input' : '' ?>"
 					required>
@@ -68,7 +68,7 @@
 					<span class="error-message"><?= $validation->getError('password') ?></span>
 				<?php endif; ?>
 
-				<label for="confirmpassword">Confirmer le mot de passe :</label>
+				<label for="confirmpassword">Confirmer le mot de passe <span class="required">*</span> :</label>
 				<input type="password" name="confirmpassword" id="confirmpassword" placeholder="Confirmez votre mot de passe"
 					class="<?= isset($validation) && $validation->hasError('confirmpassword') ? 'error-input' : '' ?>"
 					required>

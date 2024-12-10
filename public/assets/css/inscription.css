@@ -158,6 +158,11 @@ form a:hover {
 	text-decoration: underline;
 }
 
+.required {
+    color: red;
+    font-weight: bold;
+}
+
 /* Media queries pour rendre l'affichage responsive */
 @media (max-width: 768px) {
 	.signin-container {

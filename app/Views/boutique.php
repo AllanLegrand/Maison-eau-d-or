@@ -28,22 +28,22 @@
 			<?php endif; ?>
 		</div>
 
-		<?php if (!is_null($currentCategory)): ?>
-			<?php
-			$categorieActive = null;
-			foreach ($categories as $categorie) {
-				if ($categorie['id_cat'] == $currentCategory) {
-					$categorieActive = $categorie;
-					break;
-				}
-			}
-			?>
-			<?php if ($categorieActive): ?>
-				<h2 class="text-center bordergold">Découvrez nos produits <?= esc($categorieActive['nom']) ?></h2>
-			<?php endif; ?>
-		<?php else: ?>
-			<h2 class="text-center bordergold">Découvrez tout nos produits</h2>
-		<?php endif; ?>
+        <?php if(!is_null($currentCategory)): ?>
+            <?php 
+                $categorieActive = null;
+                foreach ($categories as $categorie) {
+                    if ($categorie['id_cat'] == $currentCategory) {
+                        $categorieActive = $categorie;
+                        break;
+                    }
+                }
+            ?>
+            <?php if ($categorieActive): ?>
+                <h1 class="text-center bordergold mrg-top">Découvrez nos produits <?= esc($categorieActive['nom']) ?></h1>
+            <?php endif; ?>
+        <?php else: ?>
+            <h1 class="text-center bordergold mrg-top">Découvrez tous nos produits</h1>
+        <?php endif; ?>
 
 		<!-- Tri -->
 		<div class="d-flex align-items-center mt-3 tri-align">
@@ -286,6 +286,6 @@
 	</div>
 </div>
 
-
-
 <script src="/assets/js/boutique.js"></script>
+
+

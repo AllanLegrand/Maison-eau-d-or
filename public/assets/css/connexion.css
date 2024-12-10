@@ -132,6 +132,11 @@ form a:hover {
 	text-decoration: underline;
 }
 
+.required {
+    color: red;
+    font-weight: bold;
+}
+
 /* Media Queries pour les petits écrans */
 @media (max-width: 768px) {
 	.signin-container {

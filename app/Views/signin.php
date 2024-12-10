@@ -19,7 +19,7 @@
 			<form action="/SigninController/loginAuth" method="post">
 				<h3>Connexion</h3>
 
-				<label for="mail">E-mail :</label>
+				<label for="mail">E-mail <span class="required">*</span> :</label>
 				<input type="email" name="email" id="mail" placeholder="Entrez votre adresse e-mail"
 					class="<?= isset($validation) && $validation->hasError('email') ? 'error-input' : '' ?>"
 					value="<?= old('email') ?>" required>
@@ -27,7 +27,7 @@
 					<div class="error-msg"><?= $validation->getError('email') ?></div>
 				<?php endif; ?>
 
-				<label for="password">Mot de passe :</label>
+				<label for="password">Mot de passe <span class="required">*</span> :</label>
 				<input type="password" name="password" id="password" placeholder="Entrez votre mot de passe"
 					class="<?= isset($validation) && $validation->hasError('password') ? 'error-input' : '' ?>"
 					value="<?= old('password') ?>" required>
