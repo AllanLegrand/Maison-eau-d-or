@@ -66,7 +66,7 @@ class ArticleController extends BaseController
 		
 		$model = new ArticleModel();
 		$model->insert($data);
-	
+
 		return redirect()->to('/blog')->with('message', 'Article ajouté avec succès !');
 	}
 }

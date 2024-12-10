@@ -13,6 +13,12 @@
 				<button type="submit" name="cat" value="<?= $categorie['id_cat'] ?>"
 					class="category-btn <?= ($currentCategory == $categorie['id_cat']) ? 'active' : '' ?>">
 					<?= esc($categorie['nom']) ?>
+					<?php if ($admin): ?>
+						<img src="/assets/img/modif.svg" alt="Modifier" class="icon"
+							onclick="openModalEditCategorie(event, <?= htmlspecialchars(json_encode($categorie), ENT_QUOTES, 'UTF-8') ?>)" />
+						<img src="/assets/img/supp.svg" alt="Supprimer" class="icon"
+							onclick="if (confirm('Êtes-vous sûr de vouloir supprimer cette categorie ?')) location.href='/suppCategorie/<?= esc($categorie['id_cat']) ?>';" />
+					<?php endif; ?>
 				</button>
 			<?php endforeach; ?>
 			<?php if ($admin): ?>
@@ -69,9 +75,8 @@
 							<h5 class="product-title"><?= esc($produit['nom']) ?></h5>
 							<p class="product-prix doree"><?= esc($produit['prix']) ?> €</p>
 						</div>
-					</div>
 
-					<?php if ($admin): ?>
+						<?php if ($admin): ?>
 						<button class="btn btn-sm btn-outline-secondary edit-btn"
 							onclick="openEditArticleModal(event, <?= htmlspecialchars(json_encode($produit), ENT_QUOTES, 'UTF-8') ?>,<?= htmlspecialchars(json_encode(isset($dicProdCat[$produit['id_prod']]) ? $dicProdCat[$produit['id_prod']] : []), ENT_QUOTES, 'UTF-8') ?>)">
 							<i class="fa fa-pencil" aria-hidden="true"></i> Modifier
@@ -81,6 +86,9 @@
 							<i class="fa fa-pencil" aria-hidden="true"></i> Supprimer
 						</button>
 					<?php endif; ?>
+					</div>
+
+					
 				</div>
 			<?php endforeach; ?>
 		<?php else: ?>
@@ -220,10 +228,25 @@
 				<form id="addCategorieForm" action="<?= base_url('addCategorie') ?>" method="post">
 					<div class="mb-3">
 						<label for="productName" class="form-label">Nom de la categorie</label>
-						<input type="text" id="productName" name="nom" class="form-control" placeholder="Nom du produit"
+						<input type="text" id="productName" name="nom" class="form-control" placeholder="Nom de le categorie"
 							required>
 					</div>
 					<button type="submit" class="btn btn-dark w-100">Ajouter la catégorie</button>
+				</form>
+			</div>
+		</div>
+
+		<div id="editCategorieModal" class="modal-overlay" style="display: none;">
+			<div class="modal-content">
+				<span class="close-cross" onclick="closeEditCategorieModal()">&times;</span>
+				<h3 class="text-center mb-4">Ajouter une Catégorie</h3>
+				<form id="editCategorieForm" action="<?= base_url('editCategorie') ?>" method="post">
+					<div class="mb-3">
+						<label for="productName" class="form-label">Nom de la categorie</label>
+						<input type="text" id="productName" name="nom" class="form-control" placeholder="Nom de le categorie"
+							required>
+					</div>
+					<button type="submit" class="btn btn-dark w-100">Modifier la catégorie</button>
 				</form>
 			</div>
 		</div>

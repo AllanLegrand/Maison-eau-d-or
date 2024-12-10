@@ -29,7 +29,7 @@ class SignupController extends BaseController
 				],
 			],
 			'nom' => [
-				'rules' => 'required|alpha|min_length[2]|max_length[50]',
+				'rules' => 'required|min_length[2]|max_length[50]',
 				'errors' => [
 					'required' => 'Le nom est obligatoire.',
 					'min_length' => 'Le nom doit contenir au moins 2 caractères.',
@@ -37,7 +37,7 @@ class SignupController extends BaseController
 				],
 			],
 			'prenom' => [
-				'rules' => 'required|alpha|min_length[2]|max_length[50]',
+				'rules' => 'required|min_length[2]|max_length[50]',
 				'errors' => [
 					'required' => 'Le prénom est obligatoire.',
 					'min_length' => 'Le prénom doit contenir au moins 2 caractères.',
@@ -53,10 +53,10 @@ class SignupController extends BaseController
 				],
 			],
 			'password' => [
-				'rules' => 'required|min_length[6]|max_length[50]',
+				'rules' => 'required|min_length[4]|max_length[50]',
 				'errors' => [
 					'required' => 'Le mot de passe est obligatoire.',
-					'min_length' => 'Le mot de passe doit contenir au moins 6 caractères.',
+					'min_length' => 'Le mot de passe doit contenir au moins 4 caractères.',
 					'max_length' => 'Le mot de passe ne peut pas dépasser 50 caractères.'
 				],
 			],
