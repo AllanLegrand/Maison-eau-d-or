@@ -125,3 +125,12 @@ function openModalAddCategorie() {
 function closeAddCategorieModal() {
     document.getElementById('addCategorieModal').style.display = 'none';
 }
+
+function openModalEditCategorie(event, categorie) {
+    event.stopPropagation();
+    document.getElementById('editCategorieModal').style.display = 'flex';
+}
+
+function closeEditCategorieModal() {
+    document.getElementById('editCategorieModal').style.display = 'none';
+}

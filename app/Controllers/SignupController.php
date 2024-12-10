@@ -29,7 +29,7 @@ class SignupController extends BaseController
 				],
 			],
 			'nom' => [
-				'rules' => 'required|alpha|min_length[2]|max_length[50]',
+				'rules' => 'required|min_length[2]|max_length[50]',
 				'errors' => [
 					'required' => 'Le nom est obligatoire.',
 					'min_length' => 'Le nom doit contenir au moins 2 caractères.',

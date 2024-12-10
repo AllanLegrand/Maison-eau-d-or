@@ -216,6 +216,14 @@
     color: white;
 }
 
+.category-btn:hover img {
+    filter: invert(100%);
+}
+
+.category-btn.active img {
+    filter: invert(100%);
+}
+
 .category-btn.active {
     background-color: #000;
     color: white;

@@ -321,6 +321,12 @@ class BoutiqueController extends BaseController
 			return redirect()->to('/Accueil');
 		}
 
+		$modelHistorique = new HistoriqueModel();
+
+		echo $modelHistorique->isCommander($id_prod);
+
+		return ;
+
 		$model = new ProduitsModel();
 
 		if($model->delete($id_prod)) {
