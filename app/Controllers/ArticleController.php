@@ -84,7 +84,7 @@ class ArticleController extends BaseController
 			foreach ($subscribers as $subscriber) {
 				$email->setTo($subscriber['email']);
 				$email->setFrom('no-reply@yourdomain.com', 'Votre Blog');
-				$email->setSubject('Maison Eau D\'Or | Nouvel article publié : ' . $titre);
+				$email->setSubject('Maison Eau D\'Or | Nouvel article publié ');
 				$email->setMessage(
 					'<h1>' . $titre . '</h1>' .
 					'<p>' . nl2br($msg) . '</p>' .
