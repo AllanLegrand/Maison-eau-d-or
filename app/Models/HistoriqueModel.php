@@ -25,4 +25,9 @@ class HistoriqueModel extends Model
 	{
 		return $this->delete($id_com, $id_prod);
 	}
+
+	public function isCommander(int $id_prod)
+	{
+		return $this->select('COUNT(*)')->where('id_prod', $id_prod)->doFirst()['count'];
+	}
 }
