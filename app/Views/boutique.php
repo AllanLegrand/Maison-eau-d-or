@@ -36,7 +36,7 @@
                 <h1 class="text-center bordergold mrg-top">Découvrez nos produits <?= esc($categorieActive['nom']) ?></h1>
             <?php endif; ?>
         <?php else: ?>
-            <h1 class="text-center bordergold mrg-top">Découvrez tout nos produits</h1>
+            <h1 class="text-center bordergold mrg-top">Découvrez tous nos produits</h1>
         <?php endif; ?>
 
 		<!-- Tri -->
