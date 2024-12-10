@@ -52,3 +52,6 @@ $routes->get('/conditions_generales', 'ConditionController::index');
 $routes->get('/politique_confidentialite', 'PolitiqueController::index');
 
 $routes->post('/addCategorie', 'BoutiqueController::addCategorie');
+$routes->get('/suppCategorie/(:num)', 'BoutiqueController::suppCategorie/$1');
+$routes->post('/editCategorie', 'BoutiqueController::editCategorie');
+

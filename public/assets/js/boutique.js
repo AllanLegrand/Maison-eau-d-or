@@ -127,8 +127,9 @@ function closeAddCategorieModal() {
 }
 
 function openModalEditCategorie(event, categorie) {
-    event.stopPropagation();
+    event.preventDefault();
     document.getElementById('editCategorieModal').style.display = 'flex';
+    document.getElementById('catId').value = categorie.id_cat;
 }
 
 function closeEditCategorieModal() {
