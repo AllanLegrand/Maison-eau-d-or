@@ -115,3 +115,26 @@ function addToCart() {
     });
 }
 
+function subscribeToNewsletter() {
+    fetch('/subscribeToNewsletter', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+        },
+        body: JSON.stringify({})
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Vous êtes maintenant inscrit à la newsletter.');
+            location.reload();
+        } else {
+            alert(data.message || 'Une erreur est survenue.');
+        }
+    })
+    .catch(error => {
+        console.error('Erreur:', error);
+        alert('Impossible de s’inscrire à la newsletter.');
+    });
+}

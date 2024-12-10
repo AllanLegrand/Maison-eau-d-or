@@ -25,24 +25,19 @@ class ProfilController extends BaseController
 		$pager = service('pager');
 		$configPager = config(Pager::class);
 
-		// Récupérer l'utilisateur
 		$data['utilisateur'] = $utilisateurModel->find($userId);
 
-		// Pagination
-		$perPage = 3; // Nombre de commandes par page
-		$currentPage = $this->request->getVar('page') ?? 1; // Page actuelle
-		$offset = ($currentPage - 1) * $perPage; // Décalage des résultats pour la pagination
+		$perPage = 3;
+		$currentPage = $this->request->getVar('page') ?? 1;
+		$offset = ($currentPage - 1) * $perPage;
 
-		// Récupérer les commandes paginées
 		$historiqueCommandes = $commandesModel
 			->where('id_util', $userId)
 			->orderBy('date', 'DESC')
-			->findAll($perPage, $offset); // Obtenir les commandes paginées
+			->findAll($perPage, $offset);
 
-		// Total des commandes
 		$totalCommandes = $commandesModel->where('id_util', $userId)->countAllResults(); 
 
-		// Récupérer les détails des produits pour chaque commande
 		$historiqueDetails = [];
 		foreach ($historiqueCommandes as $commande) {
 			$historiqueModel = new HistoriqueModel();
@@ -76,40 +71,38 @@ class ProfilController extends BaseController
 			];
 		}
 
-		// Passer les informations à la vue
 		$data['historiqueCommandes'] = $historiqueDetails;
-		$data['pager'] = $pager->makeLinks($currentPage, $perPage, $totalCommandes, 'default_full'); // Générer les liens de pagination
+		$data['pager'] = $pager->makeLinks($currentPage, $perPage, $totalCommandes, 'default_full');
 
 		echo view('header', ['title' => 'Profil']);
 		echo view('profil', $data);
 		echo view('footer');
 	}
 
-    public function modifierProfil()
+	public function modifierProfil()
     {
 		$session = session();
 		$userId = $session->get('id_util');
-
 		if (!$userId) {
 			return redirect()->to('/signin');
 		}
 
 		$model = new UtilisateursModel();
-
 		$data = $this->request->getPost();
+
+		$data['news'] = isset($data['news']) ? true : false;
+
 		$rules = [
 			'nom' => 'required|min_length[3]',
 			'prenom' => 'required|min_length[3]',
-			'email' => 'required|valid_email',
 			'adresse' => 'required|min_length[5]',
 		];
 
 		if (!$this->validate($rules)) {
 			return redirect()->back()->withInput()->with('error', 'Veuillez corriger les erreurs.');
 		}
-
-        if ($model->modifUtilisateurs($userId, $data)) {
-            return redirect()->to('/profil')->with('message', 'Informations mises à jour avec succès.');
-        }
+		
+        $model->modifUtilisateurs($userId, $data);
+		return redirect()->to('/profil');
     }
 }

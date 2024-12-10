@@ -9,6 +9,7 @@ $routes->get('/', 'Accueil::index');
 $routes->get('/', 'Home::index');
 $routes->get('/Accueil','Accueil::index');
 $routes->post('Accueil/addToCart', 'BoutiqueController::addToCart');
+$routes->post('/accueil/subscribeToNewsletter', 'Accueil::subscribeToNewsletter');
 
 $routes->get('/signup', 'SignupController::index'); 
 $routes->match(['get', 'post'], '/signup/store', 'SignupController::store');
