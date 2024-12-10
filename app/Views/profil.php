@@ -42,17 +42,34 @@
 
     <div class="tab-content" id="profilTab">
         <form action="/modifier-profil" method="post">
+            
             <label for="nom">Nom :</label>
-            <input type="text" name="nom" id="nom" value="<?= $utilisateur['nom'] ?>" required>
-
+            <input class="saisie" type="text" name="nom" id="nom" value="<?= old('nom', $utilisateur['nom']) ?>" required>
+            
             <label for="prenom">Prénom :</label>
-            <input type="text" name="prenom" id="prenom" value="<?= $utilisateur['prenom'] ?>" required>
-
+            <input class="saisie" type="text" name="prenom" id="prenom" value="<?= old('prenom', $utilisateur['prenom']) ?>" required>
+            
             <label for="adresse">Adresse :</label>
-            <input type="text" name="adresse" id="adresse" value="<?= $utilisateur['adresse'] ?>" required>
-
+            <input class="saisie" type="text" name="adresse" id="adresse" value="<?= old('adresse', $utilisateur['adresse']) ?>" required>
+            
+            <label class="newsletter" for="flexSwitchCheckDefault">S'inscrire à la newsletter</label>
+            <input class="form-check-input" type="checkbox" role="switch" name="news" id="flexSwitchCheckDefault">
+            
             <button type="submit">Enregistrer</button>
         </form>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const isSubscribed = <?= $utilisateur['news'] ? 'true' : 'false' ?>;
+
+            const newsSwitch = document.getElementById('flexSwitchCheckDefault');
+
+            if (newsSwitch) {
+                newsSwitch.checked = isSubscribed;
+            } else {
+                console.error("Élément 'flexSwitchCheckDefault' introuvable.");
+            }
+        });
+    </script>
 
     <script src="/assets/js/profil.js"></script>

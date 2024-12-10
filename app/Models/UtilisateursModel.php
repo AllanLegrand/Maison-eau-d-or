@@ -37,7 +37,7 @@ class UtilisateursModel extends Model
 	public function isSubscribed(int $id_util) : bool
 	{
 		return $this->select('news')
-					->where('id_util', $id_util)->get()->getResultArray()[0]['news'];
+					->where('id_util', $id_util)->get()->getResultArray()[0]['news'] === 't';
 	}
 
 	public function isAdmin(int $id_util) : bool

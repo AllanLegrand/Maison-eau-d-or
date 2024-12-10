@@ -188,7 +188,6 @@
 
 <!-- Section newsletter -->
 <?php if($afficheNews): ?>
-    <!-- Bandeau Newsletter -->
     <section class="newsletter">
         <div class="container d-flex align-items-center justify-content-between">
             <div class="newsletter-title">
@@ -198,7 +197,10 @@
                 <p>Inscrivez-vous à notre newsletter pour recevoir nos dernières actualités</p>
             </div>
             <div class="newsletter-btn">
-                <a href="#" class="btn btn-dark">Inscrivez-vous !</a>
+                <form action="/accueil/subscribeToNewsletter" method="post">
+                    <?= csrf_field() ?>
+                    <button type="submit" class="btn btn-dark">Inscrivez-vous !</button>
+                </form>
             </div>
         </div>
     </section>

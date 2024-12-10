@@ -118,7 +118,7 @@ table tr:hover {
     margin-bottom: 8px;
 }
 
-#profilTab form input {
+#profilTab form .saisie {
     width: 100%;
     padding: 10px;
     font-size: 16px;
@@ -181,4 +181,36 @@ table tr:hover {
 .pagination .disabled a {
     color: #ccc;
     cursor: not-allowed;
+}
+
+.form-check-input {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 100px;
+    height: 30px;
+    background-color: #ccc;
+    border-radius: 30px;
+    position: relative;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.form-check-input::before {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 24px;
+    height: 24px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.3s;
+}
+
+.form-check-input:checked {
+    background-color: #4CAF50;
+}
+
+.form-check-input:checked::before {
+    transform: translateX(70px);
 }

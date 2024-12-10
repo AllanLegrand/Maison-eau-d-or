@@ -30,6 +30,22 @@ class Accueil extends BaseController
 		]);
 		echo view('footer');
 	}
+
+	public function subscribeToNewsletter()
+	{
+		$session = session();
+
+		if (!$session->get('isLoggedIn')) {
+			return redirect()->to('/signin');
+		}
+
+		$userId = $session->get('id_util');
+		$utilisateurModel = new UtilisateursModel();
+
+		$utilisateurModel->update($userId, ['news' => true]);
+
+		return redirect()->to('/');
+	}
 }
 
 ?>
