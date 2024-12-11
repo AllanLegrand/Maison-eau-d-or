@@ -5,12 +5,22 @@
 	<div class="articles-container">
 		<?php if (!empty($articles) && is_array($articles)): ?>
 			<?php foreach ($articles as $article): ?>
-				<div class="article">
+				<div class="article" onclick="openArticle(<?= htmlspecialchars(json_encode($article), ENT_QUOTES, 'UTF-8') ?>)">
 					<img src="/assets/img/<?= esc($article['img_path']) ?>" alt=" "
 						class="article-image">
 					<h2><?= esc($article['titre']) ?></h2>
 					<p>Date de publication : <?= esc($article['date']) ?></p>
 
+					<?php if ($admin): ?>
+							<button class="btn btn-sm btn-outline-secondary edit-btn"
+								onclick="openEditArticleModal(event, <?= htmlspecialchars(json_encode($article), ENT_QUOTES, 'UTF-8') ?>)">
+								<i class="fa fa-pencil" aria-hidden="true"></i> Modifier
+							</button>
+							<button class="btn btn-sm btn-outline-secondary supp-btn"
+								onclick="if (confirm('Êtes-vous sûr de vouloir supprimer ce produit ?')) location.href='/suppArticle/<?= esc($article['id_art']) ?>';">
+								<i class="fa fa-pencil" aria-hidden="true"></i> Supprimer
+							</button>
+					<?php endif; ?>
 				</div>
 			<?php endforeach; ?>
 		<?php else: ?>
@@ -44,12 +54,57 @@
 						<div>
 							<textarea id="addDescription" name="description"></textarea>
 						</div>
+
 						<hr>
 						<button type="submit" class="btn-add-article">Créer</button>
 					</form>
 				</div>
 			</div>
+
+			<div id="articleEditModal" style="display: none;">
+				<div class="modal-content">
+					<span id="closeEditArticleModal" onclick="closeEditArticleModal()" style="cursor: pointer;">&times;</span>
+					<h2>Ajouter un article</h2>
+					<form id="addArticle" method="POST" action="/editArticle" enctype="multipart/form-data">
+						<input type="text" id="artId" name="id_art" class="form-control" placeholder="ID de l'article"
+						style="display:none;">
+						<hr>
+						<div>
+							<label for="editTitre">Titre</label>
+							<br>
+							<input type="text" id="editTitre" name="titre" required>
+						</div>
+						<hr>
+						<div>
+							<input type="file" id="file" name="image" accept="image/*">
+						</div>
+						<hr>
+						<div>
+							<textarea id="editDescription" name="description"></textarea>
+						</div>
+
+						<div id="result"></div>
+
+						<hr>
+						<button type="submit" class="btn-edit-article">Modifier</button>
+					</form>
+				</div>
+			</div>
 		<?php endif; ?>
+
+		<div id="articleModal" style="display: none;">
+				<div class="modal-content modalArticle">
+					<span id="closeArticleModal" onclick="closeArticleModal()" style="cursor: pointer;">&times;</span>
+					<img src="/assets/img/" alt="" id="articleImg" class="article-image">
+					<div class="suite">
+						<h1 id="titreArticle"></h1>
+						
+						<hr>
+						<div id="contenuArticle">
+						</div>
+					</div>
+				</div>
+			</div>
 	</div>
 
 	<script src="/assets/js/article.js"></script>

@@ -487,6 +487,6 @@ class BoutiqueController extends BaseController
 		}
 		$model->update($id_cat, $data);
 
-		return redirect()->to('/boutique')->with('message', 'Categorie ajouté avec succès !');
+		return redirect()->to('/boutique')->with('message', 'Categorie modifié avec succès !');
 	}
 }

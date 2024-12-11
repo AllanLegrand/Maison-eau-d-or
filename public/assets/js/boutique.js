@@ -97,8 +97,6 @@ function openEditArticleModal(event, prod, dicProdCat) {
     })
 }
 
-
-
 function closeEditProductModal() {
     document.getElementById('editProductModal').style.display = 'none';
 }

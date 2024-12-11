@@ -34,6 +34,9 @@ $routes->get('boutique/getProduit/(:num)', 'BoutiqueController::getProduit/$1');
 $routes->post('boutique/addToCart', 'BoutiqueController::addToCart');
 
 $routes->post('addArticle', 'ArticleController::addArticle');
+$routes->get('suppArticle/(:num)', 'ArticleController::suppArticle/$1');
+$routes->post('/editArticle', 'ArticleController::editArticle');
+
 $routes->get('/blog', 'ArticleController::index');
 
 $routes->get('/panier/getCartItems', 'BoutiqueController::getCartItems');

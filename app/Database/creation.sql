@@ -35,6 +35,7 @@ CREATE TABLE Utilisateurs (
 CREATE TABLE Commandes (
 	id_com SERIAL PRIMARY KEY,
 	id_util INTEGER REFERENCES Utilisateurs(id_util),
+	adresseLivraison VARCHAR(100),
 	date DATE
 );
 
