@@ -24,4 +24,9 @@ class FAQModel extends Model
 	{
 		return $this->delete($id_faq);
 	}
+
+	public function getFAQ()
+	{
+		return $this->orderBy('id_faq', 'ASC')->findAll();
+	}
 }
