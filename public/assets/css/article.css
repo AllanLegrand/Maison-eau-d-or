@@ -43,7 +43,7 @@ h1 {
 	font-size: 18px;
 	margin: 10px 0;
 	color: #222;
-	height: 50px;
+	height: 90px;
 }
 
 .article p {
@@ -269,6 +269,8 @@ h1 {
 	height: 100%;
 	padding: 0px;
 	border-radius: 0px;
+	overflow: auto;
+	min-width: 350px;
 }
 
 .suite {
