@@ -118,41 +118,59 @@ function loadCartItems() {
         .then(response => response.json())
         .then(data => {
             const cartItemsContainer = document.getElementById("cartItems");
-            cartItemsContainer.innerHTML = '';
-            let total = 0;
-            data.forEach(item => {
-                total += item.prix * item.quantite;
-                const itemElement = document.createElement("div");
-                itemElement.classList.add("cart-item");
-            
-                itemElement.innerHTML = `
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <img src="${item.image}" alt="${item.nom}" style="width: 80px;">
-                        <div>
-                            <div>${item.nom}</div>
-                            <div>${item.prix} €</div>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <button class="btn btn-outline-secondary" onclick="updateQuantity(${item.id_prod}, ${parseInt(item.quantite) - 1})">-</button>
-                            <input type="number" value="${item.quantite}" min="1" max="100" onchange="updateQuantity(${item.id_prod}, this.value)" class="form-control">
-                            <button class="btn btn-outline-secondary" onclick="updateQuantity(${item.id_prod}, ${parseInt(item.quantite) + 1})">+</button>
-                        </div>
-                        <button class="btn" onclick="removeFromCart(${item.id_prod})">
-                            🗑️
-                        </button>
-                    </div>
-                    <hr>
-                `;
-                cartItemsContainer.appendChild(itemElement);
-            });
             const totalElement = document.getElementById("cartTotal");
-            totalElement.innerHTML = `Total: ${total} €`;
-
             const finalizeButton = document.querySelector(".finalize-button");
-            finalizeButton.onclick = () => window.location.href = '/commande';
+
+            // Nettoyer les conteneurs avant de les remplir
+            cartItemsContainer.innerHTML = '';
+            totalElement.innerHTML = '';
+
+            if (data.length === 0) {
+                // Afficher le message si le panier est vide
+                cartItemsContainer.innerHTML = `
+                    <div class="text-center my-5">
+                        <p class="text-muted">Votre panier est vide</p>
+                    </div>
+                `;
+                finalizeButton.style.display = 'none'; // Masquer le bouton "Finaliser la commande"
+            } else {
+                let total = 0;
+
+                data.forEach(item => {
+                    total += item.prix * item.quantite;
+
+                    const itemElement = document.createElement("div");
+                    itemElement.classList.add("cart-item");
+
+                    itemElement.innerHTML = `
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <img src="${item.image}" alt="${item.nom}" style="width: 80px;">
+                            <div>
+                                <div>${item.nom}</div>
+                                <div>${item.prix} €</div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <button class="btn btn-outline-secondary" onclick="updateQuantity(${item.id_prod}, ${parseInt(item.quantite) - 1})">-</button>
+                                <input type="number" value="${item.quantite}" min="1" max="100" onchange="updateQuantity(${item.id_prod}, this.value)" class="form-control mx-1">
+                                <button class="btn btn-outline-secondary" onclick="updateQuantity(${item.id_prod}, ${parseInt(item.quantite) + 1})">+</button>
+                            </div>
+                            <button class="btn" onclick="removeFromCart(${item.id_prod})">
+                                🗑️
+                            </button>
+                        </div>
+                        <hr>
+                    `;
+                    cartItemsContainer.appendChild(itemElement);
+                });
+
+                totalElement.innerHTML = `Total: ${total.toFixed(2)} €`;
+                finalizeButton.style.display = 'block'; // Afficher le bouton si des produits sont dans le panier
+                finalizeButton.onclick = () => window.location.href = '/commande';
+            }
         })
         .catch(error => console.error("Error loading cart items:", error));
 }
+
 
 function updateQuantity(productId, newQuantity) {
     if (newQuantity < 1) {
