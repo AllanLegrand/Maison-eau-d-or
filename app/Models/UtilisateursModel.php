@@ -52,4 +52,17 @@ class UtilisateursModel extends Model
 					->where('news', true)
 					->findAll();
 	}
+
+	public function supprimerDonnees(int $id_util): bool
+	{
+		$data = [
+			'prenom' => 'suppr',
+			'nom' => 'suppr',
+			'email' => null,
+			'adresse' => null,
+			'news' => 'f',
+		];
+
+		return $this->update($id_util, $data);
+	}
 }

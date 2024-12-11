@@ -22,7 +22,7 @@ $routes->get('/utilisateur/getUserDetails', 'UtilisateurController::getUserDetai
 $routes->get('/utilisateur/deconnexion', 'UtilisateurController::deconnexion');
 $routes->get('/profil', 'ProfilController::index');
 $routes->post('/modifier-profil', 'ProfilController::modifierProfil');
-$routes->match(['get', 'post'],'/profil/suppr', 'ProfilController::supprInfo', ['filter' => 'authGuard']);
+$routes->match(['get', 'post'],'/profil/suppr', 'ProfilController::supprInfo');
 
 $routes->get('/forgot-password', 'ForgotPasswordController::index'); 
 $routes->post('/forgot-password/sendResetLink', 'ForgotPasswordController::sendResetLink');

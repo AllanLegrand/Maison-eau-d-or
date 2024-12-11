@@ -105,4 +105,22 @@ class ProfilController extends BaseController
         $model->modifUtilisateurs($userId, $data);
 		return redirect()->to('/profil');
     }
+
+	public function supprInfo()
+    {
+        $session = session();
+        $userId = $session->get('id_util');
+
+        $prenom = $this->request->getPost('prenom');
+        $nom = $this->request->getPost('nom');
+
+        $UtilisateurModel = new UtilisateursModel();
+        $UtilisateurModel->supprimerDonnees($userId);
+
+		$session->destroy();
+		helper('cookie');
+        delete_cookie('ci_session');
+
+        return redirect()->to('/Accueil');
+    }
 }
