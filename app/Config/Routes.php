@@ -47,6 +47,7 @@ $routes->post('/commande/finalizeOrder', 'BoutiqueController::finalizeOrder');
 
 $routes->get('/rechercheProduit', 'BoutiqueController::rechercherProduitByNom');
 $routes->get('/rechercheProduit', 'BoutiqueController::rechercherProduitByNom');
+$routes->get('/categories/getCategories', 'CategoriesController::getCategories');
 
 $routes->post('/addProduit', 'BoutiqueController::addProduit');
 $routes->get('/suppProduit/(:num)', 'BoutiqueController::suppProduit/$1');
@@ -59,3 +60,8 @@ $routes->post('/addCategorie', 'BoutiqueController::addCategorie');
 $routes->get('/suppCategorie/(:num)', 'BoutiqueController::suppCategorie/$1');
 $routes->post('/editCategorie', 'BoutiqueController::editCategorie');
 
+$routes->get('/faq', 'FAQController::index');
+$routes->post('/faq/ajouter', 'FAQController::ajouter');
+$routes->post('/faq/modifier/(:num)', 'FAQController::modifier/$1');
+$routes->get('/faq/supprimer/(:num)', 'FAQController::supprimer/$1');
+$routes->post('/faq/contact', 'FAQController::contact');
