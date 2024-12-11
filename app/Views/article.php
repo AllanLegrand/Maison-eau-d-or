@@ -83,8 +83,6 @@
 							<textarea id="editDescription" name="description"></textarea>
 						</div>
 
-						<div id="result"></div>
-
 						<hr>
 						<button type="submit" class="btn-edit-article">Modifier</button>
 					</form>

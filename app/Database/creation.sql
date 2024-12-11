@@ -81,4 +81,20 @@ CREATE TABLE FAQ (
 	txt TEXT NOT NULL
 );
 
+CREATE OR REPLACE FUNCTION handle_vedette_insert()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF (SELECT nom FROM Categories WHERE id_cat = NEW.id_cat) = 'Vedette' THEN
+        DELETE FROM ProdCat
+        WHERE id_cat = NEW.id_cat AND id_prod != NEW.id_prod;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_vedette_insert
+AFTER INSERT ON ProdCat
+FOR EACH ROW
+EXECUTE FUNCTION handle_vedette_insert();
+
 
