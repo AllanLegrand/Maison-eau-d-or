@@ -44,6 +44,7 @@ $routes->post('/commande/finalizeOrder', 'BoutiqueController::finalizeOrder');
 
 $routes->get('/rechercheProduit', 'BoutiqueController::rechercherProduitByNom');
 $routes->get('/rechercheProduit', 'BoutiqueController::rechercherProduitByNom');
+$routes->get('/categories/getCategories', 'CategoriesController::getCategories');
 
 $routes->post('/addProduit', 'BoutiqueController::addProduit');
 $routes->get('/suppProduit/(:num)', 'BoutiqueController::suppProduit/$1');

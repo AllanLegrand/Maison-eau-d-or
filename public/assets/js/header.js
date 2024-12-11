@@ -274,3 +274,41 @@ function disconnect() {
 function test() {
     window.location.href = "/profil";
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    const menuBoutique = document.getElementById("menu-boutique");
+    const categoriesMenu = document.getElementById("categories-menu");
+
+    menuBoutique.addEventListener("mouseenter", function () {
+        
+        fetch('/categories/getCategories')
+            .then(response => response.json())
+            .then(data => {
+                console.log("Réponse des catégories:", data);
+                
+                categoriesMenu.innerHTML = '';
+
+                if (data.error) {
+                    categoriesMenu.innerHTML = '<p>' + data.error + '</p>';
+                    return;
+                }
+
+                if (data.length > 0) {
+                    data.forEach(category => {
+                        console.log("Ajout de la catégorie:", category);
+                        const categoryElement = document.createElement("a");
+                        categoryElement.href = `/boutique?cat=${category.id_cat}&sort=`;
+                        categoryElement.classList.add("dropdown-item");
+                        categoryElement.textContent = category.nom;
+                        categoriesMenu.appendChild(categoryElement);
+                    });
+                } else {
+                    categoriesMenu.innerHTML = '<p>Aucune catégorie disponible.</p>';
+                }
+            })
+            .catch(error => {
+                console.error("Erreur lors de la récupération des catégories :", error);
+                categoriesMenu.innerHTML = '<p>Erreur de chargement des catégories.</p>';
+            });
+    });
+});

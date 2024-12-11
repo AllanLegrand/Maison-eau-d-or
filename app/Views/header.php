@@ -31,8 +31,11 @@
                 <!-- Navbar Links -->
                 <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                     <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link fw-bold" href="/boutique">Boutique</a>
+                        <li class="nav-item dropdown" id="menu-boutique">
+                            <a class="nav-link fw-bold" href="/boutique" id="boutiqueDropdown" role="button" aria-expanded="false">
+                                Boutique
+                            </a>
+                            <div class="dropdown-menu" id="categories-menu"></div>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link fw-bold" href="/about">À propos</a>
