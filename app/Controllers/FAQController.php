@@ -16,7 +16,6 @@ class FAQController extends BaseController
         $this->utilisateurModel = new UtilisateursModel();
     }
 
-    // Afficher la page des FAQ
     public function index()
     {
         $session = session();
@@ -32,7 +31,6 @@ class FAQController extends BaseController
 		echo view('footer'); 
     }
 
-    // Ajouter une nouvelle FAQ
     public function ajouter()
     {
         $session = session();
@@ -53,7 +51,6 @@ class FAQController extends BaseController
         }
     }
 
-    // Modifier une FAQ existante
     public function modifier($id_faq)
     {
         $session = session();
@@ -74,7 +71,6 @@ class FAQController extends BaseController
         }
     }
 
-    // Supprimer une FAQ
     public function supprimer($id_faq)
     {
         $session = session();
@@ -88,6 +84,37 @@ class FAQController extends BaseController
             return redirect()->to('/faq')->with('success', 'FAQ supprimée avec succès.');
         } else {
             return redirect()->to('/faq')->with('error', 'Échec de la suppression de la FAQ.');
+        }
+    }
+
+    public function contact()
+    {
+        $name = $this->request->getPost('name');
+        $email = $this->request->getPost('email');
+        $message = $this->request->getPost('message');
+
+        if (!$name || !$email || !$message) {
+            return redirect()->to('/faq')->with('error', 'Tous les champs doivent être remplis.');
+        }
+
+        $emailService = \Config\Services::email();
+
+        $emailService->setFrom('eaudormaison@gmail.com', 'FAQ - Maison Eau d\'Or');
+        $emailService->setTo('eaudormaison@gmail.com');
+        $emailService->setSubject('Message de contact - FAQ');
+        $emailService->setMessage("
+            <h2>Nouveau message reçu depuis la FAQ</h2>
+            <p><strong>Nom :</strong> {$name}</p>
+            <p><strong>Email :</strong> {$email}</p>
+            <p><strong>Message :</strong><br>{$message}</p>
+        ");
+
+        if ($emailService->send()) {
+            return redirect()->to('/faq')->with('success', 'Votre message a été envoyé avec succès.');
+        } else {
+            $data = $emailService->printDebugger(['headers']);
+            log_message('error', $data);
+            return redirect()->to('/faq')->with('error', 'Une erreur s’est produite lors de l’envoi de votre message.');
         }
     }
 }

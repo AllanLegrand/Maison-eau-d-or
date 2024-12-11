@@ -17,7 +17,7 @@ class FAQModel extends Model
 
 	public function modifFAQ(int $id_faq, array $data): bool
 	{
-		return $this->update($id_faq, $data);
+		return $this->db->table('faqs')->where('id_faq', $id_faq)->update($data);
 	}
 
 	public function supprFAQ(int $id_faq): bool
