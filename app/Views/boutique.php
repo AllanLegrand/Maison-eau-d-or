@@ -77,15 +77,15 @@
 						</div>
 
 						<?php if ($admin): ?>
-						<button class="btn btn-sm btn-outline-secondary edit-btn"
-							onclick="openEditArticleModal(event, <?= htmlspecialchars(json_encode($produit), ENT_QUOTES, 'UTF-8') ?>,<?= htmlspecialchars(json_encode(isset($dicProdCat[$produit['id_prod']]) ? $dicProdCat[$produit['id_prod']] : []), ENT_QUOTES, 'UTF-8') ?>)">
-							<i class="fa fa-pencil" aria-hidden="true"></i> Modifier
-						</button>
-						<button class="btn btn-sm btn-outline-secondary supp-btn"
-							onclick="if (confirm('Êtes-vous sûr de vouloir supprimer ce produit ?')) location.href='/suppProduit/<?= esc($produit['id_prod']) ?>';">
-							<i class="fa fa-pencil" aria-hidden="true"></i> Supprimer
-						</button>
-					<?php endif; ?>
+							<button class="btn btn-sm btn-outline-secondary edit-btn"
+								onclick="openEditArticleModal(event, <?= htmlspecialchars(json_encode($produit), ENT_QUOTES, 'UTF-8') ?>,<?= htmlspecialchars(json_encode(isset($dicProdCat[$produit['id_prod']]) ? $dicProdCat[$produit['id_prod']] : []), ENT_QUOTES, 'UTF-8') ?>)">
+								<i class="fa fa-pencil" aria-hidden="true"></i> Modifier
+							</button>
+							<button class="btn btn-sm btn-outline-secondary supp-btn"
+								onclick="if (confirm('Êtes-vous sûr de vouloir supprimer ce produit ?')) location.href='/suppProduit/<?= esc($produit['id_prod']) ?>';">
+								<i class="fa fa-pencil" aria-hidden="true"></i> Supprimer
+							</button>
+						<?php endif; ?>
 					</div>
 
 					
