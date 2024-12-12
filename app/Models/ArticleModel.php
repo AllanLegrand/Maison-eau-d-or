@@ -30,6 +30,6 @@ class ArticleModel extends Model
 
 	public function getPaginatedArticles(int $perPage)
 	{
-		return $this->select('id_art, msg, titre, img_path, to_char(date, \'DD TMMonth YYYY, HH24:MI\') AS date')->paginate($perPage);
+		return $this->select('id_art, msg, titre, img_path, to_char(date, \'DD TMMonth YYYY, HH24:MI\') AS date')->orderBy('date', 'DESC')->paginate($perPage);
 	}
 }

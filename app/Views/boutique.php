@@ -17,7 +17,7 @@
 						<img src="/assets/img/modif.svg" alt="Modifier" class="icon"
 							onclick="openModalEditCategorie(event, <?= htmlspecialchars(json_encode($categorie), ENT_QUOTES, 'UTF-8') ?>)" />
 						<img src="/assets/img/supp.svg" alt="Supprimer" class="icon"
-							onclick="if (confirm('Êtes-vous sûr de vouloir supprimer cette categorie ?')) location.href='/suppCategorie/<?= esc($categorie['id_cat']) ?>';" />
+							onclick="event.preventDefault(); if (confirm('Êtes-vous sûr de vouloir supprimer cette categorie ?')) location.href='/suppCategorie/<?= esc($categorie['id_cat']) ?>';" />
 					<?php endif; ?>
 				</button>
 			<?php endforeach; ?>
@@ -77,15 +77,15 @@
 						</div>
 
 						<?php if ($admin): ?>
-						<button class="btn btn-sm btn-outline-secondary edit-btn"
-							onclick="openEditArticleModal(event, <?= htmlspecialchars(json_encode($produit), ENT_QUOTES, 'UTF-8') ?>,<?= htmlspecialchars(json_encode(isset($dicProdCat[$produit['id_prod']]) ? $dicProdCat[$produit['id_prod']] : []), ENT_QUOTES, 'UTF-8') ?>)">
-							<i class="fa fa-pencil" aria-hidden="true"></i> Modifier
-						</button>
-						<button class="btn btn-sm btn-outline-secondary supp-btn"
-							onclick="if (confirm('Êtes-vous sûr de vouloir supprimer ce produit ?')) location.href='/suppProduit/<?= esc($produit['id_prod']) ?>';">
-							<i class="fa fa-pencil" aria-hidden="true"></i> Supprimer
-						</button>
-					<?php endif; ?>
+							<button class="btn btn-sm btn-outline-secondary edit-btn"
+								onclick="openEditArticleModal(event, <?= htmlspecialchars(json_encode($produit), ENT_QUOTES, 'UTF-8') ?>,<?= htmlspecialchars(json_encode(isset($dicProdCat[$produit['id_prod']]) ? $dicProdCat[$produit['id_prod']] : []), ENT_QUOTES, 'UTF-8') ?>)">
+								<i class="fa fa-pencil" aria-hidden="true"></i> Modifier
+							</button>
+							<button class="btn btn-sm btn-outline-secondary supp-btn"
+								onclick="if (confirm('Êtes-vous sûr de vouloir supprimer ce produit ?')) location.href='/suppProduit/<?= esc($produit['id_prod']) ?>';">
+								<i class="fa fa-pencil" aria-hidden="true"></i> Supprimer
+							</button>
+						<?php endif; ?>
 					</div>
 
 					
@@ -239,6 +239,8 @@
 				<span class="close-cross" onclick="closeEditCategorieModal()">&times;</span>
 				<h3 class="text-center mb-4">Ajouter une Catégorie</h3>
 				<form id="editCategorieForm" action="<?= base_url('editCategorie') ?>" method="post">
+					<input type="text" id="catId" name="id_cat" class="form-control" placeholder="ID de la categorie"
+					style="display:none;">
 					<div class="mb-3">
 						<label for="productName" class="form-label">Nom de la categorie</label>
 						<input type="text" id="productName" name="nom" class="form-control" placeholder="Nom de le categorie"

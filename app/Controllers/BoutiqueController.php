@@ -324,18 +324,19 @@ class BoutiqueController extends BaseController
 
 		$modelHistorique = new HistoriqueModel();
 
-		echo $modelHistorique->isCommander($id_prod);
-
-		return ;
-
 		$model = new ProduitsModel();
 
-		if($model->delete($id_prod)) {
+		if($modelHistorique->isCommander($id_prod)) {
+			if($model->update($id_prod, [
+				'actif' => false,
+			]))
+				return redirect()->back()->with('message', 'Produit desactiver avec succès.');
+			return redirect()->back()->with('message', 'Erreur lors de la desactivation du produit.');
+		}
+
+		if($model->delete($id_prod)) 
 			return redirect()->back()->with('message', 'Produit supprimé avec succès.');
-		}
-		else {
-			return redirect()->back()->with('error', 'Erreur lors de la suppression du produit.');
-		}
+		return redirect()->back()->with('error', 'Erreur lors de la suppression du produit.');
 	}
 
 	public function commanderpdf()
@@ -538,5 +539,45 @@ class BoutiqueController extends BaseController
 		$model->insert($data);
 
 		return redirect()->to('/boutique')->with('message', 'Categorie ajouté avec succès !');
+	}
+
+	public function suppCategorie($id_cat) {
+		$session = session();
+
+		$utilisateurModel = new UtilisateursModel();
+
+		if(!$session->get('isLoggedIn') || !$utilisateurModel->isAdmin($session->get('id_util'))) {
+			return redirect()->to('/Accueil');
+		}
+		
+		$model = new CategoriesModel();
+
+		if($model->delete($id_cat)) 
+			return redirect()->back()->with('message', 'Categorie supprimé avec succès.');
+		return redirect()->back()->with('error', 'Erreur lors de la suppression du categorie.');
+	}
+
+	public function editCategorie() {
+		$session = session();
+
+		$utilisateurModel = new UtilisateursModel();
+
+		if(!$session->get('isLoggedIn') || !$utilisateurModel->isAdmin($session->get('id_util'))) {
+			return redirect()->to('/Accueil');
+		}
+
+		$id_cat = $this->request->getPost('id_cat');
+
+		$data = [
+			'nom' => $this->request->getPost('nom'),
+		];
+		
+		$model = new CategoriesModel();
+		if (!$model->find($id_cat)) {
+			return redirect()->back()->with('error', 'Categorie introuvable.');
+		}
+		$model->update($id_cat, $data);
+
+		return redirect()->to('/boutique')->with('message', 'Categorie modifié avec succès !');
 	}
 }
