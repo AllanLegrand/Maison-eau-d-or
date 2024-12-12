@@ -56,6 +56,7 @@
             <input class="form-check-input" type="checkbox" role="switch" name="news" id="flexSwitchCheckDefault">
             
             <button type="submit">Enregistrer</button>
+            <button type="button" id="deleteAccountBtn" class="btn btn-danger">Supprimer mon compte</button>
         </form>
     </div>
     <script>
@@ -73,3 +74,13 @@
     </script>
 
     <script src="/assets/js/profil.js"></script>
+
+    <div id="confirmDialog" class="dialog-overlay" style="display: none;">
+		<div class="dialog-box">
+			<h3>Confirmer la suppression</h3>
+			<p>Êtes-vous sûr de vouloir supprimer votre compte ? <br>
+				Cette action est irréversible et entraînera la perte de toutes vos données associées.</p>
+			<button id="confirmDelete" class="btn btn-danger">Confirmer</button>
+			<button id="cancelDelete" class="btn btn-secondary">Annuler</button>
+		</div>
+	</div>

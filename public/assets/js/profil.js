@@ -26,3 +26,22 @@ document.querySelectorAll('.tabs a').forEach(tab => {
         tabContent.classList.add('active');
     });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+	const deleteAccountBtn = document.getElementById("deleteAccountBtn");
+	const confirmDialog = document.getElementById("confirmDialog");
+	const confirmDelete = document.getElementById("confirmDelete");
+	const cancelDelete = document.getElementById("cancelDelete");
+
+	deleteAccountBtn.addEventListener("click", () => {
+		confirmDialog.style.display = "flex";
+	});
+
+	cancelDelete.addEventListener("click", () => {
+		confirmDialog.style.display = "none";
+	});
+
+	confirmDelete.addEventListener("click", () => {
+		window.location.href = "/profil/suppr";
+	});
+});
