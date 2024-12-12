@@ -13,7 +13,7 @@ CREATE TABLE Produits (
 	nom VARCHAR(30) NOT NULL,
 	prix FLOAT,
 	description TEXT,
-	img_path VARCHAR(255) DEFAULT 'maisoneaudeur.webp',
+	img_path VARCHAR(255) DEFAULT 'default.png',
 	actif BOOLEAN
 );
 
@@ -81,6 +81,12 @@ CREATE TABLE FAQ (
 	id_faq SERIAL PRIMARY KEY,
 	question TEXT,
 	reponse TEXT
+);
+
+CREATE TABLE Carrousel (
+	id_car SERIAL PRIMARY KEY,
+	img_path VARCHAR(255) DEFAULT 'default.png',
+	titre VARCHAR(255)
 );
 
 CREATE OR REPLACE FUNCTION handle_vedette_insert()

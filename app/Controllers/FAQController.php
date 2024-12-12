@@ -47,7 +47,7 @@ class FAQController extends BaseController
 		$model = new FAQModel();
 		$model->insert($data);
 
-		return redirect()->to('/FAQ')->with('message', 'Question-réponse ajouté avec succès !');
+		return redirect()->to('/faq')->with('message', 'Question-réponse ajouté avec succès !');
 	}
 
 	public function modifier()
@@ -59,12 +59,14 @@ class FAQController extends BaseController
 			return redirect()->to('/faq')->with('error', 'Permission refusée.');
 		}
 
+		$id_faq = $this->request->getPost('id_faq');
+
 		$data = [
-			'txt' => $this->request->getPost('txt')
+			'reponse' => $this->request->getPost('reponse'),
+			'question' => $this->request->getPost('question'),
 		];
 
-
-		if ($this->faqModel->modifFAQ($this->faqModel->getFAQ()["id_faq"], $data)) {
+		if ($this->faqModel->modifFAQ($id_faq, $data)) {
 			return redirect()->to('/faq')->with('success', 'FAQ modifiée avec succès.');
 		} else {
 			return redirect()->to('/faq')->with('error', 'Échec de la modification de la FAQ.');

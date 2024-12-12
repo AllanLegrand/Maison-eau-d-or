@@ -7,7 +7,8 @@ class FAQModel extends Model
 	protected $primaryKey = 'id_faq';
 	protected $allowedFields = [
 		'id_faq',
-		'txt'
+		'reponse',
+		'question'
 	];
 
 	public function ajouterFAQ(array $data)
@@ -17,7 +18,7 @@ class FAQModel extends Model
 
 	public function modifFAQ(int $id_faq, array $data): bool
 	{
-		return $this->db->table('faqs')->where('id_faq', $id_faq)->update($data);
+		return $this->db->table('faq')->where('id_faq', $id_faq)->update($data);
 	}
 
 	public function supprFAQ(int $id_faq): bool

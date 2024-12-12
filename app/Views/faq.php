@@ -7,10 +7,17 @@
 		<?php if (!empty($faq) && is_array($faq)): ?>
 			<?php foreach ($faq as $questionReponse): ?>
 				<div class="faq-question">
-					<input id="q<?= esc($faq['id_faq']) ?>" type="checkbox" class="panel">
+					<input id="q<?= esc($questionReponse['id_faq']) ?>" type="checkbox" class="panel">
 					<div class="plus">+</div>
-					<label for="q1" class="panel-title"><?= esc($faq['question']) ?></label>
-					<div class="panel-content"><?= esc($faq['reponse']) ?></div>
+					<label for="q<?= esc($questionReponse['id_faq']) ?>" class="panel-title">
+						<?= $questionReponse['question'] ?>
+						
+					</label>
+					<div class="panel-content"><hr><?= $questionReponse['reponse'] ?></div>
+					<?php if ($admin): ?>
+					<button type="submit" onclick="modifierQuest(<?= htmlspecialchars(json_encode($questionReponse), ENT_QUOTES, 'UTF-8') ?>)" class="btn btn-sm btn-outline-secondary edit-btn">Modifier</button>
+					<button type="submit" onclick="if (confirm('Êtes-vous sûr de vouloir supprimer ce produit ?')) location.href='/faq/suppFAQ/<?= esc($questionReponse['id_faq']) ?>';" class="btn btn-sm btn-outline-secondary supp-btn">Supprimer</button>
+					<?php endif; ?>
 				</div>
 			<?php endforeach; ?>
 		<?php else: ?>
@@ -31,7 +38,9 @@
 				<div class="modal-content">
 					<span id="closeAddFAQModal" onclick="closeAddFAQModal()" style="cursor: pointer;">&times;</span>
 					<h2>Ajouter une question-réponse</h2>
-					<form id="addFAQ" method="POST" action="/addFAQ">
+					<form id="formFaq" method="POST" action="/faq/addFAQ">
+						<input type="text" id="faqID" name="id_faq" class="form-control" placeholder="ID de la faq"
+						style="display:none;">
 						<hr>
 						<div>
 							<label for="question" class="form-label">Question</label>
@@ -105,10 +114,26 @@
 	function ajouterQuest() {
 		document.getElementById("faqAddModal").style.display = 'flex';
 		document.getElementById("messageFAQ").style.display = 'none';
+		document.querySelector("#faqAddModal h2").innerHTML = "Ajouter une question-réponse";
+		tinymce.get('questionAdd').setContent("");
+		tinymce.get('reponseAdd').setContent("");
+		document.getElementById("formFaq").setAttribute("action","/faq/addFAQ");
+		document.querySelector("#faqAddModal .edit-btn").innerHTML = "Créer";
 	}
 
 	function closeAddFAQModal() {
 		document.getElementById("faqAddModal").style.display = 'none';
+	}
+
+	function modifierQuest(faq) {
+		document.getElementById("faqAddModal").style.display = 'flex';
+		document.getElementById("messageFAQ").style.display = 'none';
+		document.getElementById("faqID").value = faq.id_faq;
+		tinymce.get('questionAdd').setContent(faq.question);
+		tinymce.get('reponseAdd').setContent(faq.reponse);
+		document.querySelector("#faqAddModal h2").innerHTML = "Modifier une question-réponse";
+		document.getElementById("formFaq").setAttribute("action","/faq/modifier");
+		document.querySelector("#faqAddModal .edit-btn").innerHTML = "Modifier";
 	}
 
 </script>
