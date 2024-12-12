@@ -31,6 +31,7 @@ $routes->get('/boutique', 'BoutiqueController::index');
 $routes->get('/boutique/getProduit/(:num)', 'BoutiqueController::getProduit/$1');
 $routes->get('boutique/getProduit/(:num)', 'BoutiqueController::getProduit/$1');
 $routes->post('boutique/addToCart', 'BoutiqueController::addToCart');
+$routes->post('boutique/addToCart', 'BoutiqueController::addToCart');
 
 $routes->post('addArticle', 'ArticleController::addArticle');
 $routes->get('/blog', 'ArticleController::index');
@@ -39,7 +40,7 @@ $routes->get('/panier/getCartItems', 'BoutiqueController::getCartItems');
 $routes->post('panier/updateQuantity', 'BoutiqueController::updateQuantity');
 $routes->post('panier/removeItem', 'BoutiqueController::removeItem');
 $routes->get('/commande', 'BoutiqueController::commande');
-$routes->post('/commande/finalizeOrder', 'BoutiqueController::finalizeOrder');
+$routes->post('/commande/valider', 'BoutiqueController::commanderpdf');
 
 $routes->get('/rechercheProduit', 'BoutiqueController::rechercherProduitByNom');
 $routes->get('/rechercheProduit', 'BoutiqueController::rechercherProduitByNom');

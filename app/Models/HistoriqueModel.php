@@ -30,4 +30,11 @@ class HistoriqueModel extends Model
 	{
 		return $this->select('COUNT(*)')->where('id_prod', $id_prod)->doFirst()['count'];
 	}
+
+	public function getOrderDetails($id_com)
+	{
+		return $this->select('historique.*, produits.nom, produits.prix')
+		->join('produits', 'produits.id_prod = historique.id_prod')
+		->where('id_com', $id_com)->findAll();
+	}
 }

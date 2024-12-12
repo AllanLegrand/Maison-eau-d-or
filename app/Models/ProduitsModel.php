@@ -80,6 +80,7 @@ class ProduitsModel extends Model
 					->join('prodcat', 'prodcat.id_prod = produits.id_prod')
 					->join('categories', 'categories.id_cat = prodcat.id_cat')
 					->where('categories.nom', $nom_cat)
+					->where(['actif' => true])
 					->get()
 					->getResultArray();
 	}
@@ -87,6 +88,7 @@ class ProduitsModel extends Model
 	public function getProduitByNom(string $nomProd) {
 		return $this->db->table('produits')->select('produits.*')
 					->like('LOWER(produits.nom)', strtolower($nomProd), 'after')
+					->where(['actif' => true])
 					->get()
 					->getResultArray();
 	}

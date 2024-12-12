@@ -1,5 +1,3 @@
-
-
 <main class="container my-5">
 <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
     <!-- Indicateurs du carrousel -->
@@ -203,6 +201,7 @@
         </div>
     </section>
 <?php endif; ?>
+
 
 <!-- Modal -->
 <div id="productModal" class="modal-overlay" style="display: none;">
