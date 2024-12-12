@@ -2,7 +2,7 @@
 	referrerpolicy="origin"></script>
 <link rel="stylesheet" href="/assets/css/faq.css">
 <div class="container my-5">
-	<div class="faq-header">Foire aux questions</div>
+	<h1 class="faq-header">Foire aux questions</h1>
 	<div class="faq-content">
 		<?php if (!empty($faq) && is_array($faq)): ?>
 			<?php foreach ($faq as $questionReponse): ?>
@@ -18,13 +18,11 @@
 		<?php endif; ?>
 
 		<?php if ($admin): ?>
-			<button type="button" onclick="ajouterQuest()">Ajouter</button>
+			<button type="button" class="btn btn-sm btn-outline-secondary ajout-btn" onclick="ajouterQuest()">Ajouter</button>
 
 			<form id="editFAQ" action="<?= base_url('editFAQ') ?>" method="post" style="display:none;">
-				<label for="question" class="form-label">Question</label>
-				<textarea id="questionAdd" name="question"></textarea>
-				<label for="question" class="form-label">Réponse</label>
-				<textarea id="reponseAdd" name="reponse"></textarea>
+				
+				
 				
 				<button type="submit">Enregistrer</button>
 			</form>
@@ -36,13 +34,17 @@
 					<form id="addFAQ" method="POST" action="/addFAQ">
 						<hr>
 						<div>
-							<label for="email" class="form-label">Votre email :</label>
-							<textarea id="addDescription" name="description"></textarea>
+							<label for="question" class="form-label">Question</label>
+							<textarea id="questionAdd" name="question"></textarea>
+						</div>
+						<hr>
+						<div>
+							<label for="reponse" class="form-label">Réponse</label>
+							<textarea id="reponseAdd" name="reponse"></textarea>
 						</div>
 
 						<hr>
 						<button type="submit" class="btn btn-sm btn-outline-secondary edit-btn">Créer</button>
-						<button type="button" onclick="openVisuArticleModal(true)" class="btn btn-sm btn-outline-secondary edit-btn">Aperçu</button>
 					</form>
 				</div>
 			</div>
@@ -61,7 +63,7 @@
 				<label for="email" class="form-label">Votre email :</label>
 				<input type="email" class="form-control" id="email" name="email" required>
 			</div>
-			<div class="mb-3">
+			<div class="mb-3" id="messageFAQ">
 				<label for="message" class="form-label">Votre message :</label>
 				<textarea class="form-control" id="message" name="message" rows="7" required></textarea>
 			</div>
@@ -102,6 +104,11 @@
 
 	function ajouterQuest() {
 		document.getElementById("faqAddModal").style.display = 'flex';
+		document.getElementById("messageFAQ").style.display = 'none';
+	}
+
+	function closeAddFAQModal() {
+		document.getElementById("faqAddModal").style.display = 'none';
 	}
 
 </script>

@@ -62,6 +62,6 @@ $routes->get('/suppCategorie/(:num)', 'BoutiqueController::suppCategorie/$1');
 $routes->post('/editCategorie', 'BoutiqueController::editCategorie');
 
 $routes->get('/faq', 'FAQController::index');
-$routes->post('/faq/ajouter', 'FAQController::ajouter');
+$routes->post('/faq/addFAQ', 'FAQController::ajouter');
 $routes->post('/faq/modifier', 'FAQController::modifier');
 $routes->post('/faq/contact', 'FAQController::contact');
