@@ -518,6 +518,23 @@ class BoutiqueController extends BaseController
 
 		$mpdf->Output('assets/pdf/commande_'.$id_com.'.pdf', 'F');
 
+		/* envois mail automatique
+		$utilisateurModel = new UtilisateursModel();
+		$utilisateur = $utilisateurModel->where('id_util', $session->get('id_util'))->first();
+		$email = \Config\Services::email();
+		$email->setFrom($utilisateur['email'], $utilisateur['nom']);
+		$email->setTo('eaudormaison@gmail.com');
+		$email->setSubject('Nouvelle commande n°' . $id_com);
+		$email->setMessage('Bonjour, une nouvelle commande a été passée. Vous trouverez le bon de commande en pièce jointe.');
+		$email->attach('assets/pdf/commande_'.$id_com.'.pdf');
+		*/
+
+		if ($email->send()) {
+			return redirect()->to('/commande-confirmee')->with('success', 'Commande validée et e-mail envoyé.');
+		} else {
+			return redirect()->to('/commande-confirmee')->with('error', 'Commande validée mais échec de l\'envoi de l\'e-mail.');
+		}
+
 		echo view('header', ['title' => 'commande']);
 		echo view('commande_pdf', [
 			'pdfContent'=> $pdfContent
