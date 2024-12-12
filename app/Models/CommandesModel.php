@@ -8,7 +8,9 @@ class CommandesModel extends Model
 	protected $allowedFields = [
 		'id_com',
 		'id_util',
-		'date'
+		'date',
+		'adresselivraison',
+		'modelivraison'
 	];
 
 	public function ajouterCommandes(array $data)

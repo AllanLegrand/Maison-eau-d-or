@@ -38,7 +38,6 @@ body{
 
 .d-flex.align-items-center .btn-link img:hover {
     transform: scale(1.1);
-    /* effet dorée sur l'image */
     filter: drop-shadow(0 0 5px #B9A64D);
 }
 
@@ -370,21 +369,18 @@ body{
     color: #c89f65;
 }
 
-/* Assurez-vous que le menu est caché par défaut */
 #categories-menu {
     display: none;
 }
 
-/* Afficher le menu quand on passe la souris sur "Boutique" */
 #menu-boutique:hover #categories-menu {
     display: block;
     position: absolute;
     top: 100%;
     left: 0;
-    z-index: 10; /* Assurez-vous que le menu est au-dessus des autres éléments */
+    z-index: 10; 
 }
 
-/* Style optionnel pour améliorer l'apparence du menu */
 .dropdown-item {
     padding: 8px 12px;
     color: #333;

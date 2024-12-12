@@ -33,7 +33,7 @@ class ProfilController extends BaseController
 
 		$historiqueCommandes = $commandesModel
 			->where('id_util', $userId)
-			->orderBy('date', 'DESC')
+			->orderBy('id_com', 'DESC')
 			->findAll($perPage, $offset);
 
 		$totalCommandes = $commandesModel->where('id_util', $userId)->countAllResults(); 
