@@ -51,7 +51,7 @@ class AProposController extends BaseController
 		}
 		$model->update($id_pro, $data);
 
-		return redirect()->to('/boutique')->with('message', 'Categorie modifié avec succès !');
+		return redirect()->to('/apropos')->with('message', 'Categorie modifié avec succès !');
 	}
 }
 

@@ -4,8 +4,8 @@
 <main class="container py-4 pagestyle">
 	<h1>A propos</h1>
 	<?php if ($admin): ?>
-		<form action="/faq/contact" method="post">
-			<textarea id="modifiableApropos"></textarea>
+		<form action="/editApropos" method="post">
+			<textarea id="modifiableApropos" name="msg"></textarea>
 			<button type="submit" class="btn btn-sm btn-outline-secondary ajout-btn"
 				onclick="">Modifier</button>
 		</form>

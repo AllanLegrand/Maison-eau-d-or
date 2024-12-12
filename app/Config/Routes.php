@@ -63,7 +63,7 @@ $routes->get('/suppCategorie/(:num)', 'BoutiqueController::suppCategorie/$1');
 $routes->post('/editCategorie', 'BoutiqueController::editCategorie');
 
 $routes->get('/apropos','AProposController::index');
-$routes->get('/editApropos','AProposController::editApropos');
+$routes->post('/editApropos','AProposController::editApropos');
 
 $routes->get('/faq', 'FAQController::index');
 $routes->post('/faq/addFAQ', 'FAQController::ajouter');
