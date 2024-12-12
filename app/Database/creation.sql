@@ -83,12 +83,6 @@ CREATE TABLE FAQ (
 	reponse TEXT
 );
 
-CREATE TABLE Carrousel (
-	id_car SERIAL PRIMARY KEY,
-	img_path VARCHAR(255) DEFAULT 'default.png',
-	titre VARCHAR(255)
-);
-
 CREATE OR REPLACE FUNCTION handle_vedette_insert()
 RETURNS TRIGGER AS $$
 BEGIN
