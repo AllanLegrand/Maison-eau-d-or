@@ -27,6 +27,6 @@ class FAQModel extends Model
 
 	public function getFAQ()
 	{
-		return $this->orderBy('id_faq', 'ASC')->findAll();
+		return $this->findAll();
 	}
 }

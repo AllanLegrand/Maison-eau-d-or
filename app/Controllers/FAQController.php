@@ -22,8 +22,8 @@ class FAQController extends BaseController
         $admin = $session->get('isLoggedIn') && $this->utilisateurModel->isAdmin($session->get('id_util'));
 
         $data = [
-            'faqs' => $this->faqModel->getFAQ(),
-            'isAdmin' => $admin,
+            'faq' => $this->faqModel->getFAQ(),
+            'admin' => $admin,
         ];
 
 		echo view('header', ['title' => 'FAQ']);
@@ -31,7 +31,7 @@ class FAQController extends BaseController
 		echo view('footer'); 
     }
 
-    public function ajouter()
+    public function modifier()
     {
         $session = session();
         $admin = $session->get('isLoggedIn') && $this->utilisateurModel->isAdmin($session->get('id_util'));
@@ -44,27 +44,8 @@ class FAQController extends BaseController
             'txt' => $this->request->getPost('txt')
         ];
 
-        if ($this->faqModel->ajouterFAQ($data)) {
-            return redirect()->to('/faq')->with('success', 'FAQ ajoutée avec succès.');
-        } else {
-            return redirect()->to('/faq')->with('error', 'Échec de l’ajout de la FAQ.');
-        }
-    }
 
-    public function modifier($id_faq)
-    {
-        $session = session();
-        $admin = $session->get('isLoggedIn') && $this->utilisateurModel->isAdmin($session->get('id_util'));
-
-        if (!$admin) {
-            return redirect()->to('/faq')->with('error', 'Permission refusée.');
-        }
-
-        $data = [
-            'txt' => $this->request->getPost('txt')
-        ];
-
-        if ($this->faqModel->modifFAQ($id_faq, $data)) {
+        if ($this->faqModel->modifFAQ($this->faqModel->getFAQ()["id_faq"], $data)) {
             return redirect()->to('/faq')->with('success', 'FAQ modifiée avec succès.');
         } else {
             return redirect()->to('/faq')->with('error', 'Échec de la modification de la FAQ.');

@@ -56,7 +56,8 @@
 						</div>
 
 						<hr>
-						<button type="submit" class="btn-add-article">Créer</button>
+						<button type="submit" class="btn btn-sm btn-outline-secondary edit-btn">Créer</button>
+						<button type="button" onclick="openVisuArticleModal(true)" class="btn btn-sm btn-outline-secondary edit-btn">Aperçu</button>
 					</form>
 				</div>
 			</div>
@@ -69,6 +70,7 @@
 						<input type="text" id="artId" name="id_art" class="form-control" placeholder="ID de l'article"
 						style="display:none;">
 						<hr>
+						<img id="editImg" src="/assets/img/" alt="" id="articleImg" class="article-image" style="display: none;">
 						<div>
 							<label for="editTitre">Titre</label>
 							<br>
@@ -84,7 +86,8 @@
 						</div>
 
 						<hr>
-						<button type="submit" class="btn-edit-article">Modifier</button>
+						<button type="submit" class="btn btn-sm btn-outline-secondary edit-btn">Modifier</button>
+						<button type="button" onclick="openVisuArticleModal(false)" class="btn btn-sm btn-outline-secondary edit-btn">Aperçu</button>
 					</form>
 				</div>
 			</div>
