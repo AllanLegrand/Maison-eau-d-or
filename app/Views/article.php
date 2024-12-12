@@ -52,7 +52,7 @@
 						<div>
 							<label for="addTitre">Titre</label>
 							<br>
-							<input type="text" id="addTitre" name="titre" required>
+							<input type="text" id="addTitre" name="titre" required maxlength="100">
 						</div>
 						<hr>
 						<div>
@@ -82,7 +82,7 @@
 						<div>
 							<label for="editTitre">Titre</label>
 							<br>
-							<input type="text" id="editTitre" name="titre" required>
+							<input type="text" id="editTitre" name="titre" required maxlength="100">
 						</div>
 						<hr>
 						<div>

@@ -44,12 +44,12 @@
 						<hr>
 						<div>
 							<label for="question" class="form-label">Question</label>
-							<textarea id="questionAdd" name="question"></textarea>
+							<textarea id="questionAdd" name="question" required></textarea>
 						</div>
 						<hr>
 						<div>
 							<label for="reponse" class="form-label">Réponse</label>
-							<textarea id="reponseAdd" name="reponse"></textarea>
+							<textarea id="reponseAdd" name="reponse" required></textarea>
 						</div>
 
 						<hr>
@@ -59,7 +59,6 @@
 			</div>
 		<?php endif; ?>
 	</div>
-
 
 	<div class="mt-5">
 		<h3>Contactez-nous</h3>
@@ -76,64 +75,10 @@
 				<label for="message" class="form-label">Votre message :</label>
 				<textarea class="form-control" id="message" name="message" rows="7" required></textarea>
 			</div>
-			<button type="submit" class="btn btn-primary">Envoyer</button>
+			<button type="submit" class="btn btn-sm btn-outline-secondary ajout-btn">Envoyer</button>
 		</form>
 	</div>
 
 </div>
 
-<script>
-	tinymce.init({
-		selector: '#questionAdd',
-		plugins: 'lists link image preview',
-		toolbar: 'undo redo | bold italic underline | alignleft aligncenter alignright | bullist numlist | link image | preview',
-		menubar: false,
-		height: 200
-	});
-
-	tinymce.init({
-		selector: '#reponseAdd',
-		plugins: 'lists link image preview',
-		toolbar: 'undo redo | bold italic underline | alignleft aligncenter alignright | bullist numlist | link image | preview',
-		menubar: false,
-		height: 200
-	});
-
-	tinymce.init({
-		selector: '#message',
-		plugins: 'lists link image preview',
-		toolbar: 'undo redo | bold italic underline | alignleft aligncenter alignright | bullist numlist | link image | preview',
-		menubar: false,
-		height: 300
-	});
-
-	function modifierContenu() {
-		document.getElementById("rendu").innerHTML = tinymce.get('contenu').getContent();
-	}
-
-	function ajouterQuest() {
-		document.getElementById("faqAddModal").style.display = 'flex';
-		document.getElementById("messageFAQ").style.display = 'none';
-		document.querySelector("#faqAddModal h2").innerHTML = "Ajouter une question-réponse";
-		tinymce.get('questionAdd').setContent("");
-		tinymce.get('reponseAdd').setContent("");
-		document.getElementById("formFaq").setAttribute("action","/faq/addFAQ");
-		document.querySelector("#faqAddModal .edit-btn").innerHTML = "Créer";
-	}
-
-	function closeAddFAQModal() {
-		document.getElementById("faqAddModal").style.display = 'none';
-	}
-
-	function modifierQuest(faq) {
-		document.getElementById("faqAddModal").style.display = 'flex';
-		document.getElementById("messageFAQ").style.display = 'none';
-		document.getElementById("faqID").value = faq.id_faq;
-		tinymce.get('questionAdd').setContent(faq.question);
-		tinymce.get('reponseAdd').setContent(faq.reponse);
-		document.querySelector("#faqAddModal h2").innerHTML = "Modifier une question-réponse";
-		document.getElementById("formFaq").setAttribute("action","/faq/modifier");
-		document.querySelector("#faqAddModal .edit-btn").innerHTML = "Modifier";
-	}
-
-</script>
+<script src="/assets/js/faq.js"></script>

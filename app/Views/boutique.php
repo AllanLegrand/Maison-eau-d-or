@@ -118,7 +118,7 @@
 					<div class="mb-3">
 						<label for="productName" class="form-label">Nom du produit</label>
 						<input type="text" id="productName" name="nom" class="form-control" placeholder="Nom du produit"
-							required>
+							required maxlength="50">
 					</div>
 					<div class="mb-3">
 						<label for="productPrice" class="form-label">Prix (€)</label>
@@ -174,7 +174,7 @@
 					<div class="mb-3">
 						<label for="productName" class="form-label">Nom du produit</label>
 						<input type="text" id="productName" name="nom" class="form-control" placeholder="Nom du produit"
-							required>
+							required maxlength="50">
 					</div>
 					<div class="mb-3">
 						<label for="productPrice" class="form-label">Prix (€)</label>
