@@ -24,7 +24,7 @@
 
 			<!-- Deuxième diapositive -->
 			<div class="carousel-item">
-				<img src="/assets/img/imgbandeau2.webp" class="d-block w-100" alt="Produit 2">
+				<img src="/assets/img/imgbandeau2.jpg" class="d-block w-100" alt="Produit 2">
 				<div class="carousel-caption d-none d-md-block">
 					<h5>Qualité Premium</h5>
 					<p>Une expérience unique et mémorable.</p>

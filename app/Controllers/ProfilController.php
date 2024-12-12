@@ -74,6 +74,50 @@ class ProfilController extends BaseController
 		$data['historiqueCommandes'] = $historiqueDetails;
 		$data['pager'] = $pager->makeLinks($currentPage, $perPage, $totalCommandes, 'default_full');
 
+		$admin = $session->get('isLoggedIn') && $utilisateurModel->isAdmin($userId);
+
+		if( $admin ) {
+			$historiqueCommandesGene = $commandesModel
+				->orderBy('id_com', 'DESC')
+				->findAll($perPage, $offset);
+			
+			$totalCommandesGene = $commandesModel->countAllResults();
+
+			$historiqueDetailsGene = [];
+			foreach($historiqueCommandesGene as $commandeGene){
+				$historiqueModelGene = new HistoriqueModel();
+				$produitsHistoriqueGene = $historiqueModelGene->where('id_com', $commandeGene['id_com'])->findAll();
+
+				$produitsGene = [];
+				$totalCommandeGene = 0;
+
+				foreach($produitsHistoriqueGene as $produitHistoriqueGene){
+					$produitsGene[] = [
+						'id_prod' => $produit['id_prod'],
+						'nom' => $produit['nom'],
+						'prix' => $produit['prix'],
+						'image' => base_url('assets/img/' . ($produit['img_path'] ?: 'default.png')),
+						'quantite' => $produitHistorique['qt'],
+					];
+
+					$totalCommandeGene += $produit['prix'] * $produitHistorique['qt'];
+					
+				}
+
+				$historiqueDetailsGene[] = [
+					'id_com' => $commandeGene['id_com'],
+					'date' => $commandeGene['date'],
+					'produits' => $produitsGene,
+					'total' => $totalCommandeGene
+				];
+			}
+
+			$data['historiqueCommandesGene'] = $historiqueDetailsGene;
+			$data['pagerGene'] = $pager->makeLinks($currentPage, $perPage, $totalCommandesGene, 'default_full');
+		}
+
+		$data['admin'] = $admin;
+		
 		echo view('header', ['title' => 'Profil']);
 		echo view('profil', $data);
 		echo view('footer');

@@ -2,12 +2,15 @@
     <h1 class="my-4 text-center bordergold">Mon profil</h1>
 
     <div class="d-flex justify-content-center gap-3 flex-wrap">
-        <button class="tab-button active" data-tab="historiqueTab">Historique</button>
+        <button class="tab-button active" data-tab="historiqueTab"> Mon Historique</button>
         <button class="tab-button" data-tab="profilTab">Modifier le Profil</button>
+        <?php if($admin): ?>
+            <button class="tab-button" data-tab="historiqueGeneTab">Historique général</button>
+        <?php endif; ?>
     </div>
 
     <div class="tab-content active" id="historiqueTab">
-        <h1 class="my-4 text-center bordergold">Historique des Commandes</h1>
+        <h1 class="my-4 text-center bordergold">Historique de mes commandes</h1>
 
         <div class="flex-center">
             <?php foreach ($historiqueCommandes as $commande): ?>
@@ -74,6 +77,51 @@
             </form>
         </div>
     </div>
+
+    <?php if($admin): ?>
+        <div class="tab-content" id="historiqueGeneTab">
+            <h1 class="my-4 text-center bordergold">Historique des commandes clients</h1>
+
+            <div class="flex-center">
+                <?php foreach ($historiqueCommandesGene as $commandeGene): ?>
+                    <div class="commande-header d-flex justify-content-between align-items-center">
+                        <span>Commande #<?= $commandeGene['id_com'] ?> - <?= date('d/m/Y', strtotime($commandeGene['date'])) ?> | Total : <strong class="doree"><?= number_format($commandeGene['total'], 2, ',', ' ') ?> €</strong></span>
+                        <!-- Bouton pour ouvrir le modal -->
+                        <button class="btn-modal" data-command-id="<?= $commandeGene['id_com'] ?>">
+                            <img src="/assets/img/eye.png" alt="Détails" class="icon" />
+                        </button>
+                    </div>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Nom du Produit</th>
+                                <th>Quantité</th>
+                                <th>Prix Unitaire</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($commandeGene['produits'] as $produitGene): ?>
+                            <tr>
+                                <td><img class="produit-image" src="<?= $produitGene['image'] ?>" alt="Image de produit"></td>
+                                <td><?= $produitGene['nom'] ?></td>
+                                <td><?= $produitGene['quantite'] ?></td>
+                                <td><?= number_format($produitGene['prix'], 2, ',', ' ') ?> €</td>
+                                <td><?= number_format($produitGene['prix'] * $produitGene['quantite'], 2, ',', ' ') ?> €</td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                <?php endforeach; ?>
+            </div>
+
+            <div class="pagination">
+                <?= $pagerGene ?>
+            </div>
+        </div>
+    <?php endif; ?>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
