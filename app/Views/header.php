@@ -38,7 +38,7 @@
                             <div class="dropdown-menu" id="categories-menu"></div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link fw-bold" href="/about">À propos</a>
+                            <a class="nav-link fw-bold" href="/apropos">À propos</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link fw-bold" href="/blog">Blog</a>

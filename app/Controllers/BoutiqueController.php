@@ -9,6 +9,7 @@ use App\Models\CommandesModel;
 use App\Models\HistoriqueModel;
 use App\Models\UtilisateursModel;
 use App\Config\Pager;
+use Mpdf\Mpdf;
 
 class BoutiqueController extends BaseController
 {
@@ -338,57 +339,11 @@ class BoutiqueController extends BaseController
 		return redirect()->back()->with('error', 'Erreur lors de la suppression du produit.');
 	}
 
-	public function commande()
-	{
-		$session = session();
+	public function commanderpdf()
+    {
+        $session = session();
 
 		if (!$session->has('id_util')) {
-			return redirect()->to('/signin');
-		}
-
-		$id_sess = $session->get('id_util');
-
-		$panierModel = new PanierModel();
-		$panierItems = $panierModel->where('id_sess', $id_sess)
-								->orderBy('id_prod', 'ASC')
-								->findAll();
-
-		if (empty($panierItems)) {
-			return redirect()->to('/boutique');
-		}
-		$produitsModel = new ProduitsModel();
-		$orderDetails = [];
-		$total = 0;
-
-		foreach ($panierItems as $item) {
-			$produit = $produitsModel->find($item['id_prod']);
-			if ($produit) {
-				$orderDetails[] = [
-					'nom' => $produit['nom'],
-					'prix' => $produit['prix'],
-					'quantite' => $item['qt'],
-					'total' => $produit['prix'] * $item['qt']
-				];
-				$total += $produit['prix'] * $item['qt'];
-			}
-		}
-
-		$data = [
-			'orderDetails' => $orderDetails,
-			'total' => $total
-		];
-
-		echo view('header', ['title' => 'Commande']);
-		echo view('commande', $data);
-		echo view('footer');
-	}
-
-	public function finalizeOrder()
-	{
-		$session = session();
-
-		if (!$session->has('id_util')) {
-			alert("Une erreur est survenue, reconnectez-vous pour finaliser votre commande");
 			return redirect()->to('/accueil');
 		}
 
@@ -400,9 +355,9 @@ class BoutiqueController extends BaseController
 		$historiqueModel = new HistoriqueModel();
 
 		$panierItems = $panierModel->where('id_sess', $id_sess)->findAll();
-		
+
 		if (empty($panierItems)) {
-			return $this->response->setJSON(['success' => false, 'message' => 'Le panier est vide.']);
+			return redirect()->to('/Accueil');
 		}
 
 		$commandeData = [
@@ -426,9 +381,145 @@ class BoutiqueController extends BaseController
 			}
 		}
 
+		$orderDetails = $historiqueModel->getOrderDetails($id_com);
+		$total = 0;
+
+		foreach ($orderDetails as $item) {
+			$total += $item['qt'] * $item['prix'];
+		}
+
 		$panierModel->where('id_sess', $id_sess)->delete();
 
-		return $this->response->setJSON(['success' => true, 'message' => 'Commande finalisée avec succès !']);
+        $mpdf = new Mpdf();
+
+		$css = "
+			body {
+				font-family: Arial, sans-serif;
+				font-size: 12px;
+				color: #333;
+			}
+			.commande {
+				margin: 0 auto;
+				width: 100%;
+			}
+			h1 {
+				font-size: 24px;
+				color: #333;
+				text-align: center;
+			}
+			table {
+				width: 100%;
+				border-collapse: collapse;
+				margin-top: 20px;
+			}
+			table th, table td {
+				padding: 8px;
+				border: 1px solid #ddd;
+				text-align: center;
+			}
+			table th {
+				background-color: #f4f4f4;
+				font-weight: bold;
+			}
+			.total {
+				font-size: 18px;
+				font-weight: bold;
+				color: #000;
+				margin-top: 20px;
+				text-align: right;
+			}
+			.footer {
+				text-align: center;
+				margin-top: 30px;
+				font-size: 12px;
+				color: #888;
+			}
+		";
+
+		$mpdf->WriteHTML($css, 1);
+
+        $html = '<h1 style="text-align: center;">Résumé de la commande n°'. htmlspecialchars($id_com) .'</h1>
+        <table border="1" style="width: 100%; border-collapse: collapse; text-align: left;">
+            <thead>
+                <tr>
+                    <th>Produit</th>
+                    <th>Quantité</th>
+                    <th>Prix Unitaire</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>';
+
+        foreach ($orderDetails as $detail) {
+            $html .= '<tr>
+                        <td>' . htmlspecialchars($detail['nom']) . '</td>
+                        <td>' . htmlspecialchars($detail['qt']) . '</td>
+                        <td>' . number_format($detail['prix'], 2) . ' €</td>
+                        <td>' . number_format(($detail['qt'] * $detail['prix']), 2) . ' €</td>
+                      </tr>';
+        }
+
+        $html .= '</tbody>
+        </table>
+        <div style="margin-top: 20px; text-align: right; font-size: 16px;">
+            <strong>Total: ' . number_format($total, 2) . ' €</strong>
+        </div>';
+
+        $mpdf->WriteHTML($html);
+
+       	$pdfContent = $mpdf->Output('commande.pdf', 'S');
+
+		$panierModel->where('id_sess', $id_sess)->delete();
+		
+		echo view('header', ['title' => 'commande']);
+		echo view('commande_pdf', [
+			'pdfContent'=> $pdfContent
+		]);
+		echo view('footer');
+    }
+
+	public function commande(){
+
+		$session = session();
+
+		$utilisateurModel = new UtilisateursModel();
+
+		$id_sess = $session->get('id_util') ?: session_id();
+
+		if(!$session->get('isLoggedIn')) {
+			return redirect()->to('/signin');
+		}
+
+		$utilisateur = $utilisateurModel->where('id_util', $session->get('id_util'))->first();
+
+		$panierModel = new PanierModel();
+		$panierItems = $panierModel->where('id_sess', $id_sess)
+							       ->orderBy('id_prod', 'ASC')
+							       ->findAll();
+
+		$produitsModel = new ProduitsModel();
+		$cartItem = [];
+
+		foreach ($panierItems as $item) {
+			$produit = $produitsModel->find($item['id_prod']);
+			if ($produit) {
+				$cartItem[] = [
+					'id_prod' => $produit['id_prod'],
+					'nom' => $produit['nom'],
+					'prix' => $produit['prix'],
+					'quantite' => $item['qt'],
+					'image' => base_url('assets/img/' . ($produit['img_path'] ?: 'default.png')),
+					'total' => $produit['prix'] * $item['qt']
+				];
+			}
+		}
+
+		echo view('header', ['title' => 'commande']);
+		echo view('commande', [
+			'utilisateur'=> $utilisateur,
+			'cartItems' => $cartItem
+		]);
+		echo view('footer');
 	}
 
 	public function addCategorie() {
