@@ -1,60 +1,56 @@
-# CodeIgniter 4 Framework
+# Guide d'utilisation - Lancer le site web en local
 
-## What is CodeIgniter?
+Ce guide vous explique comment configurer et exécuter ce projet sur votre machine locale.
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+---
 
-This repository holds the distributable version of the framework.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+## Prérequis
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+Avant de commencer, assurez-vous que les outils suivants sont installés sur votre machine :
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+1. **PHP** (version 7.4 ou supérieure) : [Télécharger ici](https://www.php.net/downloads.php)
+2. **Composer** (gestionnaire de dépendances PHP) : [Installer ici](https://getcomposer.org/)
+3. **Un serveur web local** comme **XAMPP**, **WAMP** ou **MAMP** (ou utilisez le serveur intégré de PHP).
+4. **Git** (pour cloner le projet) : [Télécharger ici](https://git-scm.com/)
 
-## Important Change with index.php
+---
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+## Étapes d'installation
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+### 1. Cloner le dépôt GitHub
 
-**Please** read the user guide for a better explanation of how CI4 works!
+Ouvrez un terminal et exécutez la commande suivante pour cloner ce projet sur votre machine :
 
-## Repository Management
+```bash
+git clone https://github.com/AllanLegrand/Maison-eau-d-or.git
+```
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+### 2. Installation des dépots
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+Accéder au dossier du projet : 
 
-## Contributing
+```bash
+cd Maison-eau-d-or
+```
 
-We welcome contributions from the community.
+Installez les dépendances PHP à l'aide de Composer :
 
-Please read the [*Contributing to CodeIgniter*](https://github.com/codeigniter4/CodeIgniter4/blob/develop/CONTRIBUTING.md) section in the development repository.
+```bash
+composer install
+```
 
-## Server Requirements
+### 3. Initialiser la base de données
 
-PHP version 8.1 or higher is required, with the following extensions installed:
+Exécutez les migrations pour créer les tables dans la base de données :
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+```bash
+php spark migrate
+```
+### 4. Lancer le serveur local
 
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - If you are still using PHP 7.4 or 8.0, you should upgrade immediately.
-> - The end of life date for PHP 8.1 will be December 31, 2025.
+Lancez le serveur intégré de PHP à l'aide de la commande suivante : 
 
-Additionally, make sure that the following extensions are enabled in your PHP:
-
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+```bash
+php spark serve
+```
+Cela démarrera le site de la boutique sur l'url [https://localhost8080](https://localhost8080). Vous pouvez accéder au site en ouvrant cet url dans un navigateur
