@@ -67,9 +67,7 @@
                 </div>
             </div>
         </nav>
-        <!-- Bootstrap JavaScript (optional for interactive elements) -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Custom JavaScript -->
         <script src="/assets/js/header.js"></script>
     </header>
 
@@ -93,10 +91,8 @@
         <button class="deconnexion" onClick="disconnect()">Se déconnecter</button>
     </div>
 
-    <!-- Modal -->
     <div id="productModal" class="modal-overlay" style="display: none;">
         <div class="modal-content">
-            <!-- Croix pour fermer -->
             <span class="close-cross" onclick="closeModal()">&times;</span>
 
             <div class="d-flex flex-wrap justify-content-center align-items-center modal-border modal-row">
