@@ -279,15 +279,12 @@ class BoutiqueController extends BaseController
 		if ($image && $image->isValid() && !$image->hasMoved()) {
 			$targetPath = 'assets/img';
 		
-			// Vérifier si le dossier existe, sinon le créer
 			if (!is_dir($targetPath)) {
 				mkdir($targetPath, 0755, true);
 			}
 		
-			// Renommer l'image pour éviter les conflits
 			$newName = $image->getRandomName();
 		
-			// Déplacer l'image vers le dossier uploads
 			$image->move($targetPath, $newName);
 		
 			$data['img_path'] = $newName;
@@ -348,8 +345,8 @@ class BoutiqueController extends BaseController
 	}
 
 	public function commanderpdf()
-    {
-        $session = session();
+	{
+		$session = session();
 
 		if (!$session->has('id_util')) {
 			return redirect()->to('/accueil');
@@ -368,9 +365,17 @@ class BoutiqueController extends BaseController
 			return redirect()->to('/Accueil');
 		}
 
+		if ($this->request->getPost('livraison') == 'livraison') {
+			$adresseLivr = $this->request->getPost('adresseLivraison');
+		} else {
+			$adresseLivr = '123 avenue René Coty, LE HAVRE 76600';
+		}
+
 		$commandeData = [
 			'id_util' => $session->get('id_util'),
-			'date' => date('Y-m-d H:i:s')
+			'date' => date('Y-m-d H:i:s'),
+			'modelivraison' => $this->request->getPost('livraison'),
+			'adresselivraison' => $adresseLivr
 		];
 		$commandesModel->ajouterCommandes($commandeData);
 
@@ -398,7 +403,7 @@ class BoutiqueController extends BaseController
 
 		$panierModel->where('id_sess', $id_sess)->delete();
 
-        $mpdf = new Mpdf();
+		$mpdf = new Mpdf();
 
 		$css = "
 			body {
@@ -406,85 +411,119 @@ class BoutiqueController extends BaseController
 				font-size: 12px;
 				color: #333;
 			}
-			.commande {
-				margin: 0 auto;
-				width: 100%;
+
+			.header {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-bottom: 20px;
 			}
-			h1 {
-				font-size: 24px;
-				color: #333;
-				text-align: center;
+
+			.header img {
+				width: 100px;
 			}
-			table {
-				width: 100%;
-				border-collapse: collapse;
-				margin-top: 20px;
-			}
-			table th, table td {
-				padding: 8px;
-				border: 1px solid #ddd;
-				text-align: center;
-			}
-			table th {
-				background-color: #f4f4f4;
-				font-weight: bold;
-			}
-			.total {
-				font-size: 18px;
-				font-weight: bold;
-				color: #000;
-				margin-top: 20px;
+
+			.header .date {
+				font-size: 14px;
 				text-align: right;
 			}
-			.footer {
+
+			.table {
+				width: 100%;
+				margin-top: 30px;
+				margin-bottom: 30px;
+				border-collapse: collapse;
+			}
+
+			.table th, .table td {
+				padding: 15px;
 				text-align: center;
+				border: 1px solid #ddd;
+			}
+
+			.table th {
+				background-color: #333;
+				color: #ffffff;
+			}
+
+			.table td {
+				color: #555;
+			}
+
+			.total {
+				font-size: 16px;
+				font-weight: bold;
+				text-align: right;
+				margin-top: 20px;
+			}
+
+			.footer {
 				margin-top: 30px;
 				font-size: 12px;
-				color: #888;
+			}
+
+			h1 {
+				color: #333;
+				font-weight: bold;
+				text-align: center;
+				margin-bottom: 20px;
+				padding-bottom: 10px;
+				border-bottom: 2px solid #C7B254;
+			}
+
+			.gold{
+				color: #C7B254;
 			}
 		";
-
 		$mpdf->WriteHTML($css, 1);
 
-        $html = '<h1 style="text-align: center;">Résumé de la commande n°'. htmlspecialchars($id_com) .'</h1>
-        <table border="1" style="width: 100%; border-collapse: collapse; text-align: left;">
-            <thead>
-                <tr>
-                    <th>Produit</th>
-                    <th>Quantité</th>
-                    <th>Prix Unitaire</th>
-                    <th>Total</th>
-                </tr>
-            </thead>
-            <tbody>';
+		$html = '<div class="header">
+					<p> Maison Eau d\'Or </p>
+					<div class="date">Date : ' . htmlspecialchars($commandeData['date']) . '</div>
+				</div>';
 
-        foreach ($orderDetails as $detail) {
-            $html .= '<tr>
-                        <td>' . htmlspecialchars($detail['nom']) . '</td>
-                        <td>' . htmlspecialchars($detail['qt']) . '</td>
-                        <td>' . number_format($detail['prix'], 2) . ' €</td>
-                        <td>' . number_format(($detail['qt'] * $detail['prix']), 2) . ' €</td>
-                      </tr>';
-        }
+		$html .= '<h1 style="text-align: center;" class="">Résumé de la commande n°' . htmlspecialchars($id_com) . '</h1>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Produit</th>
+					<th>Quantité</th>
+					<th>Prix Unitaire</th>
+					<th>Total</th>
+				</tr>
+			</thead>
+			<tbody>';
 
-        $html .= '</tbody>
-        </table>
-        <div style="margin-top: 20px; text-align: right; font-size: 16px;">
-            <strong>Total: ' . number_format($total, 2) . ' €</strong>
-        </div>';
+		foreach ($orderDetails as $detail) {
+			$html .= '<tr>
+						<td>' . htmlspecialchars($detail['nom']) . '</td>
+						<td>' . htmlspecialchars($detail['qt']) . '</td>
+						<td>' . number_format($detail['prix'], 2) . ' €</td>
+						<td>' . number_format(($detail['qt'] * $detail['prix']), 2) . ' €</td>
+					</tr>';
+		}
 
-        $mpdf->WriteHTML($html);
+		$html .= '</tbody>
+		</table>
+		<div class="total">Total : <strong class="gold">' . number_format($total, 2) . ' €</strong></div>';
 
-       	$pdfContent = $mpdf->Output('commande.pdf', 'S');
+		$html .= '<div class="footer">
+					<p><strong>Mode de livraison :</strong> ' . htmlspecialchars($commandeData['modelivraison']) . '</p>
+					<p><strong>Adresse :</strong> ' . htmlspecialchars($adresseLivr) . '</p>
+				</div>';
 
-		$panierModel->where('id_sess', $id_sess)->delete();
-		
+		$mpdf->WriteHTML($html);
+
+		$pdfContent = $mpdf->Output('commande_'.$id_com.'.pdf', 'S');
+
+		$mpdf->Output('assets/pdf/commande_'.$id_com.'.pdf', 'F');
+
 		echo view('header', ['title' => 'commande']);
 		echo view('commande_pdf', [
 			'pdfContent'=> $pdfContent
 		]);
 		echo view('footer');
-    }
+	}
 
 	public function commande(){
 
