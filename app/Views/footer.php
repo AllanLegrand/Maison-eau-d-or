@@ -5,7 +5,7 @@
                 <div class="footer-links d-flex">
                     <a href="<?= base_url('conditions_generales') ?>" class="footer-link">Condition générales</a>
                     <a href="<?= base_url('politique_confidentialite') ?>" class="footer-link">Politique de confidentialité</a>
-                    <a href="#" class="footer-link">FAQ</a>
+                    <a href="<?= base_url('faq') ?>" class="footer-link">FAQ</a>
                 </div>
                 <div class="footer-social d-flex align-items-center">
                     <span class="footer-social-label">Nos réseaux :</span>

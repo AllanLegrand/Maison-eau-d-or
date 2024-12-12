@@ -7,95 +7,116 @@ use App\Models\UtilisateursModel;
 
 class FAQController extends BaseController
 {
-    protected $faqModel;
-    protected $utilisateurModel;
+	protected $faqModel;
+	protected $utilisateurModel;
 
-    public function __construct()
-    {
-        $this->faqModel = new FAQModel();
-        $this->utilisateurModel = new UtilisateursModel();
-    }
+	public function __construct()
+	{
+		$this->faqModel = new FAQModel();
+		$this->utilisateurModel = new UtilisateursModel();
+	}
 
-    public function index()
-    {
-        $session = session();
-        $admin = $session->get('isLoggedIn') && $this->utilisateurModel->isAdmin($session->get('id_util'));
+	public function index()
+	{
+		$session = session();
+		$admin = $session->get('isLoggedIn') && $this->utilisateurModel->isAdmin($session->get('id_util'));
 
-        $data = [
-            'faq' => $this->faqModel->getFAQ(),
-            'admin' => $admin,
-        ];
+		$data = [
+			'faq' => $this->faqModel->getFAQ(),
+			'admin' => $admin,
+		];
 
 		echo view('header', ['title' => 'FAQ']);
 		echo view('faq', $data);
-		echo view('footer'); 
-    }
+		echo view('footer');
+	}
 
-    public function modifier()
-    {
-        $session = session();
-        $admin = $session->get('isLoggedIn') && $this->utilisateurModel->isAdmin($session->get('id_util'));
+	public function ajouter() {
+		$session = session();
+		$admin = $session->get('isLoggedIn') && $this->utilisateurModel->isAdmin($session->get('id_util'));
 
-        if (!$admin) {
-            return redirect()->to('/faq')->with('error', 'Permission refusée.');
-        }
+		if (!$admin) {
+			return redirect()->to('/faq')->with('error', 'Permission refusée.');
+		}
 
-        $data = [
-            'txt' => $this->request->getPost('txt')
-        ];
+		$data = [
+			'reponse' => $this->request->getPost('reponse'),
+			'question' => $this->request->getPost('question'),
+		];
 
+		$model = new FAQModel();
+		$model->insert($data);
 
-        if ($this->faqModel->modifFAQ($this->faqModel->getFAQ()["id_faq"], $data)) {
-            return redirect()->to('/faq')->with('success', 'FAQ modifiée avec succès.');
-        } else {
-            return redirect()->to('/faq')->with('error', 'Échec de la modification de la FAQ.');
-        }
-    }
+		return redirect()->to('/faq')->with('message', 'Question-réponse ajouté avec succès !');
+	}
 
-    public function supprimer($id_faq)
-    {
-        $session = session();
-        $admin = $session->get('isLoggedIn') && $this->utilisateurModel->isAdmin($session->get('id_util'));
+	public function modifier()
+	{
+		$session = session();
+		$admin = $session->get('isLoggedIn') && $this->utilisateurModel->isAdmin($session->get('id_util'));
 
-        if (!$admin) {
-            return redirect()->to('/faq')->with('error', 'Permission refusée.');
-        }
+		if (!$admin) {
+			return redirect()->to('/faq')->with('error', 'Permission refusée.');
+		}
 
-        if ($this->faqModel->supprFAQ($id_faq)) {
-            return redirect()->to('/faq')->with('success', 'FAQ supprimée avec succès.');
-        } else {
-            return redirect()->to('/faq')->with('error', 'Échec de la suppression de la FAQ.');
-        }
-    }
+		$id_faq = $this->request->getPost('id_faq');
 
-    public function contact()
-    {
-        $name = $this->request->getPost('name');
-        $email = $this->request->getPost('email');
-        $message = $this->request->getPost('message');
+		$data = [
+			'reponse' => $this->request->getPost('reponse'),
+			'question' => $this->request->getPost('question'),
+		];
 
-        if (!$name || !$email || !$message) {
-            return redirect()->to('/faq')->with('error', 'Tous les champs doivent être remplis.');
-        }
+		if ($this->faqModel->modifFAQ($id_faq, $data)) {
+			return redirect()->to('/faq')->with('success', 'FAQ modifiée avec succès.');
+		} else {
+			return redirect()->to('/faq')->with('error', 'Échec de la modification de la FAQ.');
+		}
+	}
 
-        $emailService = \Config\Services::email();
+	public function supprimer($id_faq)
+	{
+		$session = session();
+		$admin = $session->get('isLoggedIn') && $this->utilisateurModel->isAdmin($session->get('id_util'));
 
-        $emailService->setFrom('eaudormaison@gmail.com', 'FAQ - Maison Eau d\'Or');
-        $emailService->setTo('eaudormaison@gmail.com');
-        $emailService->setSubject('Message de contact - FAQ');
-        $emailService->setMessage("
-            <h2>Nouveau message reçu depuis la FAQ</h2>
-            <p><strong>Nom :</strong> {$name}</p>
-            <p><strong>Email :</strong> {$email}</p>
-            <p><strong>Message :</strong><br>{$message}</p>
-        ");
+		if (!$admin) {
+			return redirect()->to('/faq')->with('error', 'Permission refusée.');
+		}
 
-        if ($emailService->send()) {
-            return redirect()->to('/faq')->with('success', 'Votre message a été envoyé avec succès.');
-        } else {
-            $data = $emailService->printDebugger(['headers']);
-            log_message('error', $data);
-            return redirect()->to('/faq')->with('error', 'Une erreur s’est produite lors de l’envoi de votre message.');
-        }
-    }
+		if ($this->faqModel->supprFAQ($id_faq)) {
+			return redirect()->to('/faq')->with('success', 'FAQ supprimée avec succès.');
+		} else {
+			return redirect()->to('/faq')->with('error', 'Échec de la suppression de la FAQ.');
+		}
+	}
+
+	public function contact()
+	{
+		$name = $this->request->getPost('name');
+		$email = $this->request->getPost('email');
+		$message = $this->request->getPost('message');
+
+		if (!$name || !$email || !$message) {
+			return redirect()->to('/faq')->with('error', 'Tous les champs doivent être remplis.');
+		}
+
+		$emailService = \Config\Services::email();
+
+		$emailService->setFrom('eaudormaison@gmail.com', 'FAQ - Maison Eau d\'Or');
+		$emailService->setTo('eaudormaison@gmail.com');
+		$emailService->setSubject('Message de contact - FAQ');
+		$emailService->setMessage("
+			<h2>Nouveau message reçu depuis la FAQ</h2>
+			<p><strong>Nom :</strong> {$name}</p>
+			<p><strong>Email :</strong> {$email}</p>
+			<p><strong>Message :</strong><br>{$message}</p>
+		");
+
+		if ($emailService->send()) {
+			return redirect()->to('/faq')->with('success', 'Votre message a été envoyé avec succès.');
+		} else {
+			$data = $emailService->printDebugger(['headers']);
+			log_message('error', $data);
+			return redirect()->to('/faq')->with('error', 'Une erreur s’est produite lors de l’envoi de votre message.');
+		}
+	}
 }

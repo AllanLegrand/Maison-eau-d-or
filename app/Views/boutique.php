@@ -118,7 +118,7 @@
 					<div class="mb-3">
 						<label for="productName" class="form-label">Nom du produit</label>
 						<input type="text" id="productName" name="nom" class="form-control" placeholder="Nom du produit"
-							required>
+							required maxlength="50">
 					</div>
 					<div class="mb-3">
 						<label for="productPrice" class="form-label">Prix (€)</label>
@@ -174,7 +174,7 @@
 					<div class="mb-3">
 						<label for="productName" class="form-label">Nom du produit</label>
 						<input type="text" id="productName" name="nom" class="form-control" placeholder="Nom du produit"
-							required>
+							required maxlength="50">
 					</div>
 					<div class="mb-3">
 						<label for="productPrice" class="form-label">Prix (€)</label>
@@ -237,7 +237,7 @@
 		<div id="editCategorieModal" class="modal-overlay" style="display: none;">
 			<div class="modal-content">
 				<span class="close-cross" onclick="closeEditCategorieModal()">&times;</span>
-				<h3 class="text-center mb-4">Ajouter une Catégorie</h3>
+				<h3 class="text-center mb-4">Modifier une Catégorie</h3>
 				<form id="editCategorieForm" action="<?= base_url('editCategorie') ?>" method="post">
 					<input type="text" id="catId" name="id_cat" class="form-control" placeholder="ID de la categorie"
 					style="display:none;">

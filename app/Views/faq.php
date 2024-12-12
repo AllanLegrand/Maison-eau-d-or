@@ -2,15 +2,22 @@
 	referrerpolicy="origin"></script>
 <link rel="stylesheet" href="/assets/css/faq.css">
 <div class="container my-5">
-	<div class="faq-header">Foire aux questions</div>
+	<h1 class="faq-header">Foire aux questions</h1>
 	<div class="faq-content">
 		<?php if (!empty($faq) && is_array($faq)): ?>
 			<?php foreach ($faq as $questionReponse): ?>
 				<div class="faq-question">
-					<input id="q<?= esc($faq['id_faq']) ?>" type="checkbox" class="panel">
+					<input id="q<?= esc($questionReponse['id_faq']) ?>" type="checkbox" class="panel">
 					<div class="plus">+</div>
-					<label for="q1" class="panel-title"><?= esc($faq['question']) ?></label>
-					<div class="panel-content"><?= esc($faq['reponse']) ?></div>
+					<label for="q<?= esc($questionReponse['id_faq']) ?>" class="panel-title">
+						<?= $questionReponse['question'] ?>
+						
+					</label>
+					<div class="panel-content"><hr><?= $questionReponse['reponse'] ?></div>
+					<?php if ($admin): ?>
+					<button type="submit" onclick="modifierQuest(<?= htmlspecialchars(json_encode($questionReponse), ENT_QUOTES, 'UTF-8') ?>)" class="btn btn-sm btn-outline-secondary edit-btn">Modifier</button>
+					<button type="submit" onclick="if (confirm('Êtes-vous sûr de vouloir supprimer ce produit ?')) location.href='/faq/suppFAQ/<?= esc($questionReponse['id_faq']) ?>';" class="btn btn-sm btn-outline-secondary supp-btn">Supprimer</button>
+					<?php endif; ?>
 				</div>
 			<?php endforeach; ?>
 		<?php else: ?>
@@ -18,13 +25,11 @@
 		<?php endif; ?>
 
 		<?php if ($admin): ?>
-			<button type="button" onclick="ajouterQuest()">Ajouter</button>
+			<button type="button" class="btn btn-sm btn-outline-secondary ajout-btn" onclick="ajouterQuest()">Ajouter</button>
 
 			<form id="editFAQ" action="<?= base_url('editFAQ') ?>" method="post" style="display:none;">
-				<label for="question" class="form-label">Question</label>
-				<textarea id="questionAdd" name="question"></textarea>
-				<label for="question" class="form-label">Réponse</label>
-				<textarea id="reponseAdd" name="reponse"></textarea>
+				
+				
 				
 				<button type="submit">Enregistrer</button>
 			</form>
@@ -33,22 +38,27 @@
 				<div class="modal-content">
 					<span id="closeAddFAQModal" onclick="closeAddFAQModal()" style="cursor: pointer;">&times;</span>
 					<h2>Ajouter une question-réponse</h2>
-					<form id="addFAQ" method="POST" action="/addFAQ">
+					<form id="formFaq" method="POST" action="/faq/addFAQ">
+						<input type="text" id="faqID" name="id_faq" class="form-control" placeholder="ID de la faq"
+						style="display:none;">
 						<hr>
 						<div>
-							<label for="email" class="form-label">Votre email :</label>
-							<textarea id="addDescription" name="description"></textarea>
+							<label for="question" class="form-label">Question</label>
+							<textarea id="questionAdd" name="question" required></textarea>
+						</div>
+						<hr>
+						<div>
+							<label for="reponse" class="form-label">Réponse</label>
+							<textarea id="reponseAdd" name="reponse" required></textarea>
 						</div>
 
 						<hr>
 						<button type="submit" class="btn btn-sm btn-outline-secondary edit-btn">Créer</button>
-						<button type="button" onclick="openVisuArticleModal(true)" class="btn btn-sm btn-outline-secondary edit-btn">Aperçu</button>
 					</form>
 				</div>
 			</div>
 		<?php endif; ?>
 	</div>
-
 
 	<div class="mt-5">
 		<h3>Contactez-nous</h3>
@@ -61,47 +71,14 @@
 				<label for="email" class="form-label">Votre email :</label>
 				<input type="email" class="form-control" id="email" name="email" required>
 			</div>
-			<div class="mb-3">
+			<div class="mb-3" id="messageFAQ">
 				<label for="message" class="form-label">Votre message :</label>
 				<textarea class="form-control" id="message" name="message" rows="7" required></textarea>
 			</div>
-			<button type="submit" class="btn btn-primary">Envoyer</button>
+			<button type="submit" class="btn btn-sm btn-outline-secondary ajout-btn">Envoyer</button>
 		</form>
 	</div>
 
 </div>
 
-<script>
-	tinymce.init({
-		selector: '#questionAdd',
-		plugins: 'lists link image preview',
-		toolbar: 'undo redo | bold italic underline | alignleft aligncenter alignright | bullist numlist | link image | preview',
-		menubar: false,
-		height: 200
-	});
-
-	tinymce.init({
-		selector: '#reponseAdd',
-		plugins: 'lists link image preview',
-		toolbar: 'undo redo | bold italic underline | alignleft aligncenter alignright | bullist numlist | link image | preview',
-		menubar: false,
-		height: 200
-	});
-
-	tinymce.init({
-		selector: '#message',
-		plugins: 'lists link image preview',
-		toolbar: 'undo redo | bold italic underline | alignleft aligncenter alignright | bullist numlist | link image | preview',
-		menubar: false,
-		height: 300
-	});
-
-	function modifierContenu() {
-		document.getElementById("rendu").innerHTML = tinymce.get('contenu').getContent();
-	}
-
-	function ajouterQuest() {
-		document.getElementById("faqAddModal").style.display = 'flex';
-	}
-
-</script>
+<script src="/assets/js/faq.js"></script>

@@ -1,6 +1,14 @@
 <link rel="stylesheet" href="/assets/css/article.css">
 <script src="https://cdn.tiny.cloud/1/ykhnn1uuwtja98fn7bo25quckri41i762dvrv8bg3ui23ump/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 
+<?php if (!$admin): ?>
+	<style>
+		.article {
+			height: 425px;
+		}
+	</style>
+<?php endif; ?>
+
 <h1>Liste des Articles</h1>
 	<div class="articles-container">
 		<?php if (!empty($articles) && is_array($articles)): ?>
@@ -44,7 +52,7 @@
 						<div>
 							<label for="addTitre">Titre</label>
 							<br>
-							<input type="text" id="addTitre" name="titre" required>
+							<input type="text" id="addTitre" name="titre" required maxlength="100">
 						</div>
 						<hr>
 						<div>
@@ -74,7 +82,7 @@
 						<div>
 							<label for="editTitre">Titre</label>
 							<br>
-							<input type="text" id="editTitre" name="titre" required>
+							<input type="text" id="editTitre" name="titre" required maxlength="100">
 						</div>
 						<hr>
 						<div>

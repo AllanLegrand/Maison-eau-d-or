@@ -13,7 +13,7 @@ CREATE TABLE Produits (
 	nom VARCHAR(30) NOT NULL,
 	prix FLOAT,
 	description TEXT,
-	img_path VARCHAR(255) DEFAULT 'maisoneaudeur.webp',
+	img_path VARCHAR(255) DEFAULT 'default.png',
 	actif BOOLEAN
 );
 
@@ -36,6 +36,7 @@ CREATE TABLE Commandes (
 	id_com SERIAL PRIMARY KEY,
 	id_util INTEGER REFERENCES Utilisateurs(id_util),
 	adresseLivraison VARCHAR(100),
+	modelivraison VARCHAR(100),
 	date DATE
 );
 
