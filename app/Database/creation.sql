@@ -92,6 +92,9 @@ INSERT INTO Categories(nom) VALUES ('Coffrets');
 INSERT INTO Categories(nom) VALUES ('Best-sellers');
 INSERT INTO Categories(nom) VALUES ('Vedette');
 
+/* Le mot de passe est admin */
+INSERT INTO Utilisateurs(nom, prenom, mdp, email, admin) VALUES ('maison', 'eau d or', '$2y$10$Ygbe5KktS08OssA/JFww8ujaLWTnodgPZQR3mvFuPt/10xSP7l8ly', 'eaudormaison@gmail.com', true);
+
 CREATE OR REPLACE FUNCTION handle_vedette_insert()
 RETURNS TRIGGER AS $$
 BEGIN
