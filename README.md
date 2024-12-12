@@ -39,6 +39,12 @@ Installez les dépendances PHP à l'aide de Composer :
 composer install
 ```
 
+Prérequis pour les bons de commandes en PDF
+
+```bash
+composer require mpdf/mpdf
+```
+
 ### 3. Initialiser la base de données
 
 Exécutez les migrations pour créer les tables dans la base de données :
