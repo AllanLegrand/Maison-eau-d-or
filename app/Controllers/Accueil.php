@@ -12,7 +12,7 @@ class Accueil extends BaseController
 
 		$produitsCoffret = $produitsModel->getProduitByFilter('Coffrets');
 		$produitsBestsellers = $produitsModel->getProduitByFilter('Best-sellers');
-		$produitVedette = $produitsModel->getProduitByFilter('Vedette')[0];
+		$produitVedette = isset($produitsModel->getProduitByFilter('Vedette')[0]) ? $produitsModel->getProduitByFilter('Vedette')[0] : null;
 
 		$session = session();
 

@@ -1,6 +1,7 @@
 @import url('couleur.css');
 
 .privacy-section {
+    margin-top: 20px;
     margin-bottom: 30px;
     padding: 15px;
     border-left: 5px solid var(--orfoncer);
@@ -40,5 +41,39 @@ h1.text-gradient, h2.section-title {
 
 .pagestyle {
     min-height: 700px;
-    margin-top: 100px;
+    margin-top: 25px;
+}
+
+.ajout-btn {
+	width: 100%;
+	height: 40px;
+	margin-top: 10px;
+	border-color: black;
+	color: black;
+	font-weight: bold;
+	border: 2px solid var(--noir);
+	border-radius: 0;
+}
+
+.ajout-btn:hover {
+	color: white;
+	background-color: #000;
+	border: 2px solid var(--noir);
+}
+
+#modifiableApropos {
+    margin-bottom: 20px;
+}
+
+h1 {
+	text-align: center;
+	margin: 20px 0;
+	color: #444;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 24px;
+	font-weight: bold;
+	text-align: center;
+	margin-bottom: 20px;
+	padding-bottom: 10px;
+	border-bottom: 2px solid var(--orclaire);
 }
