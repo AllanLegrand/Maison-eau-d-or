@@ -243,6 +243,10 @@ class BoutiqueController extends BaseController
 			'id_prod' => $model->getInsertID(),
 		];
 
+		if(!isset($categories) || $categories == null) {
+			return redirect()->to('/boutique')->with('message', 'Produit ajouté avec succès !');
+		}
+
 		foreach($categories as $categorie) {
 			$data['id_cat'] = $categorie;
 
@@ -300,6 +304,10 @@ class BoutiqueController extends BaseController
 		$modelCat = new ProdCatModel();
 
 		$modelCat->reintialiseProdCat($id_prod);
+
+		if(!isset($categories) || $categories == null) {
+			return redirect()->to('/boutique')->with('message', 'Produit ajouté avec succès !');
+		}
 
 		foreach($categories as $categorie) {
 			$data = [
