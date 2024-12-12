@@ -78,7 +78,8 @@ CREATE TABLE Article (
 
 CREATE TABLE FAQ (
 	id_faq SERIAL PRIMARY KEY,
-	txt TEXT NOT NULL
+	question TEXT,
+	reponse TEXT
 );
 
 CREATE OR REPLACE FUNCTION handle_vedette_insert()

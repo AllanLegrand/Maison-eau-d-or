@@ -65,6 +65,5 @@ $routes->get('/apropos','AProposController::index');
 
 $routes->get('/faq', 'FAQController::index');
 $routes->post('/faq/ajouter', 'FAQController::ajouter');
-$routes->post('/faq/modifier/(:num)', 'FAQController::modifier/$1');
-$routes->get('/faq/supprimer/(:num)', 'FAQController::supprimer/$1');
+$routes->post('/faq/modifier', 'FAQController::modifier');
 $routes->post('/faq/contact', 'FAQController::contact');
