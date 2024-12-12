@@ -83,6 +83,15 @@ CREATE TABLE FAQ (
 	reponse TEXT
 );
 
+CREATE TABLE Apropos (
+	id_pro SERIAL PRIMARY KEY,
+	msg TEXT
+);
+
+INSERT INTO Categories(nom) VALUES ('Coffrets');
+INSERT INTO Categories(nom) VALUES ('Best-sellers');
+INSERT INTO Categories(nom) VALUES ('Vedette');
+
 CREATE OR REPLACE FUNCTION handle_vedette_insert()
 RETURNS TRIGGER AS $$
 BEGIN
